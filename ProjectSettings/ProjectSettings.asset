@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
-  productGUID: 8abae2d4abbaa0146bbffea09b9b41dd
+  productGUID: c4a5ac504d870e04bb65b1680b534d02
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -754,10 +754,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 1ebb31e9-771e-4c90-9a37-ee77b3d05b39
+  cloudProjectId: 7ad565bb-918d-4703-bb12-5572c883a0b0
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: BipoleVI3D 2025-04-16_15-29-51
+  projectName: BipoleVI3D
   organizationId: jkajustin
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
