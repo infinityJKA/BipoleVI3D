@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] DungeonManager dm;
     public bool animateMovement = false;
     public float moveSpeed = 10f;
     public float rotateSpeed = 500f;
+    public int playerX,playerY = 0;
+    public PlayerFacing playerFacing = PlayerFacing.North;
 
     Vector3 targetGridPos;
     Vector3 prevTargetGridPos;
@@ -18,10 +24,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        MovePlayerObject();
     }
 
-    void MovePlayer(){
+    void MovePlayerObject(){
         if(true){ //if can move
             prevTargetGridPos = targetGridPos;
             Vector3 targetPosition = targetGridPos;
@@ -51,43 +57,116 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    public void Walk(int x, int y){    // x is to the side, y is upwards
+        int oldX = x;
+        int oldY = y;
+
+        // adjust for rotation
+        if(playerFacing == PlayerFacing.South){
+            x *= -1;
+            y *= -1;
+        }
+        else if(playerFacing == PlayerFacing.East){
+            oldY = y;
+            y = x;
+            x = -1*oldY;
+        }
+        else if(playerFacing == PlayerFacing.West){
+            oldY = y;
+            y = -1*x;
+            x = oldY;
+        }
+
+        Tile t = dm.GetTile(playerX+x,playerY+y);
+        if(t != null){
+            if(t.walkable){
+                playerX += x;
+                playerY += y;
+                if(oldX > 0){    // walk forwards
+                    targetGridPos += transform.forward*10;
+                }
+                else if(oldX < 0){    // walk backwards
+                    targetGridPos -= transform.forward*10;
+                }
+                else if(oldY > 0){    // walk right
+                    targetGridPos += transform.right*10;
+                }
+                else if(oldY < 0){    // walk left
+                    targetGridPos -= transform.right*10;
+                }
+                else{
+                    Debug.Log("wtf man");
+                }
+            }
+            else{
+                Debug.Log("Trying to walk to a nonwalkable tile!");
+            }
+        }
+        else{
+            Debug.Log("Tile you are trying to walk to is NULL!");
+        }
+    }
 
 
     public void RotateLeft(){
         if(DoneMoving){
+            if(playerFacing == PlayerFacing.North){
+                playerFacing = PlayerFacing.West;
+            }
+            else if(playerFacing == PlayerFacing.West){
+                playerFacing = PlayerFacing.South;
+            }
+            else if(playerFacing == PlayerFacing.South){
+                playerFacing = PlayerFacing.East;
+            }
+            else{
+                playerFacing = PlayerFacing.North;
+            }
             targetRotation -= Vector3.up*90f;
         }
     }
 
     public void RotateRight(){
         if(DoneMoving){
+            if(playerFacing == PlayerFacing.North){
+                playerFacing = PlayerFacing.East;
+            }
+            else if(playerFacing == PlayerFacing.West){
+                playerFacing = PlayerFacing.North;
+            }
+            else if(playerFacing == PlayerFacing.South){
+                playerFacing = PlayerFacing.West;
+            }
+            else{
+                playerFacing = PlayerFacing.South;
+            }
             targetRotation += Vector3.up*90f;
         }
     }
 
-    public void MoveForward(){
-        if(DoneMoving){
-            targetGridPos += transform.forward*10;
-        }
-    }
+    // public void MoveForward(){
+    //     if(DoneMoving){
+    //         targetGridPos += transform.forward*10;
+    //     }
+    // }
 
-    public void MoveBack(){
-        if(DoneMoving){
-            targetGridPos -= transform.forward*10;
-        }
-    }
+    // public void MoveBack(){
+    //     if(DoneMoving){
+    //         targetGridPos -= transform.forward*10;
+    //     }
+    // }
 
-    public void MoveLeft(){
-        if(DoneMoving){
-            targetGridPos -= transform.right*10;
-        }
-    }
+    // public void MoveLeft(){
+    //     if(DoneMoving){
+    //         targetGridPos -= transform.right*10;
+    //     }
+    // }
 
-    public void MoveRight(){
-        if(DoneMoving){
-            targetGridPos += transform.right*10;
-        }
-    }
+    // public void MoveRight(){
+    //     if(DoneMoving){
+    //         targetGridPos += transform.right*10;
+    //     }
+    // }
 
 
 
@@ -106,4 +185,10 @@ public class PlayerController : MonoBehaviour
 
 
 
+}
+
+
+
+public enum PlayerFacing{
+    North,South,East,West
 }
