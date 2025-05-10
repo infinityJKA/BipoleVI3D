@@ -20,10 +20,10 @@ public class PlayerInputs : MonoBehaviour{
 
     private void Update()
     {
-        if(Input.GetKeyDown(forward)) controller.Walk(1,0);
-        if(Input.GetKeyDown(backward)) controller.Walk(-1,0);
-        if(Input.GetKeyDown(strafeLeft)) controller.Walk(0,-1);
-        if(Input.GetKeyDown(strafeRight)) controller.Walk(0,1);
+        if(Input.GetKeyDown(forward)) controller.Walk(0,1);
+        if(Input.GetKeyDown(backward)) controller.Walk(0,-1);
+        if(Input.GetKeyDown(strafeLeft)) controller.Walk(-1,0);
+        if(Input.GetKeyDown(strafeRight)) controller.Walk(1,0);
         if(Input.GetKeyDown(turnLeft)) controller.RotateLeft();
         if(Input.GetKeyDown(turnRight)) controller.RotateRight();
 

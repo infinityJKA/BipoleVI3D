@@ -58,52 +58,55 @@ public class PlayerController : MonoBehaviour
 
 
     public void Walk(int x, int y){    // x is to the side, y is upwards
-        int oldX = x;
-        int oldY = y;
+        if(DoneMoving){
+            int oldX = x;
+            int oldY = y;
 
-        // adjust for rotation
-        if(playerFacing == PlayerFacing.South){
-            x *= -1;
-            y *= -1;
-        }
-        else if(playerFacing == PlayerFacing.East){
-            oldY = y;
-            y = x;
-            x = -1*oldY;
-        }
-        else if(playerFacing == PlayerFacing.West){
-            oldY = y;
-            y = -1*x;
-            x = oldY;
-        }
-
-        Tile t = dm.GetTile(playerX+x,playerY+y);
-        if(t != null){
-            if(t.walkable){
-                playerX += x;
-                playerY += y;
-                if(oldX > 0){    // walk forwards
-                    targetGridPos += transform.forward*10;
-                }
-                else if(oldX < 0){    // walk backwards
-                    targetGridPos -= transform.forward*10;
-                }
-                else if(oldY > 0){    // walk right
-                    targetGridPos += transform.right*10;
-                }
-                else if(oldY < 0){    // walk left
-                    targetGridPos -= transform.right*10;
+            // adjust for rotation
+            if(playerFacing == PlayerFacing.South){
+                x *= -1;
+                y *= -1;
+            }
+            else if(playerFacing == PlayerFacing.East){
+                oldY = y;
+                y = -1*x;
+                x = oldY;
+            }
+            else if(playerFacing == PlayerFacing.West){
+                oldY = y;
+                y = x;
+                x = -1*oldY;
+            }
+            Debug.Log("Old: "+oldX+","+oldY+"  New: "+x+","+y);
+            Tile t = dm.GetTile(playerX+x,playerY+y);
+            if(t != null){
+                if(t.walkable){
+                    playerX += x;  
+                    playerY += y;
+                    targetGridPos = t.transform.position;
+                    // if(oldX > 0){    // walk forwards
+                    //     targetGridPos += transform.forward*10;
+                    // }
+                    // else if(oldX < 0){    // walk backwards
+                    //     targetGridPos -= transform.forward*10;
+                    // }
+                    // else if(oldY > 0){    // walk right
+                    //     targetGridPos += transform.right*10;
+                    // }
+                    // else if(oldY < 0){    // walk left
+                    //     targetGridPos -= transform.right*10;
+                    // }
+                    // else{
+                    //     Debug.Log("wtf man");
+                    // }
                 }
                 else{
-                    Debug.Log("wtf man");
+                    Debug.Log("Trying to walk to a nonwalkable tile!");
                 }
             }
             else{
-                Debug.Log("Trying to walk to a nonwalkable tile!");
+                Debug.Log("Tile you are trying to walk to is NULL!");
             }
-        }
-        else{
-            Debug.Log("Tile you are trying to walk to is NULL!");
         }
     }
 
@@ -174,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
     bool DoneMoving {
         get{
-            if( (Vector3.Distance(transform.position, targetGridPos) < 0.05f) && (Vector3.Distance(transform.eulerAngles, targetRotation) < 0.05f) ){
+            if( (Vector3.Distance(transform.position, targetGridPos) < 0.00001f) && (Vector3.Distance(transform.eulerAngles, targetRotation) < 0.00001f) ){
                 return true;
             }
             else{return false;}
