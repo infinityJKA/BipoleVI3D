@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class MinimapTile : MonoBehaviour
 {
-    public Sprite sprite;
+    public SpriteRenderer spriteRenderer,spriteRendererBg;
     
 }

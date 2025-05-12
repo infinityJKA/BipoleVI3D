@@ -7,19 +7,29 @@ public class DungeonManager : MonoBehaviour
     public Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
 
     public int lowestX,highestX,lowestY,highestY = 0;
+    [SerializeField] GameObject minimapParent;
+    [SerializeField] MinimapTile minimapTilePrefab;
+
 
     void Start()
     {
         foreach(Transform child in transform)
         {
+            // adds tile to tile dictonary
             Tile t = child.GetComponent<Tile>();
             tiles.Add(new Vector2(t.x,t.y), t);
             Debug.Log("Added tile "+t.x+","+t.y+" to tiles dictionary");
 
+            // updates highest/lowest xy values
             if(t.x < lowestX){lowestX = t.x;}
             else if(t.x > highestX){highestX = t.x;}
             if(t.y < lowestY){lowestY = t.y;}
             else if(t.y > highestY){highestY = t.y;}
+
+            // creates minimap tile
+            MinimapTile mmT = Instantiate(minimapTilePrefab, new Vector3(minimapParent.transform.position.x+t.x,minimapParent.transform.position.y+t.y), minimapParent.transform.rotation, minimapParent.transform);
+            t.minimapTile = mmT;
+            t.UpdateMiniMapSprite();
         }
     }
 

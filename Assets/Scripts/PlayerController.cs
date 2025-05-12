@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,12 +15,19 @@ public class PlayerController : MonoBehaviour
     public int playerX,playerY = 0;
     public PlayerFacing playerFacing = PlayerFacing.North;
 
+    [SerializeField] Tile currentTile;
+
     Vector3 targetGridPos;
     Vector3 prevTargetGridPos;
     Vector3 targetRotation;
 
+    [SerializeField] Sprite up,down,left,right;
+
     private void Start(){
         targetGridPos = Vector3Int.RoundToInt(transform.position);
+        currentTile = dm.GetTile(playerX,playerY);
+        currentTile.playerHasDiscovered = true;
+        MinimapSprite(currentTile);
     }
 
     private void FixedUpdate()
@@ -27,33 +35,48 @@ public class PlayerController : MonoBehaviour
         MovePlayerObject();
     }
 
-    void MovePlayerObject(){
-        if(true){ //if can move
-            prevTargetGridPos = targetGridPos;
-            Vector3 targetPosition = targetGridPos;
-
-            if(targetRotation.y > 270f && targetRotation.y < 361){
-                targetRotation.y = 0f;
-            }
-            if(targetRotation.y < 0f){
-                targetRotation.y = 270f;
-            }
-
-            if(!animateMovement){
-                transform.position = targetPosition;
-                transform.rotation = Quaternion.Euler(targetRotation);
-            }
-            else{
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * rotateSpeed);
-            }
-
-
-
+    private void MinimapSprite(Tile t){
+        if(playerFacing == PlayerFacing.North){
+            t.SetMiniMapSprite(up);
+        }
+        else if(playerFacing == PlayerFacing.South){
+            t.SetMiniMapSprite(down);
+        }
+        else if(playerFacing == PlayerFacing.East){
+            t.SetMiniMapSprite(right);
         }
         else{
-            targetGridPos = prevTargetGridPos;
+            t.SetMiniMapSprite(left);
         }
+    }
+
+    void MovePlayerObject(){
+        // if(true){ //if can move
+        prevTargetGridPos = targetGridPos;
+        Vector3 targetPosition = targetGridPos;
+
+        if(targetRotation.y > 270f && targetRotation.y < 361){
+            targetRotation.y = 0f;
+        }
+        if(targetRotation.y < 0f){
+            targetRotation.y = 270f;
+        }
+
+        if(!animateMovement){
+            transform.position = targetPosition;
+            transform.rotation = Quaternion.Euler(targetRotation);
+        }
+        else{
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * rotateSpeed);
+        }
+
+
+
+        // }
+        // else{
+        //     targetGridPos = prevTargetGridPos;
+        // }
     }
 
 
@@ -84,6 +107,14 @@ public class PlayerController : MonoBehaviour
                     playerX += x;  
                     playerY += y;
                     targetGridPos = t.transform.position;
+                    
+                    currentTile.UpdateMiniMapSprite(); // reset the minimap sprite before leaving
+                    currentTile = t; // set new current tile
+                    t.playerHasDiscovered = true; // set new tile as discovered
+                    MinimapSprite(t); // put player sprite on new tile
+
+
+
                     // if(oldX > 0){    // walk forwards
                     //     targetGridPos += transform.forward*10;
                     // }
@@ -126,6 +157,7 @@ public class PlayerController : MonoBehaviour
                 playerFacing = PlayerFacing.North;
             }
             targetRotation -= Vector3.up*90f;
+            MinimapSprite(dm.GetTile(playerX,playerY));
         }
     }
 
@@ -144,6 +176,7 @@ public class PlayerController : MonoBehaviour
                 playerFacing = PlayerFacing.South;
             }
             targetRotation += Vector3.up*90f;
+            MinimapSprite(dm.GetTile(playerX,playerY));
         }
     }
 
