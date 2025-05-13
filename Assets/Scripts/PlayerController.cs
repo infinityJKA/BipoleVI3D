@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     private void Start(){
         targetGridPos = Vector3Int.RoundToInt(transform.position);
         currentTile = dm.GetTile(playerX,playerY);
-        currentTile.playerHasDiscovered = true;
-        MinimapSprite(currentTile);
+        // currentTile.playerHasDiscovered = true;
+        currentTile.EnterTile(PlayerMapSprite());
     }
 
     private void FixedUpdate()
@@ -35,7 +35,22 @@ public class PlayerController : MonoBehaviour
         MovePlayerObject();
     }
 
-    private void MinimapSprite(Tile t){
+    private Sprite PlayerMapSprite(){
+        if(playerFacing == PlayerFacing.North){
+            return up;
+        }
+        else if(playerFacing == PlayerFacing.South){
+            return down;
+        }
+        else if(playerFacing == PlayerFacing.East){
+            return right;
+        }
+        else{
+            return left;
+        }
+    }
+
+    private void OLDMinimapSprite(Tile t){
         if(playerFacing == PlayerFacing.North){
             t.SetMiniMapSprite(up);
         }
@@ -110,26 +125,8 @@ public class PlayerController : MonoBehaviour
                     
                     currentTile.UpdateMiniMapSprite(); // reset the minimap sprite before leaving
                     currentTile = t; // set new current tile
-                    t.playerHasDiscovered = true; // set new tile as discovered
-                    MinimapSprite(t); // put player sprite on new tile
+                    t.EnterTile(PlayerMapSprite()); // update minimap sprites
 
-
-
-                    // if(oldX > 0){    // walk forwards
-                    //     targetGridPos += transform.forward*10;
-                    // }
-                    // else if(oldX < 0){    // walk backwards
-                    //     targetGridPos -= transform.forward*10;
-                    // }
-                    // else if(oldY > 0){    // walk right
-                    //     targetGridPos += transform.right*10;
-                    // }
-                    // else if(oldY < 0){    // walk left
-                    //     targetGridPos -= transform.right*10;
-                    // }
-                    // else{
-                    //     Debug.Log("wtf man");
-                    // }
                 }
                 else{
                     Debug.Log("Trying to walk to a nonwalkable tile!");
@@ -157,7 +154,8 @@ public class PlayerController : MonoBehaviour
                 playerFacing = PlayerFacing.North;
             }
             targetRotation -= Vector3.up*90f;
-            MinimapSprite(dm.GetTile(playerX,playerY));
+            
+            dm.GetTile(playerX,playerY).EnterTile(PlayerMapSprite());
         }
     }
 
@@ -176,34 +174,11 @@ public class PlayerController : MonoBehaviour
                 playerFacing = PlayerFacing.South;
             }
             targetRotation += Vector3.up*90f;
-            MinimapSprite(dm.GetTile(playerX,playerY));
+
+            dm.GetTile(playerX,playerY).EnterTile(PlayerMapSprite());
+            // MinimapSprite(dm.GetTile(playerX,playerY));
         }
     }
-
-    // public void MoveForward(){
-    //     if(DoneMoving){
-    //         targetGridPos += transform.forward*10;
-    //     }
-    // }
-
-    // public void MoveBack(){
-    //     if(DoneMoving){
-    //         targetGridPos -= transform.forward*10;
-    //     }
-    // }
-
-    // public void MoveLeft(){
-    //     if(DoneMoving){
-    //         targetGridPos -= transform.right*10;
-    //     }
-    // }
-
-    // public void MoveRight(){
-    //     if(DoneMoving){
-    //         targetGridPos += transform.right*10;
-    //     }
-    // }
-
 
 
 

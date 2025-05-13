@@ -5,5 +5,6 @@ using UnityEngine;
 public class MinimapTile : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer,spriteRendererBg;
+    public GameObject wallUp,wallRight,wallDown,wallLeft;
     
 }

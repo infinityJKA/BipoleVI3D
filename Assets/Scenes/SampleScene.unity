@@ -189,6 +189,7 @@ MonoBehaviour:
   lowestY: 0
   highestY: 0
   minimapParent: {fileID: 1395320720}
+  minimapCamera: {fileID: 1852603772}
   minimapTilePrefab: {fileID: 7076731556686625948, guid: 8535415dd54a4104f968ccc40f4e6858, type: 3}
 --- !u!4 &204484443 stripped
 Transform:
@@ -1954,7 +1955,7 @@ Camera:
   far clip plane: 1000
   field of view: 26.991467
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

@@ -16,14 +16,27 @@ public class Tile : MonoBehaviour
 
     public int x, y; // used for getting position
 
+    public DungeonManager dm;
+
     void Awake(){
         x = (int)(transform.position.x/10);
         y = (int)(transform.position.z/10); // using z because 3D
     }
 
+    public void EnterTile(Sprite s){ // called when the player walks onto a tile
+        if(!playerHasDiscovered){
+            DiscoverTile(s);
+        }
+        else{
+            SetMiniMapSprite(s);
+        }
+
+        dm.MoveMinimapCamera(minimapTile.transform.position.x,minimapTile.transform.position.y); // move camera to this tile
+    }
+
     public void SetMiniMapSprite(Sprite s){
         Debug.Log("Setting minimap sprite to "+s.name);
-        minimapTile.gameObject.SetActive(playerHasDiscovered);
+        // minimapTile.gameObject.SetActive(playerHasDiscovered);
         minimapTile.spriteRenderer.sprite = s;
     }
 
@@ -32,6 +45,26 @@ public class Tile : MonoBehaviour
         minimapTile.spriteRenderer.sprite = minimapSprite;
         minimapTile.spriteRendererBg.sprite = minimapBg;
         minimapTile.gameObject.SetActive(playerHasDiscovered); // hide if the tile hasn't been discovered yet
+    }
+
+    private void DiscoverTile(Sprite s){  // called when the tile is discovered for the first time
+        playerHasDiscovered = true;
+        minimapTile.gameObject.SetActive(true);
+        // set wall sprites if there is a wall
+        if(dm.GetTile(x,y+1) == null || dm.GetTile(x,y+1).walkable != true){
+            minimapTile.wallUp.SetActive(true);
+        }
+        if(dm.GetTile(x,y-1) == null || dm.GetTile(x,y-1).walkable != true){
+            minimapTile.wallDown.SetActive(true);
+        }
+        if(dm.GetTile(x+1,y) == null || dm.GetTile(x+1,y).walkable != true){
+            minimapTile.wallRight.SetActive(true);
+        }
+        if(dm.GetTile(x-1,y) == null || dm.GetTile(x-1,y).walkable != true){
+            minimapTile.wallLeft.SetActive(true);
+        }
+
+        SetMiniMapSprite(s);
     }
 
 }
