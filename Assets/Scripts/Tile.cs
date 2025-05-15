@@ -8,10 +8,9 @@ public class Tile : MonoBehaviour
     public bool walkable = true, // the player can walk onto this tile
     eventOnWalk = false;  // if an event will be triggered when the player walks onto this tile
     public GameObject objectDisableOnWalk; // this object will be disabled when you are on this tile (for visibility reasons)
-    public Sprite spriteShowOnWalk; // this sprite will be shown when on the canvas you are on this tile (ex. talking to an npc)
-
     public MinimapTile minimapTile; // the minimap tile tied to this tile
     public Sprite minimapSprite, minimapBg;
+    public InteractType interactType = InteractType.None; // used for displaying the interaction popup
     public bool playerHasDiscovered; // if the player has previously walked on this tile before, used for minimap discovery
 
     public int x, y; // used for getting position
@@ -73,4 +72,12 @@ public enum MapIcon{
     Empty,
     Exit,
     Interactable
+}
+
+public enum InteractType
+{
+    None,
+    Talk,
+    Shop,
+    Exit
 }

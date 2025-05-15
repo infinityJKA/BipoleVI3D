@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] DungeonManager dm;
+    public DungeonUI ui;
     public bool animateMovement = false;
     public float moveSpeed = 10f;
     public float rotateSpeed = 500f;
@@ -118,17 +119,39 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Old: "+oldX+","+oldY+"  New: "+x+","+y);
             Tile t = dm.GetTile(playerX+x,playerY+y);
             if(t != null){
-                if(t.walkable){
-                    playerX += x;  
+                if (t.walkable)
+                {
+                    playerX += x;
                     playerY += y;
                     targetGridPos = t.transform.position;
-                    
+
                     currentTile.UpdateMiniMapSprite(); // reset the minimap sprite before leaving
                     currentTile = t; // set new current tile
                     t.EnterTile(PlayerMapSprite()); // update minimap sprites
 
+                    if (t.interactType != InteractType.None)
+                    {
+                        if(t.interactType == InteractType.Talk)
+                        {
+                            ui.PopupText("Talk");
+                        }
+                        else if(t.interactType == InteractType.Shop)
+                        {
+                            ui.PopupText("Shop");
+                        }
+                        else if (t.interactType == InteractType.Exit)
+                        {
+                            ui.PopupText("Exit");
+                        }
+                    }
+                    else
+                    {
+                        ui.popupTextParent.SetActive(false);
+                    }
+
                 }
-                else{
+                else
+                {
                     Debug.Log("Trying to walk to a nonwalkable tile!");
                 }
             }
