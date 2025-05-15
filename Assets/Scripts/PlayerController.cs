@@ -1,15 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] DungeonManager dm;
+    private GameManager gm;
     public DungeonUI ui;
     public bool animateMovement = false;
     public float moveSpeed = 10f;
@@ -36,6 +33,7 @@ public class PlayerController : MonoBehaviour
         currentTile = dm.GetTile(playerX, playerY);
         // currentTile.playerHasDiscovered = true;
         currentTile.EnterTile(PlayerMapSprite());
+        gm = GameManager.gm;
     }
 
     private void FixedUpdate()
@@ -125,6 +123,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void UpdatePartyUI()
+    {
+        UpdatePartyUISingle(0);
+
+        if (gm.partyMembers.Count >= 2)
+        {
+            UpdatePartyUISingle(1);
+        }
+        else
+        {
+            ui.partyMemberUIs[1].SetEmpty(true);
+        }
+    }
+
+    private void UpdatePartyUISingle(int i)
+    {
+        ui.partyMemberUIs[i].SetEmpty(false);
+        ui.partyMemberUIs[i].UpdateValues(gm.partyMembers[i].characterNameEn, gm.partyMembers[i].currentHP, gm.partyMembers[i].maxHP, gm.partyMembers[i].currentMP, gm.partyMembers[i].maxMP, gm.partyMembers[i].VIZ);
+    }
 
     void MovePlayerObject(){
         // if(true){ //if can move
@@ -179,7 +196,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Old: "+oldX+","+oldY+"  New: "+x+","+y);
             Tile t = dm.GetTile(playerX+x,playerY+y);
             if(t != null){
-                if (t.walkable)
+                if (t.walkable)              // STUFF HERE IS CALLED IF YOU ACTUALLY WALKED
                 {
                     playerX += x;
                     playerY += y;
@@ -189,13 +206,15 @@ public class PlayerController : MonoBehaviour
                     currentTile = t; // set new current tile
                     t.EnterTile(PlayerMapSprite()); // update minimap sprites
 
-                    if (t.interactType != InteractType.None)
+                    UpdatePartyUI(); // updates the party ui
+
+                    if (t.interactType != InteractType.None)  // sets popup text
                     {
-                        if(t.interactType == InteractType.Talk)
+                        if (t.interactType == InteractType.Talk)
                         {
                             ui.PopupText("TALK");
                         }
-                        else if(t.interactType == InteractType.Shop)
+                        else if (t.interactType == InteractType.Shop)
                         {
                             ui.PopupText("SHOP");
                         }
@@ -223,38 +242,55 @@ public class PlayerController : MonoBehaviour
 
 
     public void RotateLeft(){
-        if(DoneMoving){
-            if(playerFacing == PlayerFacing.North){
+        if (DoneMoving)
+        {
+            if (playerFacing == PlayerFacing.North)
+            {
                 playerFacing = PlayerFacing.West;
+                ui.facingText.text = "Facing\nWEST";
             }
-            else if(playerFacing == PlayerFacing.West){
+            else if (playerFacing == PlayerFacing.West)
+            {
                 playerFacing = PlayerFacing.South;
+                ui.facingText.text = "Facing\nSOUTH";
             }
-            else if(playerFacing == PlayerFacing.South){
+            else if (playerFacing == PlayerFacing.South)
+            {
                 playerFacing = PlayerFacing.East;
+                ui.facingText.text = "Facing\nEAST";
             }
-            else{
+            else
+            {
                 playerFacing = PlayerFacing.North;
+                ui.facingText.text = "Facing\nNORTH";
             }
-            targetRotation -= Vector3.up*90f;
-            
-            dm.GetTile(playerX,playerY).EnterTile(PlayerMapSprite());
+            targetRotation -= Vector3.up * 90f;
+
+            dm.GetTile(playerX, playerY).EnterTile(PlayerMapSprite());
         }
     }
 
     public void RotateRight(){
         if(DoneMoving){
-            if(playerFacing == PlayerFacing.North){
+            if (playerFacing == PlayerFacing.North)
+            {
                 playerFacing = PlayerFacing.East;
+                ui.facingText.text = "Facing\nEAST";
             }
-            else if(playerFacing == PlayerFacing.West){
+            else if (playerFacing == PlayerFacing.West)
+            {
                 playerFacing = PlayerFacing.North;
+                ui.facingText.text = "Facing\nNORTH";
             }
-            else if(playerFacing == PlayerFacing.South){
+            else if (playerFacing == PlayerFacing.South)
+            {
                 playerFacing = PlayerFacing.West;
+                ui.facingText.text = "Facing\nWEST";
             }
-            else{
+            else
+            {
                 playerFacing = PlayerFacing.South;
+                ui.facingText.text = "Facing\nSOUTH";
             }
             targetRotation += Vector3.up*90f;
 
