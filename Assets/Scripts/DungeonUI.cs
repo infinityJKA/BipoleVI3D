@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class DungeonUI : MonoBehaviour
 {
-    public TMP_Text popupText;
-    public GameObject popupTextParent;
+    public TMP_Text popupText, dialogueText;
+    public GameObject popupTextParent, dialogueBox, dialogueTriangle;
 
     public void PopupText(String s)
     {

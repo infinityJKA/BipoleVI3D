@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -23,10 +24,16 @@ public class PlayerController : MonoBehaviour
     Vector3 targetRotation;
 
     [SerializeField] Sprite up,down,left,right;
+    public DungeonInputControlState inputState = DungeonInputControlState.FreeMove;
+    public int dialogueIndex;
+    public DungeonDialogue[] currentDialogue;
+    public float textSpeed = 0.01f;
+    private bool finishedDialogueEarly = false;
 
-    private void Start(){
+    private void Start()
+    {
         targetGridPos = Vector3Int.RoundToInt(transform.position);
-        currentTile = dm.GetTile(playerX,playerY);
+        currentTile = dm.GetTile(playerX, playerY);
         // currentTile.playerHasDiscovered = true;
         currentTile.EnterTile(PlayerMapSprite());
     }
@@ -51,20 +58,73 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OLDMinimapSprite(Tile t){
-        if(playerFacing == PlayerFacing.North){
-            t.SetMiniMapSprite(up);
-        }
-        else if(playerFacing == PlayerFacing.South){
-            t.SetMiniMapSprite(down);
-        }
-        else if(playerFacing == PlayerFacing.East){
-            t.SetMiniMapSprite(right);
-        }
-        else{
-            t.SetMiniMapSprite(left);
+    public void Interact()
+    {
+        if (DoneMoving)
+        {
+            if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk)
+            {
+                inputState = DungeonInputControlState.Dialogue;
+                dialogueIndex = -1; // -1 bc +1s at the start of dialogue
+                currentDialogue = dm.GetTile(playerX, playerY).dialogue;
+                ui.popupTextParent.SetActive(false);
+                ui.dialogueBox.SetActive(true);
+                finishedDialogueEarly = false;
+                ui.dialogueTriangle.SetActive(false);
+                ProgressDialogue();
+            }
         }
     }
+
+    public void ProgressDialogue()
+    {
+        if (dialogueIndex == -1 || currentDialogue[dialogueIndex].textEn == ui.dialogueText.text || finishedDialogueEarly) // makes sure dialogue is finished or skipped first
+        {
+            finishedDialogueEarly = false;
+            ui.dialogueTriangle.SetActive(false);
+            dialogueIndex++;
+            DungeonDialogue d = currentDialogue[dialogueIndex];
+            if (d.command != "")
+            {
+                Debug.Log("Going to do command \"" + d.command + "\"");
+                PerformDialogueCommand(d.command);
+            }
+            else
+            {
+                ui.dialogueText.text = "";
+                Debug.Log("Going to say line \"" + d.textEn + "\"");
+                StartCoroutine(TypeLine(d.textEn));
+            }
+        }
+        else
+        {
+            finishedDialogueEarly = true;
+            ui.dialogueText.text = currentDialogue[dialogueIndex].textEn;
+            ui.dialogueTriangle.SetActive(true);
+        }
+    }
+
+    private IEnumerator TypeLine(String l)
+    {
+        foreach (char c in l)
+        {
+            if (finishedDialogueEarly) { break; }
+            ui.dialogueText.text += c;
+            yield return new WaitForSeconds(textSpeed);
+        }
+        ui.dialogueTriangle.SetActive(true);
+    }
+
+    private void PerformDialogueCommand(String command)
+    {
+        if (command == "END")
+        {
+            ui.dialogueBox.SetActive(false);
+            ui.popupTextParent.SetActive(true);
+            inputState = DungeonInputControlState.FreeMove;
+        }
+    }
+
 
     void MovePlayerObject(){
         // if(true){ //if can move
@@ -133,15 +193,15 @@ public class PlayerController : MonoBehaviour
                     {
                         if(t.interactType == InteractType.Talk)
                         {
-                            ui.PopupText("Talk");
+                            ui.PopupText("TALK");
                         }
                         else if(t.interactType == InteractType.Shop)
                         {
-                            ui.PopupText("Shop");
+                            ui.PopupText("SHOP");
                         }
                         else if (t.interactType == InteractType.Exit)
                         {
-                            ui.PopupText("Exit");
+                            ui.PopupText("EXIT");
                         }
                     }
                     else

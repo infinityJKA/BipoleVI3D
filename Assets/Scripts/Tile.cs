@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    [Header("Sustem Stuff")]
+    public int x, y; // used for getting position
+    public DungeonManager dm;
+    public bool playerHasDiscovered; // if the player has previously walked on this tile before, used for minimap discovery
+
+    [Header("Graphics")]
     public MapIcon mapIcon;  // icon to show on the minimap
-    public bool walkable = true, // the player can walk onto this tile
-    eventOnWalk = false;  // if an event will be triggered when the player walks onto this tile
     public GameObject objectDisableOnWalk; // this object will be disabled when you are on this tile (for visibility reasons)
     public MinimapTile minimapTile; // the minimap tile tied to this tile
     public Sprite minimapSprite, minimapBg;
+
+    [Header("Interaction Logic")]
+    public bool walkable = true, // the player can walk onto this tile
+    eventOnWalk = false;  // if an event will be triggered when the player walks onto this tile
     public InteractType interactType = InteractType.None; // used for displaying the interaction popup
-    public bool playerHasDiscovered; // if the player has previously walked on this tile before, used for minimap discovery
+    public DungeonDialogue[] dialogue; // dialogue read from when event is triggered (from walking or from interacting)
 
-    public int x, y; // used for getting position
-
-    public DungeonManager dm;
+    
 
     void Awake(){
         x = (int)(transform.position.x/10);
