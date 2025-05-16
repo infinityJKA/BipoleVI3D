@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DungeonManager : MonoBehaviour
 {
+    public String dungeonName; // name of the dungeon that is displayed to the player
+    public String dungeonID; // used for load/saving data, including the ids of tiles
     public Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
 
     public int lowestX,highestX,lowestY,highestY = 0;
@@ -21,9 +24,12 @@ public class DungeonManager : MonoBehaviour
             Debug.Log("Added tile "+t.x+","+t.y+" to tiles dictionary");
             t.dm = this;
 
+            // sets tileID
+            t.objectID = dungeonID+"_TILE_"+t.x+","+t.y;
+
             // updates highest/lowest xy values
-            if(t.x < lowestX){lowestX = t.x;}
-            else if(t.x > highestX){highestX = t.x;}
+            if (t.x < lowestX) { lowestX = t.x; }
+            else if (t.x > highestX) { highestX = t.x; }
             if(t.y < lowestY){lowestY = t.y;}
             else if(t.y > highestY){highestY = t.y;}
 
