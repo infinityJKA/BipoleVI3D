@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - MinimapObject
+  - MenuButton
   layers:
   - Default
   - TransparentFX
