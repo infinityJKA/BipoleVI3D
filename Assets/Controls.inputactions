@@ -6,7 +6,7 @@
             "id": "6475685c-f875-44d8-9443-facd1c45f20e",
             "actions": [
                 {
-                    "name": "WalkForwardsDungeon",
+                    "name": "Walk Forwards",
                     "type": "Button",
                     "id": "3d089ad4-25bf-4109-99d7-79bda662fd86",
                     "expectedControlType": "",
@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WalkBackwardsDungeon",
+                    "name": "Walk Backwards",
                     "type": "Button",
                     "id": "1020aaac-8270-4afa-9f1c-5d3a57d4c156",
                     "expectedControlType": "",
@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TurnRightDungeon",
+                    "name": "Turn Right",
                     "type": "Button",
                     "id": "d4d283ec-81c8-472c-8e8d-e63010ea872b",
                     "expectedControlType": "",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TurnLeftDungeon",
+                    "name": "Turn Left",
                     "type": "Button",
                     "id": "ae86e26c-3f28-4143-8aa7-f522ca100c6b",
                     "expectedControlType": "",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "StrafeRight",
+                    "name": "Strafe Right",
                     "type": "Button",
                     "id": "b64a1df9-62eb-4aee-874c-bfbde0479b59",
                     "expectedControlType": "",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "StrafeLeft",
+                    "name": "Strafe Left",
                     "type": "Button",
                     "id": "075d32d2-7246-4d9a-838a-5bda8afc34e2",
                     "expectedControlType": "",
@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OverworldMovement",
+                    "name": "Overworld Movement",
                     "type": "PassThrough",
                     "id": "e8f27a0b-a36b-401e-83cb-1cfd5ef67a39",
                     "expectedControlType": "Vector2",
@@ -113,7 +113,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "WalkForwardsDungeon",
+                    "action": "Walk Forwards",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -124,7 +124,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "WalkForwardsDungeon",
+                    "action": "Walk Forwards",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -135,7 +135,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "WalkBackwardsDungeon",
+                    "action": "Walk Backwards",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -146,7 +146,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "WalkBackwardsDungeon",
+                    "action": "Walk Backwards",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -157,7 +157,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "TurnRightDungeon",
+                    "action": "Turn Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -168,7 +168,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "TurnRightDungeon",
+                    "action": "Turn Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -179,7 +179,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "TurnLeftDungeon",
+                    "action": "Turn Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -190,7 +190,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "TurnLeftDungeon",
+                    "action": "Turn Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -201,7 +201,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "StrafeRight",
+                    "action": "Strafe Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -212,7 +212,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "StrafeRight",
+                    "action": "Strafe Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -223,7 +223,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "StrafeLeft",
+                    "action": "Strafe Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -234,7 +234,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "StrafeLeft",
+                    "action": "Strafe Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -289,7 +289,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -300,7 +300,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -311,7 +311,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -322,7 +322,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -333,7 +333,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -344,7 +344,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -355,7 +355,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -366,7 +366,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -377,7 +377,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -388,7 +388,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "OverworldMovement",
+                    "action": "Overworld Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },

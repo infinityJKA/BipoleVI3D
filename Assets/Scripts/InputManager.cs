@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -50,12 +51,12 @@ public class InputManager : MonoBehaviour
 
     private void SetInputActions() // connects variables on awake
     {
-        moveForwardAction = playerInput.actions["WalkForwardsDungeon"];
-        moveBackwardsAction = playerInput.actions["WalkBackwardsDungeon"];
-        turnRightAction = playerInput.actions["TurnRightDungeon"];
-        turnLeftAction = playerInput.actions["TurnLeftDungeon"];
-        strafeRightAction = playerInput.actions["StrafeRight"];
-        strafeLeftAction = playerInput.actions["StrafeLeft"];
+        moveForwardAction = playerInput.actions["Walk Forwards"];
+        moveBackwardsAction = playerInput.actions["Walk Backwards"];
+        turnRightAction = playerInput.actions["Turn Right"];
+        turnLeftAction = playerInput.actions["Turn Left"];
+        strafeRightAction = playerInput.actions["Strafe Right"];
+        strafeLeftAction = playerInput.actions["Strafe Left"];
         interactAction = playerInput.actions["Interact"];
         declineAction = playerInput.actions["Decline"];
         optionsAction = playerInput.actions["Options"];
