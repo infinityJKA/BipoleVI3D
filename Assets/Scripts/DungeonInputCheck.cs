@@ -18,6 +18,7 @@ public class DungeonInputCheck : MonoBehaviour
     // interact = KeyCode.Space,
     // retract = KeyCode.LeftShift;
 
+
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
@@ -42,6 +43,8 @@ public class DungeonInputCheck : MonoBehaviour
             else if (InputManager.instance.turnRight) controller.RotateRight();
             else if (InputManager.instance.turnLeft) controller.RotateLeft();
             else if (InputManager.instance.interact) controller.Interact();
+            else if (InputManager.instance.options) controller.OpenOptions();
+            else if (InputManager.instance.menu) controller.OpenMenu();
 
         }
         else if (controller.inputState == DungeonInputControlState.Dialogue)

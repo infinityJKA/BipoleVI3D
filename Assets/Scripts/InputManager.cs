@@ -31,6 +31,7 @@ public class InputManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        eventSystem = GameObject.FindObjectOfType<EventSystem>();
         SetInputActions();
     }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
     public DungeonDialogue[] currentDialogue;
     public float textSpeed = 0.01f;
     private bool finishedDialogueEarly = false;
+    public GameObject optionsUI, menuUI,optionsButtonSelected,menuButtonSelected;
+    private EventSystem eventSystem;
 
     private void Start()
     {
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
         // currentTile.playerHasDiscovered = true;
         currentTile.EnterTile(PlayerMapSprite());
         gm = GameManager.gm;
+        eventSystem = GameObject.FindObjectOfType<EventSystem>();
     }
 
     private void FixedUpdate()
@@ -54,6 +58,36 @@ public class PlayerController : MonoBehaviour
         else{
             return left;
         }
+    }
+
+    public void OpenOptions()
+    {
+        inputState = DungeonInputControlState.Menu;
+        optionsUI.SetActive(true);
+        if (eventSystem.currentSelectedGameObject != optionsButtonSelected)
+        {
+            eventSystem.SetSelectedGameObject(optionsButtonSelected);
+            Debug.Log("Set eventSystem selected button");
+        }
+        else
+        {
+            Debug.Log("eventSystem button already set");
+        }
+    }
+
+    public void OpenMenu()
+    {
+        inputState = DungeonInputControlState.Menu;
+        menuUI.SetActive(true);
+        if (eventSystem.currentSelectedGameObject != menuButtonSelected)
+        {
+            eventSystem.SetSelectedGameObject(menuButtonSelected);
+        }
+    }
+
+    public void SetInputStateFreeMove()
+    {
+        inputState = DungeonInputControlState.FreeMove;
     }
 
     public void Interact()
