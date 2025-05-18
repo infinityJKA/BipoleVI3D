@@ -27,8 +27,10 @@ public class PlayerController : MonoBehaviour
     public DungeonDialogue[] currentDialogue;
     public float textSpeed = 0.01f;
     private bool finishedDialogueEarly = false;
-    public GameObject optionsUI, menuUI,optionsButtonSelected,menuButtonSelected;
-    private EventSystem eventSystem;
+    [Header("UI Stuff")]
+    public GameObject optionsUI, menuUI, optionsButtonSelected, menuButtonSelected;
+    public EventSystem eventSystem;
+    public GameObject buttonSelectOnDecline;
 
     private void Start()
     {
@@ -58,6 +60,16 @@ public class PlayerController : MonoBehaviour
         else{
             return left;
         }
+    }
+
+    public void SetButtonSelectOnDecline(GameObject button)
+    {
+        buttonSelectOnDecline = button;
+    }
+
+    public void DeclineInMenu()
+    {
+        eventSystem.SetSelectedGameObject(buttonSelectOnDecline);
     }
 
     public void OpenOptions()

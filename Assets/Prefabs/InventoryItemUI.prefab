@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4827549656173564151}
   - component: {fileID: 2790926508305861486}
   - component: {fileID: 429255603655785697}
+  - component: {fileID: 200925740268937827}
   m_Layer: 5
   m_Name: InventoryItemUI
   m_TagString: Untagged
@@ -93,7 +94,54 @@ MonoBehaviour:
   nameText: {fileID: 4892559514375009727}
   countText: {fileID: 8580188820421642401}
   sprite: {fileID: 0}
-  item: {fileID: 0}
+  itemInfo:
+    item: {fileID: 0}
+    amount: 0
+  button: {fileID: 200925740268937827}
+--- !u!114 &200925740268937827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673455587396943232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 200925740268937827}
+    m_SelectOnDown: {fileID: 200925740268937827}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.28315237, g: 0.9528302, b: 0.93411905, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2790926508305861486}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2362211599009823359
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +241,7 @@ MonoBehaviour:
   m_fontSizeMin: 10
   m_fontSizeMax: 25
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

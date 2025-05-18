@@ -28,14 +28,6 @@ public class DungeonInputCheck : MonoBehaviour
     {
         if (controller.inputState == DungeonInputControlState.FreeMove)
         {
-            // if (Input.GetKeyDown(forward)) controller.Walk(0, 1);
-            // if (Input.GetKeyDown(backward)) controller.Walk(0, -1);
-            // if (Input.GetKeyDown(strafeLeft)) controller.Walk(-1, 0);
-            // if (Input.GetKeyDown(strafeRight)) controller.Walk(1, 0);
-            // if (Input.GetKeyDown(turnLeft)) controller.RotateLeft();
-            // if (Input.GetKeyDown(turnRight)) controller.RotateRight();
-            // if (Input.GetKeyDown(interact)) controller.Interact();
-
             if (InputManager.instance.moveForward) controller.Walk(0, 1);
             else if (InputManager.instance.moveBackward) controller.Walk(0, -1);
             else if (InputManager.instance.strafeRight) controller.Walk(1, 0);
@@ -45,14 +37,16 @@ public class DungeonInputCheck : MonoBehaviour
             else if (InputManager.instance.interact) controller.Interact();
             else if (InputManager.instance.options) controller.OpenOptions();
             else if (InputManager.instance.menu) controller.OpenMenu();
-
         }
+        
         else if (controller.inputState == DungeonInputControlState.Dialogue)
         {
-            // if (Input.GetKeyDown(interact)) controller.ProgressDialogue();
-
             if (InputManager.instance.interact) controller.ProgressDialogue();
+        }
 
+        else if (controller.inputState == DungeonInputControlState.Menu)
+        {
+            if (InputManager.instance.decline) controller.DeclineInMenu();
         }
 
     }

@@ -9,6 +9,7 @@ public class ItemUIButton : MonoBehaviour
     public TMP_Text nameText, countText;
     public Image sprite;
     public InventorySlot itemInfo;
+    public Button button;
 
     public void UpdateGraphic()
     {
