@@ -12,6 +12,7 @@ public class ItemsUI : MonoBehaviour
     public ItemUIButton prefab;
     public Button itemButton; // this is used for setting the decline button after returning from the inventory to top item row
     private ItemUIButton firstButton, previousButton;
+    public TMP_Text nameText, descriptionText;
 
 
     Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
@@ -56,6 +57,7 @@ public class ItemsUI : MonoBehaviour
                 iui.itemInfo = inv.Container[i];
                 iui.UpdateGraphic();
                 itemsDisplayed.Add(inv.Container[i], iui);
+                iui.itemsUI = this;
 
                 var nav = iui.button.navigation;
 
