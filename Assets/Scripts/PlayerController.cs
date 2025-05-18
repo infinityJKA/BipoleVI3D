@@ -155,6 +155,12 @@ public class PlayerController : MonoBehaviour
             ui.popupTextParent.SetActive(true);
             inputState = DungeonInputControlState.FreeMove;
         }
+        else if (command == "ADDITEM")
+        {
+            GameManager.gm.inventory.AddItem(currentDialogue[dialogueIndex].item, 1);
+            finishedDialogueEarly = true;
+            ProgressDialogue();
+        }
     }
 
     private void UpdatePartyUI()

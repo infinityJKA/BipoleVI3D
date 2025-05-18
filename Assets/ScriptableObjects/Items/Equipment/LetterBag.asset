@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
+  m_Name: LetterBag
+  m_EditorClassIdentifier: 
+  itemName: Letter Bag
+  itemDescription: 'Equip Type: STELLEIN
+
+    +10% LCK/AGL, +15% DEF/RES, +20% ACR'
+  itemType: 1
+  value: 200
+  sprite: {fileID: 0}
+  restoreHP: 0
+  restoreMP: 0
+  restoreSetAmount: 0
+  targetType: 0
+  canUseInBattle: 0
+  canUseInInventory: 0
+  isAttack: 0
+  equipmentType: 13
+  pDEF: 20
+  nDEF: 0
+  pRES: 25
+  nRES: 0
+  pATK: 0
+  nATK: 0
+  pINT: 0
+  nINT: 0
+  pAGL: 0
+  nAGL: 0
+  pACR: 0
+  nACR: 0
+  pSPD: 0
+  nSPD: 0
+  pLCK: 0
+  nLCK: 0
+  pEDR: 0
+  nEDR: 0
+  pHP: 0
+  nHP: 0
+  pMP: 0
+  nMP: 0
+  equipmentEffect: 2
+  equipmentAction:
+    actionDescription: <LUCKY LETTER> Party gains [+10% LCK] and [+20% ACR] for 3
+      turns. Increases the user's VIZ by 20%. Builds +3 BP.
+    isUlt: 0
+    isHealing: 0
+    actionName: 
+    damageType: 0
+    PWR: 0
+    HIT: 0
+    costMP: 0
+    costHP: 0
+    costBP: 0
+    gainBP: 0
+    gainVIZ: 0
+    setVIZ: 0
+    targetType: 1
+    statusConditions:
+    - stat: 
+      amount: 0
+      isPercentage: 0
+      turns: 0
+    addtionalStatusOnUser: []
+  pages: []
+  coinValue: 0
+  currencyType: 0
+  condition: 0
+  mintYear: 0
+  design: 

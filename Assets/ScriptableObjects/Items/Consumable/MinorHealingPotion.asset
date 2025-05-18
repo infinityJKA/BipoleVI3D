@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
+  m_Name: MinorHealingPotion
+  m_EditorClassIdentifier: 
+  itemName: Minor Healing Potion
+  itemDescription: Restores 80 HP.
+  itemType: 0
+  value: 20
+  sprite: {fileID: 0}
+  restoreHP: 80
+  restoreMP: 0
+  restoreSetAmount: 1
+  singleTarget: 1
+  canUseInBattle: 1
+  canUseInInventory: 1
+  isAttack: 0
+  pwr: 0
+  setDamage: 0
+  damageType: 0
+  pDEF: 0
+  nDEF: 0
+  pRES: 0
+  nRES: 0
+  pATK: 0
+  nATK: 0
+  pINT: 0
+  nINT: 0
+  pAGL: 0
+  nAGL: 0
+  pACR: 0
+  nACR: 0
+  pSPD: 0
+  nSPD: 0
+  pLCK: 0
+  nLCK: 0
+  pEDR: 0
+  nEDR: 0
+  pHP: 0
+  nHP: 0
+  pMP: 0
+  nMP: 0
+  VIZeffect: 0
+  setVIZ: 0
+  equipmentEffect: 0
+  pages: []
+  coinValue: 0
+  currencyType: 0
+  condition: 0
+  mintYear: 0
+  design: 

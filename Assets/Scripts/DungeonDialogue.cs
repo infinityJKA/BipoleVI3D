@@ -6,7 +6,9 @@ using UnityEngine;
 [Serializable]
 public class DungeonDialogue //: MonoBehaviour
 {
+    [TextArea(2, 10)]
     public String command = "",
     textEn, textJp;
+    public ItemObject item;
 
 }
