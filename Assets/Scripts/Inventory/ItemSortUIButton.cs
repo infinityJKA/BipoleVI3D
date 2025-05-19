@@ -20,6 +20,7 @@ public class ItemSortUIButton : MonoBehaviour, ISelectHandler
         itemsUI.nameText.text = nameText;
         itemsUI.descriptionText.text = descriptionText;
         GameManager.gm.dungeonPlayer.buttonSelectOnDecline = itemButton;
+        itemsUI.ResetButtonSnap();
     }
 
 

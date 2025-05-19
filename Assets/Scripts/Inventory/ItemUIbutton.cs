@@ -23,7 +23,7 @@ public class ItemUIButton : MonoBehaviour, ISelectHandler
         Debug.Log("selected button worldPos: " + rectTransform.position.y);
         Debug.Log("selected button localPos: " + rectTransform.localPosition.y);
 
-        itemsUI.NewerSnapTo(rectTransform);
+        itemsUI.NewerSnapTo(rectTransform, itemNumber);
 
 
         // itemsUI.topPos = -itemsUI.rectTransforms[itemNumber].anchoredPosition.y + itemsUI.offSet;

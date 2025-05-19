@@ -21,75 +21,52 @@ public class ItemsUI : MonoBehaviour
     public float topPos, bottomPos, offSet;
     public int itemCount;
     private RectTransform oldRect;
-    private float originalY;
-    public int offset;
+    private Vector2 originalPos;
+    public int offsetGoingUp,offsetGoingDown;
 
     Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
 
     void OnEnable()
     {
-        originalY = content.transform.position.y;
+        originalPos = content.anchoredPosition;
     }
 
-    public void SnapTo(int index)
+    public void ResetButtonSnap()
     {
+        content.anchoredPosition = originalPos;
+        oldRect = null;
+    }
+
+    public void NewerSnapTo(RectTransform target, int index)
+    {
+        Vector2 offsetVector = new Vector2(0, 0);
         RectTransform rect = rectTransforms[index];
         Vector2 v = rect.position;
-        bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewport, v);
 
-        float incrimentSize = rect.rect.height + 1; // height of item
+        bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewport, v);
 
         if (!inView)
         {
             if (oldRect != null)
             {
-                Debug.Log("Old anchored postion: " + content.anchoredPosition.y);
                 if (oldRect.localPosition.y < rect.localPosition.y) // if old position was lower than new pos
                 {
-                    content.anchoredPosition += new Vector2(0, -incrimentSize);
+                    Debug.Log("offsetGoingUp");
+                    offsetVector = new Vector2(0, offsetGoingUp);
                 }
                 else if (oldRect.localPosition.y > rect.localPosition.y)
                 {
-                    content.anchoredPosition += new Vector2(0, incrimentSize);
+                    Debug.Log("offsetGoingDown");
+                    offsetVector = new Vector2(0, offsetGoingDown);
                 }
-                Debug.Log("New anchored postion: " + content.anchoredPosition.y);
+
+                Canvas.ForceUpdateCanvases();
+                Vector2 targetPosition = (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
+                Vector2 contentPosition = (Vector2)scrollRect.transform.InverseTransformPoint(content.position);
+                content.anchoredPosition = contentPosition - targetPosition + offsetVector;
             }
         }
         oldRect = rect;
-    }
-
-    public void NewSnapTo(int index)
-    {
-        RectTransform rect = rectTransforms[index];
-        Vector2 v = rect.position;
-        bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewport, v);
-
-        float incrimentSize = rect.rect.height + 1; // height of item
-
-        if (!inView)
-        {
-            if (oldRect != null)
-            {
-                Debug.Log("Old anchored postion: " + content.anchoredPosition.y);
-
-                //content.anchoredPosition = new Vector2(0, originalY-((index+1)*incrimentSize));
-                content.transform.position = new Vector2(content.transform.position.x, originalY - rect.transform.localPosition.y);
-                
-
-                Debug.Log("New anchored postion: " + content.anchoredPosition.y);
-
-                
-                
-            }
-        }
-        oldRect = rect;
-    }
-
-    public void NewerSnapTo(RectTransform target)
-    {
-        Canvas.ForceUpdateCanvases();
-        content.anchoredPosition = (Vector2)scrollRect.transform.InverseTransformPoint(content.position)
-            - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
     }
 
     public void CreateDisplay(string str)
