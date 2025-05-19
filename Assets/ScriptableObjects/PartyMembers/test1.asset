@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a87975661796814eb6a5b3f3285b403, type: 3}
-  m_Name: Mageire
+  m_Name: test1
   m_EditorClassIdentifier: 
-  characterNameEn: "M\xE1geire"
+  characterNameEn: Test1
   characterNameJp: "\u30DE\u30B2\u30A4\u30EC"
   ATK: 80
   INT: 50

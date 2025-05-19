@@ -32,10 +32,24 @@ public class GameManager : MonoBehaviour
 		inventory = invenotryClone;
 	}
 
-    private void OnApplicationQuit()
-    {
-		//inventory.Container.Clear();
+	public void PartySwap(int a, int b)
+	{
+
+		PartyMember temp = partyMembers[a];
+
+		Debug.Log("a is " + a);
+		Debug.Log("b is " + b);
+
+
+
+		partyMembers[a] = partyMembers[b];
+		partyMembers[b] = temp;
     }
+
+    private void OnApplicationQuit()
+	{
+		//inventory.Container.Clear();
+	}
 
 
 

@@ -9,10 +9,10 @@ using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class PartyInMenuUI : MonoBehaviour
 {
-    public GameObject parentSpawnUnder;
+    public GameObject parentSpawnUnder, characterSwitchPopup, sidebarPartyButton;
     public PartyInMenuUIButton prefab;
     public PartyInMenuUIButton firstButton, previousButton;
-    public TMP_Text nameText, statsText1, statsText2;
+    public TMP_Text nameText, statsText1, statsText2, characterSwitchText;
     public Image charSprite;
 
 
@@ -24,6 +24,8 @@ public class PartyInMenuUI : MonoBehaviour
     private RectTransform oldRect;
     private Vector2 originalPos;
     public int offsetGoingUp,offsetGoingDown;
+
+    public int charToSwitch1;
 
     Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
 
@@ -72,6 +74,9 @@ public class PartyInMenuUI : MonoBehaviour
 
     public void CreateDisplay()
     {
+        characterSwitchPopup.SetActive(false);
+        charToSwitch1 = -1;
+
         // destroy old children first
         foreach (Transform child in parentSpawnUnder.transform)
         {
@@ -85,6 +90,8 @@ public class PartyInMenuUI : MonoBehaviour
         rectTransforms = new List<RectTransform>();
         itemCount = 0;
 
+        oldRect = null;
+
         firstButton = null;
         bool isFirst = true;
         // spawn new display
@@ -93,11 +100,12 @@ public class PartyInMenuUI : MonoBehaviour
             // create the UI display for the item
             PartyInMenuUIButton pimui = Instantiate(prefab, parentSpawnUnder.transform);
             pimui.partyMember = party[i];
-            pimui.UpdateGraphic();
+            
             pimui.partyUI = this;
 
             rectTransforms.Add(pimui.rectTransform);
             pimui.itemNumber = itemCount;
+            pimui.UpdateGraphic();
             itemCount++;
 
 

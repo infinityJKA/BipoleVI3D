@@ -28,24 +28,56 @@ public class PartyInMenuUIButton : MonoBehaviour, ISelectHandler
         partyUI.SnapTo(rectTransform, itemNumber);
     }
 
+    public void CharacterSwitchPressed()
+    {
+        if (partyUI.charToSwitch1 == -1)
+        {
+            partyUI.charToSwitch1 = itemNumber;
+            partyUI.characterSwitchPopup.SetActive(true);
+            partyUI.characterSwitchText.text = "Select character to switch places with " + partyMember.characterNameEn + "\n\nSelect " + partyMember.characterNameEn + " again to exit";
+            GameManager.gm.dungeonPlayer.buttonSelectOnDecline = button.gameObject;
+        }
+        else
+        {
+            if (partyUI.charToSwitch1 == itemNumber)
+            {
+                partyUI.charToSwitch1 = -1;
+                partyUI.characterSwitchPopup.SetActive(false);
+                GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.firstButton.button.gameObject;
+            }
+            else
+            {
+                GameManager.gm.PartySwap(partyUI.charToSwitch1, itemNumber);
+                partyUI.CreateDisplay();
+                GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.sidebarPartyButton;
+            }
+        }
+    }
+
+
+
     public void UpdateGraphic()
     {
         nameText.text = partyMember.characterNameEn;
         levelText.text = "Lv." + partyMember.LV;
 
-        if (itemNumber <= 3)
+        if (itemNumber < 4)
         {
+            Debug.Log(itemNumber + " is less than 4");
             isActiveObject.SetActive(true);
         }
         else
         {
+            Debug.Log(itemNumber + " is not less than 4");
             isActiveObject.SetActive(false);
         }
 
-        if (partyMember.currentHP <= 0) {
+        if (partyMember.currentHP <= 0)
+        {
             isDefeatedObject.SetActive(true);
         }
-        else {
+        else
+        {
             isDefeatedObject.SetActive(false);
         }
 
