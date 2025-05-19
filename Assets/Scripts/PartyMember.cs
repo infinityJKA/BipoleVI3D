@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System;
 
 [CreateAssetMenu(fileName = "PartyMember", menuName = "Bipole VI/PartyMember")]
 public class PartyMember : ScriptableObject
@@ -22,15 +23,22 @@ public class PartyMember : ScriptableObject
 
     public EquipmentType[] weaknesses, equippable;
     public Sprite sprite;
-
-
-
+    public BodyPart[] bodyParts;
 
     public bool Weakness(EquipmentType e)
     {
         return weaknesses.Contains(e);
     }
 
+
+}
+
+[Serializable]
+public class BodyPart
+{
+    public string bodyPartName;
+
+    public StatusCondition[] conditionsOnBreak; 
 
 
 }
