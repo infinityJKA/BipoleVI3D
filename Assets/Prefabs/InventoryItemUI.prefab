@@ -98,6 +98,9 @@ MonoBehaviour:
     item: {fileID: 0}
     amount: 0
   button: {fileID: 200925740268937827}
+  itemsUI: {fileID: 0}
+  rectTransform: {fileID: 928779640983330147}
+  itemNumber: 0
 --- !u!114 &200925740268937827
 MonoBehaviour:
   m_ObjectHideFlags: 0

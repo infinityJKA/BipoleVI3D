@@ -187,6 +187,24 @@ public class PlayerController : MonoBehaviour
         {
             ui.partyMemberUIs[1].SetEmpty(true);
         }
+
+        if (gm.partyMembers.Count >= 3)
+        {
+            UpdatePartyUISingle(2);
+        }
+        else
+        {
+            ui.partyMemberUIs[2].SetEmpty(true);
+        }
+
+        if (gm.partyMembers.Count >= 4)
+        {
+            UpdatePartyUISingle(3);
+        }
+        else
+        {
+            ui.partyMemberUIs[3].SetEmpty(true);
+        }
     }
 
     private void UpdatePartyUISingle(int i)

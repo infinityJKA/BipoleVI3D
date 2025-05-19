@@ -4,27 +4,92 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UI;
-using UnityEditor.Experimental.GraphView;
+using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class ItemsUI : MonoBehaviour
 {
     public GameObject parentSpawnUnder;
     public ItemUIButton prefab;
-    public Button itemButton; // this is used for setting the decline button after returning from the inventory to top item row
     private ItemUIButton firstButton, previousButton;
     public TMP_Text nameText, descriptionText;
 
 
+    public ScrollRect scrollRect;
+    public RectTransform content, viewport;
+    public List<RectTransform> rectTransforms;
+    public float topPos, bottomPos, offSet;
+    public int itemCount;
+    private RectTransform oldRect;
+    private float originalY;
+    public int offset;
+
     Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
 
-    void Start()
+    void OnEnable()
     {
-
+        originalY = content.transform.position.y;
     }
 
-    void Update()
+    public void SnapTo(int index)
     {
+        RectTransform rect = rectTransforms[index];
+        Vector2 v = rect.position;
+        bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewport, v);
 
+        float incrimentSize = rect.rect.height + 1; // height of item
+
+        if (!inView)
+        {
+            if (oldRect != null)
+            {
+                Debug.Log("Old anchored postion: " + content.anchoredPosition.y);
+                if (oldRect.localPosition.y < rect.localPosition.y) // if old position was lower than new pos
+                {
+                    content.anchoredPosition += new Vector2(0, -incrimentSize);
+                }
+                else if (oldRect.localPosition.y > rect.localPosition.y)
+                {
+                    content.anchoredPosition += new Vector2(0, incrimentSize);
+                }
+                Debug.Log("New anchored postion: " + content.anchoredPosition.y);
+            }
+        }
+        oldRect = rect;
+    }
+
+    public void NewSnapTo(int index)
+    {
+        RectTransform rect = rectTransforms[index];
+        Vector2 v = rect.position;
+        bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewport, v);
+
+        float incrimentSize = rect.rect.height + 1; // height of item
+
+        if (!inView)
+        {
+            if (oldRect != null)
+            {
+                Debug.Log("Old anchored postion: " + content.anchoredPosition.y);
+
+                //content.anchoredPosition = new Vector2(0, originalY-((index+1)*incrimentSize));
+                content.transform.position = new Vector2(content.transform.position.x, originalY - rect.transform.localPosition.y);
+                
+
+                Debug.Log("New anchored postion: " + content.anchoredPosition.y);
+
+                
+                
+            }
+        }
+        oldRect = rect;
+    }
+
+    public void NewerSnapTo(RectTransform target)
+    {
+        Canvas.ForceUpdateCanvases();
+        content.anchoredPosition = (Vector2)scrollRect.transform.InverseTransformPoint(content.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
     }
 
     public void CreateDisplay(string str)
@@ -45,6 +110,9 @@ public class ItemsUI : MonoBehaviour
 
         inventoryObject inv = GameManager.gm.inventory;
 
+        rectTransforms = new List<RectTransform>();
+        itemCount = 0;
+
         firstButton = null;
         bool isFirst = true;
         // spawn new display
@@ -58,6 +126,11 @@ public class ItemsUI : MonoBehaviour
                 iui.UpdateGraphic();
                 itemsDisplayed.Add(inv.Container[i], iui);
                 iui.itemsUI = this;
+
+                rectTransforms.Add(iui.rectTransform);
+                iui.itemNumber = itemCount;
+                itemCount++;
+
 
                 var nav = iui.button.navigation;
 
@@ -94,10 +167,10 @@ public class ItemsUI : MonoBehaviour
         }
 
 
-        SendToDisplayButtons(str);
+        //SendToDisplayButtons();
     }
 
-    public void SendToDisplayButtons(String str)
+    public void SendToDisplayButtons()
     {
         // make sure there is at least one item of the type
         if (firstButton != null)

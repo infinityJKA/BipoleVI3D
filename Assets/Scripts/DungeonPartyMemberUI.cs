@@ -28,7 +28,7 @@ public class DungeonPartyMemberUI : MonoBehaviour
         if (b)
         {
             main.SetActive(false);
-            empty.SetActive(true);
+            //empty.SetActive(true);
             bgSprite.sprite = emptyBg;
         }
         else
