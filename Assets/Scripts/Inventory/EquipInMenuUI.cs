@@ -5,6 +5,7 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class EquipInMenuUI : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class EquipInMenuUI : MonoBehaviour
     public int offsetGoingUp,offsetGoingDown;
 
     public PartyMember selectedCharacter;
-    public Button[] equipment;
+    public CurrentlyEquippedMenuUIButton[] equipmentButtons;
 
     Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
 
@@ -93,6 +94,8 @@ public class EquipInMenuUI : MonoBehaviour
         // spawn new display
         for (int i = 0; i < GameManager.gm.partyMembers.Count; i++)
         {
+            Debug.Log("Party member found");
+
             // create the UI display for the item
             EquipToPartyInMenuUIButton eimui = Instantiate(prefabParty, parentSpawnUnderParty.transform);
             eimui.partyMember = party[i];
@@ -143,6 +146,22 @@ public class EquipInMenuUI : MonoBehaviour
         SendToDisplayButtonsParty();
     }
 
+    public void CreateCurrentlyEquippedDisplay()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (selectedCharacter.currentlyEquipped[i] == null)
+            {
+                equipmentButtons[i].nameText.text = i + ". [empty]";
+            }
+            else
+            {
+                equipmentButtons[i].nameText.text = i + ". " + selectedCharacter.currentlyEquipped[i].itemName;
+            }
+            equipmentButtons[i].itemNumber = i;
+        }
+    }
+
     public void SendToDisplayButtonsParty()
     {
         // make sure there is at least one item of the type
@@ -154,7 +173,7 @@ public class EquipInMenuUI : MonoBehaviour
             // move the selection to the first item
             GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(firstButtonParty.button.gameObject);
         }
-        
+
     }
 
 }

@@ -25,6 +25,8 @@ public class PartyMember : ScriptableObject
     public Sprite sprite;
     public BodyPart[] bodyParts;
 
+    public ItemObject[] currentlyEquipped;
+
     public bool Weakness(EquipmentType e)
     {
         return weaknesses.Contains(e);

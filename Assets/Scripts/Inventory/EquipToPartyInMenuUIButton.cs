@@ -20,12 +20,9 @@ public class EquipToPartyInMenuUIButton : MonoBehaviour, ISelectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
-        UpdateDescription();
-
-        Debug.Log("selected button worldPos: " + rectTransform.position.y);
-        Debug.Log("selected button localPos: " + rectTransform.localPosition.y);
-
         equipUI.SnapToParty(rectTransform, itemNumber);
+        equipUI.selectedCharacter = partyMember;
+        equipUI.CreateCurrentlyEquippedDisplay();
     }
 
     public void CharacterSwitchPressed()
@@ -52,9 +49,5 @@ public class EquipToPartyInMenuUIButton : MonoBehaviour, ISelectHandler
 
     }
 
-    public void UpdateDescription()
-    {
-
-    }
 
 }
