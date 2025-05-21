@@ -40,3 +40,8 @@ MonoBehaviour:
     conditionsOnBreak: []
   - bodyPartName: Legs
     conditionsOnBreak: []
+  currentlyEquipped:
+  - {fileID: 11400000, guid: 90b74b5aef0e4e441b46d726b9340d62, type: 2}
+  - {fileID: 11400000, guid: 6687753af6b64af49a05cdb364e06b7c, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}

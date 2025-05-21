@@ -15,6 +15,9 @@ public class MenuSideButton : MonoBehaviour, ISelectHandler
     {
         menuUI.DisableAllButThis(screen);
         GameManager.gm.dungeonPlayer.buttonSelectOnDecline = menuUI.returnButton.gameObject;
+
+        menuUI.equipUI.ResetButtonSnapParty();
+        menuUI.partyUI.ResetButtonSnap();
     }
 
 

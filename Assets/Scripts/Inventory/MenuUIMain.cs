@@ -7,6 +7,8 @@ public class MenuUIMain : MonoBehaviour
 {
     public GameObject[] menuScreens;
     public Button returnButton;
+    public EquipInMenuUI equipUI;
+    public PartyInMenuUI partyUI;
 
 
     public void DisableAllButThis(GameObject obj)

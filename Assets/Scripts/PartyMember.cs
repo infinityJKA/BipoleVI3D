@@ -25,7 +25,7 @@ public class PartyMember : ScriptableObject
     public Sprite sprite;
     public BodyPart[] bodyParts;
 
-    public ItemObject[] currentlyEquipped;
+    public ItemObject[] currentlyEquipped = new ItemObject[4];
 
     public bool Weakness(EquipmentType e)
     {

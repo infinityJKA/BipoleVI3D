@@ -40,3 +40,8 @@ MonoBehaviour:
     conditionsOnBreak: []
   - bodyPartName: Legs
     conditionsOnBreak: []
+  currentlyEquipped:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

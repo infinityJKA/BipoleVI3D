@@ -43,7 +43,7 @@ public class PartyInMenuUIButton : MonoBehaviour, ISelectHandler
             {
                 partyUI.charToSwitch1 = -1;
                 partyUI.characterSwitchPopup.SetActive(false);
-                GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.firstButton.button.gameObject;
+                GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.sidebarPartyButton;
             }
             else
             {
