@@ -23,11 +23,14 @@ public class EquipToPartyInMenuUIButton : MonoBehaviour, ISelectHandler
         equipUI.SnapToParty(rectTransform, itemNumber);
         equipUI.selectedCharacter = partyMember;
         equipUI.CreateCurrentlyEquippedDisplay();
+        GameManager.gm.dungeonPlayer.buttonSelectOnDecline = equipUI.sideBarEquipButton;
+        equipUI.DescriptionText();
     }
 
-    public void CharacterSwitchPressed()
+    public void OnClickFunction()
     {
-        equipUI.selectedCharacter = partyMember;
+        GameManager.gm.dungeonPlayer.buttonSelectOnDecline = button.gameObject;
+        GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(equipUI.equipmentButtons[0].gameObject);        
     }
 
 

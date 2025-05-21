@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: LetterBag
   m_EditorClassIdentifier: 
   itemName: Letter Bag
+  itemName_jp: 
   itemDescription: 'Equip Type: STELLEIN
 
     +10% LCK/AGL, +15% DEF/RES, +20% ACR'
+  itemDescription_jp: 
   itemType: 1
   value: 200
   sprite: {fileID: 0}
@@ -53,9 +55,11 @@ MonoBehaviour:
   equipmentAction:
     actionDescription: <LUCKY LETTER> Party gains [+10% LCK] and [+20% ACR] for 3
       turns. Increases the user's VIZ by 20%. Builds +3 BP.
+    actionDescription_jp: 
     isUlt: 0
     isHealing: 0
-    actionName: 
+    actionName: Lucky Letter
+    actionName_jp: 
     damageType: 0
     PWR: 0
     HIT: 0

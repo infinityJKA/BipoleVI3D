@@ -87,7 +87,7 @@ public enum CurrencyType {
 
 public enum EquipmentEffect
 {
-    Action, UltAction, Passive
+    Action, UltAction, Passive, None
 }
 
 public enum DamageType

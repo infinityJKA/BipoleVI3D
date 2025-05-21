@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: WoodenHelmet
   m_EditorClassIdentifier: 
   itemName: Wooden Helmet
+  itemName_jp: 
   itemDescription: 'Equip Type: ANY
 
     +5% LCK, +20% DEF, +25% RES.'
+  itemDescription_jp: 
   itemType: 1
   value: 200
   sprite: {fileID: 0}
@@ -49,12 +51,14 @@ MonoBehaviour:
   nHP: 0
   pMP: 0
   nMP: 0
-  equipmentEffect: 2
+  equipmentEffect: 3
   equipmentAction:
     actionDescription: 
+    actionDescription_jp: 
     isUlt: 0
     isHealing: 0
     actionName: 
+    actionName_jp: 
     damageType: 0
     PWR: 0
     HIT: 0

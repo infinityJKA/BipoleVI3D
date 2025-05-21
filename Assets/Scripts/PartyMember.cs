@@ -32,6 +32,80 @@ public class PartyMember : ScriptableObject
         return weaknesses.Contains(e);
     }
 
+    public int[] CalculateBonus(string stat)
+    {
+        int pTotal = 0;
+        int nTotal = 0;
+        foreach (ItemObject eqp in currentlyEquipped)
+        {
+            if (eqp != null)
+            {
+                if (stat == "ATK")
+                {
+                    pTotal += eqp.pATK;
+                    nTotal += eqp.nATK;
+                }
+                else if (stat == "INT")
+                {
+                    pTotal += eqp.pINT;
+                    nTotal += eqp.nINT;
+                }
+                else if (stat == "DEF")
+                {
+                    pTotal += eqp.pDEF;
+                    nTotal += eqp.nDEF;
+                }
+                else if (stat == "RES")
+                {
+                    pTotal += eqp.pRES;
+                    nTotal += eqp.nRES;
+                }
+                else if (stat == "AGL")
+                {
+                    pTotal += eqp.pAGL;
+                    nTotal += eqp.nAGL;
+                }
+                else if (stat == "ACR")
+                {
+                    pTotal += eqp.pACR;
+                    nTotal += eqp.nACR;
+                }
+                else if (stat == "LCK")
+                {
+                    pTotal += eqp.pLCK;
+                    nTotal += eqp.nLCK;
+                }
+                else if (stat == "SPD")
+                {
+                    pTotal += eqp.pSPD;
+                    nTotal += eqp.nSPD;
+                }
+                else if (stat == "EDR")
+                {
+                    pTotal += eqp.pEDR;
+                    nTotal += eqp.nEDR;
+                }
+                else if (stat == "HP")
+                {
+                    pTotal += eqp.pHP;
+                    nTotal += eqp.nHP;
+                }
+                else if (stat == "MP")
+                {
+                    pTotal += eqp.pMP;
+                    nTotal += eqp.nMP;
+                }
+            }
+        }
+
+        int[] r = new int[2];
+        r[0] = pTotal;
+        r[1] = nTotal;
+
+        return r;
+    }
+
+
 
 }
 

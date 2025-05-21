@@ -122,9 +122,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 276223788847969790}
-        m_TargetAssemblyTypeName: PartyInMenuUIButton, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 3778913968967901438}
+        m_TargetAssemblyTypeName: EquipToPartyInMenuUIButton, Assembly-CSharp
+        m_MethodName: OnClickFunction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

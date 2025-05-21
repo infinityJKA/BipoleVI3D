@@ -6,12 +6,13 @@ using System;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using System.Linq;
+using System.Data.SqlTypes;
 
 public class EquipInMenuUI : MonoBehaviour
 {
     public GameObject parentSpawnUnderParty, parentSpawnUnderEquipment, sideBarEquipButton;
     public EquipToPartyInMenuUIButton prefabParty;
-    public EquipToPartyInMenuUIButton firstButtonParty, firstButtonEquip, previousButtonParty,previousButtonEquip;
+    public EquipToPartyInMenuUIButton firstButtonParty, firstButtonEquip, previousButtonParty, previousButtonEquip;
     public TMP_Text equipStats, characterStats;
 
     public ScrollRect scrollRectParty;
@@ -21,7 +22,7 @@ public class EquipInMenuUI : MonoBehaviour
     public int itemCountParty, itemCountEquip;
     private RectTransform oldRectParty, oldRectEquip;
     private Vector2 originalPosParty, originalPosEquip;
-    public int offsetGoingUp,offsetGoingDown;
+    public int offsetGoingUp, offsetGoingDown;
 
     public PartyMember selectedCharacter;
     public CurrentlyEquippedMenuUIButton[] equipmentButtons;
@@ -87,7 +88,7 @@ public class EquipInMenuUI : MonoBehaviour
         rectTransforms = new List<RectTransform>();
         itemCountParty = 0;
 
-        oldRectParty= null;
+        oldRectParty = null;
 
         firstButtonParty = null;
         bool isFirst = true;
@@ -99,7 +100,7 @@ public class EquipInMenuUI : MonoBehaviour
             // create the UI display for the item
             EquipToPartyInMenuUIButton eimui = Instantiate(prefabParty, parentSpawnUnderParty.transform);
             eimui.partyMember = party[i];
-            
+
             eimui.equipUI = this;
 
             rectTransforms.Add(eimui.rectTransform);
@@ -132,7 +133,7 @@ public class EquipInMenuUI : MonoBehaviour
             // set this button to the previous before moving forwards in the loop
             previousButtonParty = eimui;
         }
-        
+
 
         // set first button's navigation up to the last button
         if (firstButtonParty != null)
@@ -175,5 +176,41 @@ public class EquipInMenuUI : MonoBehaviour
         }
 
     }
+
+    public void DescriptionText()
+    {
+        string str = "HP " + selectedCharacter.maxHP + "(+" + selectedCharacter.CalculateBonus("HP")[0] + "% +" + selectedCharacter.CalculateBonus("HP")[1] +
+        ") MP " + selectedCharacter.maxHP + "(+" + selectedCharacter.CalculateBonus("MP")[0] + "% +" + selectedCharacter.CalculateBonus("MP")[1] +
+        ")\nATK " + selectedCharacter.ATK + "(+" + selectedCharacter.CalculateBonus("ATK")[0] + "% +" + selectedCharacter.CalculateBonus("ATK")[1] +
+        ") INT " + selectedCharacter.INT + "(+" + selectedCharacter.CalculateBonus("INT")[0] + "% +" + selectedCharacter.CalculateBonus("INT")[1] +
+        ")\nDEF " + selectedCharacter.DEF + "(+" + selectedCharacter.CalculateBonus("DEF")[0] + "% +" + selectedCharacter.CalculateBonus("DEF")[1] +
+        ") RES " + selectedCharacter.RES + "(+" + selectedCharacter.CalculateBonus("RES")[0] + "% +" + selectedCharacter.CalculateBonus("RES")[1] +
+        ")\nAGL " + selectedCharacter.AGL + "(+" + selectedCharacter.CalculateBonus("AGL")[0] + "% +" + selectedCharacter.CalculateBonus("AGL")[1] +
+        ") ACR " + selectedCharacter.ACR + "(+" + selectedCharacter.CalculateBonus("ACR")[0] + "% +" + selectedCharacter.CalculateBonus("ACR")[1] +
+        ")\nSPD " + selectedCharacter.SPD + "(+" + selectedCharacter.CalculateBonus("SPD")[0] + "% +" + selectedCharacter.CalculateBonus("SPD")[1] +
+        ") LCK " + selectedCharacter.LCK + "(+" + selectedCharacter.CalculateBonus("LCK")[0] + "% +" + selectedCharacter.CalculateBonus("LCK")[1] +
+        ")\nEDR " + selectedCharacter.EDR + "(+" + selectedCharacter.CalculateBonus("EDR")[0] + "% +" + selectedCharacter.CalculateBonus("EDR")[1]+")";
+
+        bool hasPassive = false;
+        foreach (ItemObject eqp in selectedCharacter.currentlyEquipped)
+        {
+            if (eqp != null)
+            {
+                if (eqp.equipmentEffect != EquipmentEffect.None)
+                {
+                    if (!hasPassive)
+                    {
+                        str = str + "\n";
+                        hasPassive = true;
+                    }
+                    str = str + "<" + eqp.equipmentAction.actionName + "> ";
+                }
+            }
+        }
+
+        characterStats.text = str;
+
+    }
+
 
 }
