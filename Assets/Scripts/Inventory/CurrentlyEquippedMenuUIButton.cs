@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using System;
 
-// this is the button used to select a party member to equip to
+// this is the button used to select a currently equipped item
 public class CurrentlyEquippedMenuUIButton : MonoBehaviour, ISelectHandler
 {
     public TMP_Text nameText;
@@ -17,17 +17,30 @@ public class CurrentlyEquippedMenuUIButton : MonoBehaviour, ISelectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
+        GameManager.gm.dungeonPlayer.buttonSelectOnDecline = equipUI.selectedCharacterButton.gameObject;
         UpdateDescription();
     }
 
-    public void UpdateGraphic()
+    public void OnClickFunction()
     {
-        
+        equipUI.selectedEquipmentIndex = itemNumber;
+        GameManager.gm.dungeonPlayer.buttonSelectOnDecline = button.gameObject;
+        equipUI.CreateDisplayEquip(true);
     }
 
     public void UpdateDescription()
     {
-
+        ItemObject item = equipUI.selectedCharacter.currentlyEquipped[itemNumber];
+        if (item != null)
+        {
+            equipUI.equipStats.text = item.itemName + "\n"
+            + item.itemDescription + "\n\n"
+            + item.equipmentAction.actionDescription;
+        }
+        else
+        {
+            equipUI.equipStats.text = "[No item equipped in this slot]";
+        }
     }
 
 }

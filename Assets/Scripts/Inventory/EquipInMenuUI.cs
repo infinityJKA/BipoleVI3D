@@ -12,10 +12,12 @@ public class EquipInMenuUI : MonoBehaviour
 {
     public GameObject parentSpawnUnderParty, parentSpawnUnderEquipment, sideBarEquipButton;
     public EquipToPartyInMenuUIButton prefabParty;
-    public EquipToPartyInMenuUIButton firstButtonParty, firstButtonEquip, previousButtonParty, previousButtonEquip;
+    public EquipSelectMenuUIButton prefabEquipment;
+    public EquipToPartyInMenuUIButton firstButtonParty, previousButtonParty;
+    public EquipSelectMenuUIButton firstButtonEquip, previousButtonEquip;
     public TMP_Text equipStats, characterStats;
 
-    public ScrollRect scrollRectParty;
+    public ScrollRect scrollRectParty, scrollRectEquip;
     public RectTransform contentParty, viewportParty, contentEquip, viewportEquip;
     public List<RectTransform> rectTransforms;
     public float topPosParty, bottomPosParty, offSetParty;
@@ -25,9 +27,12 @@ public class EquipInMenuUI : MonoBehaviour
     public int offsetGoingUp, offsetGoingDown;
 
     public PartyMember selectedCharacter;
+    public Button selectedCharacterButton;
+    public int selectedEquipmentIndex;
     public CurrentlyEquippedMenuUIButton[] equipmentButtons;
 
-    Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
+    Dictionary<InventorySlot, ItemUIButton> itemsDisplayedParty = new Dictionary<InventorySlot, ItemUIButton>();
+    Dictionary<InventorySlot, ItemUIButton> itemsDisplayedEquip = new Dictionary<InventorySlot, ItemUIButton>();
 
     void OnEnable()
     {
@@ -39,6 +44,12 @@ public class EquipInMenuUI : MonoBehaviour
     {
         contentParty.anchoredPosition = originalPosParty;
         oldRectParty = null;
+    }
+
+    public void ResetButtonSnapEquip()
+    {
+        contentEquip.anchoredPosition = originalPosEquip;
+        oldRectEquip = null;
     }
 
     public void SnapToParty(RectTransform target, int index)
@@ -73,6 +84,38 @@ public class EquipInMenuUI : MonoBehaviour
         oldRectParty = rect;
     }
 
+    public void SnapToEquip(RectTransform target, int index)
+    {
+        Vector2 offsetVector = new Vector2(0, 0);
+        RectTransform rect = rectTransforms[index];
+        Vector2 v = rect.position;
+
+        bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewportEquip, v);
+
+        if (!inView)
+        {
+            if (oldRectEquip != null)
+            {
+                if (oldRectEquip.localPosition.y < rect.localPosition.y) // if old position was lower than new pos
+                {
+                    Debug.Log("offsetGoingUp");
+                    offsetVector = new Vector2(0, offsetGoingUp);
+                }
+                else if (oldRectEquip.localPosition.y > rect.localPosition.y)
+                {
+                    Debug.Log("offsetGoingDown");
+                    offsetVector = new Vector2(0, offsetGoingDown);
+                }
+
+                Canvas.ForceUpdateCanvases();
+                Vector2 targetPosition = (Vector2)scrollRectEquip.transform.InverseTransformPoint(target.position);
+                Vector2 contentPosition = (Vector2)scrollRectEquip.transform.InverseTransformPoint(contentEquip.position);
+                contentEquip.anchoredPosition = contentPosition - targetPosition + offsetVector;
+            }
+        }
+        oldRectEquip = rect;
+    }
+
     public void CreateDisplayParty()
     {
         // destroy old children first
@@ -81,7 +124,7 @@ public class EquipInMenuUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        itemsDisplayed.Clear();
+        itemsDisplayedParty.Clear();
 
         List<PartyMember> party = GameManager.gm.partyMembers;
 
@@ -147,6 +190,96 @@ public class EquipInMenuUI : MonoBehaviour
         SendToDisplayButtonsParty();
     }
 
+    public void CreateDisplayEquip(bool sendTo)
+    {
+        // destroy old children first
+        foreach (Transform child in parentSpawnUnderEquipment.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        itemsDisplayedEquip.Clear();
+
+        rectTransforms = new List<RectTransform>();
+        itemCountEquip = 0;
+
+        oldRectEquip = null;
+
+        firstButtonEquip = Instantiate(prefabEquipment, parentSpawnUnderEquipment.transform); // default is set to the equip button
+        firstButtonEquip.equipUI = this;
+        var nav1 = firstButtonEquip.button.navigation;
+        nav1.selectOnDown = firstButtonEquip.button; // this will be overriden unless this is the final button
+        firstButtonEquip.button.navigation = nav1;
+        rectTransforms.Add(firstButtonEquip.rectTransform);
+        firstButtonEquip.UpdateDescription();
+        previousButtonEquip = firstButtonEquip;
+        
+
+
+        // spawn new display
+        foreach (InventorySlot item in GameManager.gm.inventory.Container)
+        {
+            if (item.item != null)
+            {
+
+                if (item.item.itemType == ItemType.Equipment)
+                {
+
+                    if (item.item.equipmentType == EquipmentType.Universal || selectedCharacter.equippable.Contains(item.item.equipmentType))
+                    {
+                        Debug.Log("Item member found");
+
+                        // create the UI display for the item
+                        EquipSelectMenuUIButton eimui = Instantiate(prefabEquipment, parentSpawnUnderEquipment.transform);
+                        eimui.equipment = item.item;
+
+                        eimui.equipUI = this;
+
+                        eimui.itemQuantity = item.amount;
+
+                        rectTransforms.Add(eimui.rectTransform);
+                        eimui.itemNumber = itemCountEquip;
+                        eimui.UpdateDescription();
+                        itemCountEquip++;
+
+
+                        var nav = eimui.button.navigation;
+
+
+                        nav.selectOnDown = firstButtonEquip.button; // this will be overriden unless this is the final button
+                        nav.selectOnUp = previousButtonEquip.button;
+                        eimui.button.navigation = nav;
+
+                        // override the previous selectOnDown to be this button
+                        var pNav = previousButtonEquip.button.navigation;
+                        pNav.selectOnDown = eimui.button;
+                        previousButtonEquip.button.navigation = pNav;
+
+
+
+                        // set this button to the previous before moving forwards in the loop
+                        previousButtonEquip = eimui;
+                    }
+                }
+            }
+        }
+
+
+        // set first button's navigation up to the last button
+        if (firstButtonEquip != null)
+        {
+            Navigation nav = firstButtonEquip.button.navigation;
+            nav.selectOnUp = parentSpawnUnderEquipment.transform.GetChild(parentSpawnUnderEquipment.transform.childCount - 1).GetComponent<EquipSelectMenuUIButton>().button;
+            firstButtonEquip.button.navigation = nav;
+        }
+
+        if (sendTo)
+        {
+            SendToDisplayButtonsEquip();
+        }
+    }
+
+
     public void CreateCurrentlyEquippedDisplay()
     {
         for (int i = 0; i < 4; i++)
@@ -176,6 +309,16 @@ public class EquipInMenuUI : MonoBehaviour
         }
 
     }
+    
+    public void SendToDisplayButtonsEquip()
+    {
+        // set decline button to the previous button
+        GameManager.gm.dungeonPlayer.buttonSelectOnDecline = GameManager.gm.dungeonPlayer.eventSystem.currentSelectedGameObject;
+
+        // move the selection to the first item
+        GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(firstButtonEquip.button.gameObject);
+
+    }
 
     public void DescriptionText()
     {
@@ -189,7 +332,7 @@ public class EquipInMenuUI : MonoBehaviour
         ") ACR " + selectedCharacter.ACR + "(+" + selectedCharacter.CalculateBonus("ACR")[0] + "% +" + selectedCharacter.CalculateBonus("ACR")[1] +
         ")\nSPD " + selectedCharacter.SPD + "(+" + selectedCharacter.CalculateBonus("SPD")[0] + "% +" + selectedCharacter.CalculateBonus("SPD")[1] +
         ") LCK " + selectedCharacter.LCK + "(+" + selectedCharacter.CalculateBonus("LCK")[0] + "% +" + selectedCharacter.CalculateBonus("LCK")[1] +
-        ")\nEDR " + selectedCharacter.EDR + "(+" + selectedCharacter.CalculateBonus("EDR")[0] + "% +" + selectedCharacter.CalculateBonus("EDR")[1]+")";
+        ")\nEDR " + selectedCharacter.EDR + "(+" + selectedCharacter.CalculateBonus("EDR")[0] + "% +" + selectedCharacter.CalculateBonus("EDR")[1] + ")";
 
         bool hasPassive = false;
         foreach (ItemObject eqp in selectedCharacter.currentlyEquipped)

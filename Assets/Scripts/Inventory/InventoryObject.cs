@@ -25,6 +25,25 @@ public class inventoryObject : ScriptableObject
         }
     }
 
+    public void RemoveItem(ItemObject _item, int _amount)
+    {
+        int index = -1;
+        for (int i = 0; i < Container.Count; i++)
+        {
+            if (Container[i].item == _item)
+            {
+                index = i;
+            }
+        }
+
+        Container[index].amount -= _amount;
+        if (Container[index].amount <= 0)
+        {
+            Container.RemoveAt(index);
+        }
+    }
+
+
     public int GetItemCount(ItemObject _item)
     {
         for (int i = 0; i < Container.Count; i++)
@@ -34,7 +53,7 @@ public class inventoryObject : ScriptableObject
                 return Container[i].amount;
             }
         }
-        
+
         Debug.Log("Item not found while trying to get count");
         return 0;
     }
