@@ -33,8 +33,18 @@ public class EquipSelectMenuUIButton : MonoBehaviour, ISelectHandler
         }
         else    // remove item from inventory and add it to the equipment slot
         {
-            equipUI.selectedCharacter.currentlyEquipped[equipUI.selectedEquipmentIndex] = equipment;
-            GameManager.gm.inventory.RemoveItem(equipUI.selectedCharacter.currentlyEquipped[equipUI.selectedEquipmentIndex], 1);
+            if (equipUI.selectedCharacter.currentlyEquipped[equipUI.selectedEquipmentIndex] == null)
+            {
+                Debug.Log("Adding to slot that is empty");
+                equipUI.selectedCharacter.currentlyEquipped[equipUI.selectedEquipmentIndex] = equipment;
+                GameManager.gm.inventory.RemoveItem(equipUI.selectedCharacter.currentlyEquipped[equipUI.selectedEquipmentIndex], 1);
+            }
+            else {
+                Debug.Log("Adding to slot that isn't empty");
+                GameManager.gm.inventory.AddItem(equipUI.selectedCharacter.currentlyEquipped[equipUI.selectedEquipmentIndex], 1);
+                equipUI.selectedCharacter.currentlyEquipped[equipUI.selectedEquipmentIndex] = equipment;
+                GameManager.gm.inventory.RemoveItem(equipUI.selectedCharacter.currentlyEquipped[equipUI.selectedEquipmentIndex], 1);
+            }
         }
 
         GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(equipUI.equipmentButtons[equipUI.selectedEquipmentIndex].gameObject);
