@@ -19,13 +19,18 @@ public class CurrentlyEquippedMenuUIButton : MonoBehaviour, ISelectHandler
     {
         GameManager.gm.dungeonPlayer.buttonSelectOnDecline = equipUI.selectedCharacterButton.gameObject;
         UpdateDescription();
+        equipUI.DescriptionText();
+        //equipUI.ResetButtonSnapEquip();
+        equipUI.CreateDisplayEquip(false);
+        
+        // equipUI.SnapToEquip(equipUI.firstButtonEquip.rectTransform, equipUI.firstButtonEquip.itemNumber);
     }
 
     public void OnClickFunction()
     {
         equipUI.selectedEquipmentIndex = itemNumber;
         GameManager.gm.dungeonPlayer.buttonSelectOnDecline = button.gameObject;
-        equipUI.CreateDisplayEquip(true);
+        equipUI.SendToDisplayButtonsEquip();
     }
 
     public void UpdateDescription()

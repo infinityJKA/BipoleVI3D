@@ -31,7 +31,7 @@ public class EquipToPartyInMenuUIButton : MonoBehaviour, ISelectHandler
     {
         equipUI.selectedCharacterButton = button;
         GameManager.gm.dungeonPlayer.buttonSelectOnDecline = button.gameObject;
-        GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(equipUI.equipmentButtons[0].gameObject);        
+        GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(equipUI.equipmentButtons[0].gameObject);     
     }
 
 

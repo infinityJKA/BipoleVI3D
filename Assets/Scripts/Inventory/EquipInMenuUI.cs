@@ -211,9 +211,11 @@ public class EquipInMenuUI : MonoBehaviour
         nav1.selectOnDown = firstButtonEquip.button; // this will be overriden unless this is the final button
         firstButtonEquip.button.navigation = nav1;
         rectTransformsEquip.Add(firstButtonEquip.rectTransform);
+        firstButtonEquip.itemNumber = itemCountEquip;
+        itemCountEquip++;
         firstButtonEquip.UpdateDescription();
         previousButtonEquip = firstButtonEquip;
-        
+
 
 
         // spawn new display
@@ -272,6 +274,8 @@ public class EquipInMenuUI : MonoBehaviour
             nav.selectOnUp = parentSpawnUnderEquipment.transform.GetChild(parentSpawnUnderEquipment.transform.childCount - 1).GetComponent<EquipSelectMenuUIButton>().button;
             firstButtonEquip.button.navigation = nav;
         }
+
+        //SnapToEquip(firstButtonEquip.rectTransform, firstButtonEquip.itemNumber);
 
         if (sendTo)
         {
