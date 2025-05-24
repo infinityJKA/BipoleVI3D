@@ -144,7 +144,7 @@ public class PartyInMenuUI : MonoBehaviour
         }
 
 
-        SendToDisplayButtons();
+        //SendToDisplayButtons();
     }
 
     public void SendToDisplayButtons()

@@ -19,7 +19,7 @@ public class EquipInMenuUI : MonoBehaviour
 
     public ScrollRect scrollRectParty, scrollRectEquip;
     public RectTransform contentParty, viewportParty, contentEquip, viewportEquip;
-    public List<RectTransform> rectTransforms;
+    public List<RectTransform> rectTransformsParty, rectTransformsEquip;
     public float topPosParty, bottomPosParty, offSetParty;
     public int itemCountParty, itemCountEquip;
     private RectTransform oldRectParty, oldRectEquip;
@@ -55,7 +55,7 @@ public class EquipInMenuUI : MonoBehaviour
     public void SnapToParty(RectTransform target, int index)
     {
         Vector2 offsetVector = new Vector2(0, 0);
-        RectTransform rect = rectTransforms[index];
+        RectTransform rect = rectTransformsParty[index];
         Vector2 v = rect.position;
 
         bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewportParty, v);
@@ -87,7 +87,7 @@ public class EquipInMenuUI : MonoBehaviour
     public void SnapToEquip(RectTransform target, int index)
     {
         Vector2 offsetVector = new Vector2(0, 0);
-        RectTransform rect = rectTransforms[index];
+        RectTransform rect = rectTransformsEquip[index];
         Vector2 v = rect.position;
 
         bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewportEquip, v);
@@ -128,7 +128,7 @@ public class EquipInMenuUI : MonoBehaviour
 
         List<PartyMember> party = GameManager.gm.partyMembers;
 
-        rectTransforms = new List<RectTransform>();
+        rectTransformsParty = new List<RectTransform>();
         itemCountParty = 0;
 
         oldRectParty = null;
@@ -146,7 +146,7 @@ public class EquipInMenuUI : MonoBehaviour
 
             eimui.equipUI = this;
 
-            rectTransforms.Add(eimui.rectTransform);
+            rectTransformsParty.Add(eimui.rectTransform);
             eimui.itemNumber = itemCountParty;
             eimui.UpdateGraphic();
             itemCountParty++;
@@ -187,7 +187,7 @@ public class EquipInMenuUI : MonoBehaviour
         }
 
 
-        SendToDisplayButtonsParty();
+        //SendToDisplayButtonsParty();
     }
 
     public void CreateDisplayEquip(bool sendTo)
@@ -200,7 +200,7 @@ public class EquipInMenuUI : MonoBehaviour
 
         itemsDisplayedEquip.Clear();
 
-        rectTransforms = new List<RectTransform>();
+        rectTransformsEquip = new List<RectTransform>();
         itemCountEquip = 0;
 
         oldRectEquip = null;
@@ -210,7 +210,7 @@ public class EquipInMenuUI : MonoBehaviour
         var nav1 = firstButtonEquip.button.navigation;
         nav1.selectOnDown = firstButtonEquip.button; // this will be overriden unless this is the final button
         firstButtonEquip.button.navigation = nav1;
-        rectTransforms.Add(firstButtonEquip.rectTransform);
+        rectTransformsEquip.Add(firstButtonEquip.rectTransform);
         firstButtonEquip.UpdateDescription();
         previousButtonEquip = firstButtonEquip;
         
@@ -237,7 +237,7 @@ public class EquipInMenuUI : MonoBehaviour
 
                         eimui.itemQuantity = item.amount;
 
-                        rectTransforms.Add(eimui.rectTransform);
+                        rectTransformsEquip.Add(eimui.rectTransform);
                         eimui.itemNumber = itemCountEquip;
                         eimui.UpdateDescription();
                         itemCountEquip++;
