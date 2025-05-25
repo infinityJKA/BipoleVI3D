@@ -37,7 +37,7 @@ public class EquipInMenuUI : MonoBehaviour
     void OnEnable()
     {
         originalPosParty = contentParty.anchoredPosition;
-        //originalPosEquip = contentEquip.anchoredPosition;
+        originalPosEquip = contentEquip.anchoredPosition;
     }
 
     public void ResetButtonSnapParty()
@@ -190,7 +190,7 @@ public class EquipInMenuUI : MonoBehaviour
         //SendToDisplayButtonsParty();
     }
 
-    public void CreateDisplayEquip(bool sendTo)
+    public void CreateDisplayEquip()
     {
         // destroy old children first
         foreach (Transform child in parentSpawnUnderEquipment.transform)
@@ -276,11 +276,6 @@ public class EquipInMenuUI : MonoBehaviour
         }
 
         //SnapToEquip(firstButtonEquip.rectTransform, firstButtonEquip.itemNumber);
-
-        if (sendTo)
-        {
-            SendToDisplayButtonsEquip();
-        }
     }
 
 

@@ -21,7 +21,9 @@ public class CurrentlyEquippedMenuUIButton : MonoBehaviour, ISelectHandler
         UpdateDescription();
         equipUI.DescriptionText();
         //equipUI.ResetButtonSnapEquip();
-        equipUI.CreateDisplayEquip(false);
+        equipUI.ResetButtonSnapEquip();
+        equipUI.CreateDisplayEquip();
+       // GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(equipUI.firstButtonEquip.button.gameObject);
         
         // equipUI.SnapToEquip(equipUI.firstButtonEquip.rectTransform, equipUI.firstButtonEquip.itemNumber);
     }

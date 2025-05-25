@@ -49,7 +49,7 @@ public class EquipSelectMenuUIButton : MonoBehaviour, ISelectHandler
 
         GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(equipUI.equipmentButtons[equipUI.selectedEquipmentIndex].gameObject);
         GameManager.gm.dungeonPlayer.buttonSelectOnDecline = equipUI.selectedCharacterButton.gameObject;
-        equipUI.CreateDisplayEquip(false);
+        equipUI.CreateDisplayEquip();
         equipUI.CreateCurrentlyEquippedDisplay();
     }
 
