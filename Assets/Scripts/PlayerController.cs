@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -278,6 +279,8 @@ public class PlayerController : MonoBehaviour
 
                     UpdatePartyUI(); // updates the party ui
 
+                    ProgressTimeOnce();
+
                     if (t.interactType != InteractType.None)  // sets popup text
                     {
                         if (t.interactType == InteractType.Talk)
@@ -368,6 +371,124 @@ public class PlayerController : MonoBehaviour
             // MinimapSprite(dm.GetTile(playerX,playerY));
         }
     }
+
+    public void ProgressTimeOnce()
+    {
+        gm.stepsSinceDayChange++;
+        if (gm.stepsSinceDayChange >= 24) // day changes every 24 steps
+        {
+            gm.day++;
+            gm.daysSinceMoonChange++;
+            gm.stepsSinceDayChange = 0;
+
+            // CALCULATE MONTH
+
+            if (gm.month == 2 && gm.year % 4 != 0 && gm.day >= 28) // if februrary and not a leap year
+            {
+                gm.month++;
+                gm.day = 1;
+            }
+            else if (gm.month == 2 && gm.year % 4 == 0 && gm.day >= 29) // if februrary and is a leap year
+            {
+                gm.month++;
+                gm.day = 1;
+            }
+            else if (gm.month == 4 || gm.month == 6 || gm.month == 9 || gm.month == 11) // april (4), june (6), september (9), november (11)
+            {
+                if (gm.day >= 30)
+                {
+                    gm.month++;
+                    gm.day = 1;
+                }
+            }
+            else if (gm.day >= 31) // all other months are 31 days long
+            {
+                if (gm.month == 12)
+                {
+                    gm.month = 1;
+                    gm.year++;
+                }
+                else
+                {
+                    gm.month++;
+                }
+                gm.day = 1;
+            }
+
+            // CALCULATE MOON PHASE
+
+            if (gm.daysSinceMoonChange >= 4)
+            {
+                ProgressMoonPhase();
+                gm.daysSinceMoonChange = 0;
+            }
+
+            // CALCULATE DAY OF WEEK
+
+            gm.dayofWeek++;
+            if (gm.dayofWeek >= 8) gm.dayofWeek = 1;
+
+        }
+
+        UpdateTimeUI();
+
+    }
+
+    public void ProgressMoonPhase()
+    {
+        switch (gm.moonPhase){
+            case MoonPhase.NewMoon:
+                gm.moonPhase = MoonPhase.WaxingCrescent; break;
+            case MoonPhase.WaxingCrescent:
+                gm.moonPhase = MoonPhase.FirstQuarter; break;
+            case MoonPhase.FirstQuarter:
+                gm.moonPhase = MoonPhase.WaxingGibbous; break;
+            case MoonPhase.WaxingGibbous:
+                gm.moonPhase = MoonPhase.FullMoon; break;
+            case MoonPhase.FullMoon:
+                gm.moonPhase = MoonPhase.WaningGibbous; break;
+            case MoonPhase.WaningGibbous:
+                gm.moonPhase = MoonPhase.ThirdQuarter; break;
+            case MoonPhase.ThirdQuarter:
+                gm.moonPhase = MoonPhase.WaningCrescent; break;
+            case MoonPhase.WaningCrescent:
+                gm.moonPhase = MoonPhase.NewMoon; break;
+        }
+    }
+
+    public void UpdateTimeUI()
+    {
+        if (gm.dayofWeek == 1) ui.dayText.text = "Sunday";
+        else if (gm.dayofWeek == 2) ui.dayText.text = "Monday";
+        else if (gm.dayofWeek == 3) ui.dayText.text = "Tuesday";
+        else if (gm.dayofWeek == 4) ui.dayText.text = "Wednsday";
+        else if (gm.dayofWeek == 5) ui.dayText.text = "Thursday";
+        else if (gm.dayofWeek == 6) ui.dayText.text = "Friday";
+        else if (gm.dayofWeek == 7) ui.dayText.text = "Saturday";
+
+        ui.dateText.text = gm.month + "/" + gm.day;
+
+        switch (gm.moonPhase){
+            case MoonPhase.NewMoon:
+                ui.moonSprite.sprite = ui.newMoon; break;
+            case MoonPhase.WaxingCrescent:
+                ui.moonSprite.sprite = ui.waxingCrescent; break;
+            case MoonPhase.FirstQuarter:
+                ui.moonSprite.sprite = ui.firstQuarter; break;
+            case MoonPhase.WaxingGibbous:
+                ui.moonSprite.sprite = ui.waxingGibbous; break;
+            case MoonPhase.FullMoon:
+                ui.moonSprite.sprite = ui.fullMoon; break;
+            case MoonPhase.WaningGibbous:
+                ui.moonSprite.sprite = ui.waningGibbous; break;
+            case MoonPhase.ThirdQuarter:
+                ui.moonSprite.sprite = ui.thirdQuarter; break;
+            case MoonPhase.WaningCrescent:
+                ui.moonSprite.sprite = ui.waningCrescent; break;
+        }
+
+    }
+
 
 
 

@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
 	public List<PartyMember> partyMembers;
 	public List<PartyMember> partyMembersInit;
 	public inventoryObject inventory, inventoryPrefab;
+	public int day, month, year, dayofWeek, stepsSinceDayChange;
+	public MoonPhase moonPhase;
+	public int daysSinceMoonChange;
 
 
 	void Awake()
@@ -20,6 +23,12 @@ public class GameManager : MonoBehaviour
 			gm = this;
 
 		DontDestroyOnLoad(this);
+
+		day = 1;
+		month = 1;
+		year = 1;
+		dayofWeek = 1;
+
 
 		// scriptable objects save values onto the object itself so I have to create clones
 		for (int p = 0; p < partyMembersInit.Count; p++)
@@ -44,13 +53,18 @@ public class GameManager : MonoBehaviour
 
 		partyMembers[a] = partyMembers[b];
 		partyMembers[b] = temp;
-    }
+	}
 
-    private void OnApplicationQuit()
+	private void OnApplicationQuit()
 	{
 		//inventory.Container.Clear();
 	}
 
 
 
+}
+
+public enum MoonPhase {
+	NewMoon,WaxingCrescent,FirstQuarter,WaxingGibbous,
+	FullMoon,WaningGibbous,ThirdQuarter,WaningCrescent
 }
