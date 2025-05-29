@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
@@ -32,9 +33,11 @@ public class PlayerController : MonoBehaviour
     public GameObject optionsUI, menuUI, optionsButtonSelected, menuButtonSelected;
     public EventSystem eventSystem;
     public GameObject buttonSelectOnDecline;
+    private TMP_Text currentDialogueText;
 
     private void Start()
     {
+        currentDialogueText = ui.dialogueText;
         targetGridPos = Vector3Int.RoundToInt(transform.position);
         currentTile = dm.GetTile(playerX, playerY);
         // currentTile.playerHasDiscovered = true;
@@ -123,7 +126,7 @@ public class PlayerController : MonoBehaviour
 
     public void ProgressDialogue()
     {
-        if (dialogueIndex == -1 || currentDialogue[dialogueIndex].textEn == ui.dialogueText.text || finishedDialogueEarly) // makes sure dialogue is finished or skipped first
+        if (dialogueIndex == -1 || currentDialogue[dialogueIndex].textEn == currentDialogueText.text || finishedDialogueEarly) // makes sure dialogue is finished or skipped first
         {
             finishedDialogueEarly = false;
             ui.dialogueTriangle.SetActive(false);
@@ -136,15 +139,30 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                ui.dialogueText.text = "";
+                currentDialogueText.text = "";
                 Debug.Log("Going to say line \"" + d.textEn + "\"");
+                if (d.portrait == null)
+                {
+                    currentDialogueText = ui.dialogueText;
+                    ui.dialogueText2.gameObject.SetActive(false);
+                    ui.dialogueText.gameObject.SetActive(true);
+                    ui.dialoguePortrait.gameObject.SetActive(false);
+                }
+                else
+                {
+                    currentDialogueText = ui.dialogueText2;
+                    ui.dialogueText.gameObject.SetActive(false);
+                    ui.dialogueText2.gameObject.SetActive(true);
+                    ui.dialoguePortrait.sprite = d.portrait;
+                    ui.dialoguePortrait.gameObject.SetActive(true);
+                }
                 StartCoroutine(TypeLine(d.textEn));
             }
         }
         else
         {
             finishedDialogueEarly = true;
-            ui.dialogueText.text = currentDialogue[dialogueIndex].textEn;
+            currentDialogueText.text = currentDialogue[dialogueIndex].textEn;
             ui.dialogueTriangle.SetActive(true);
         }
     }
@@ -154,7 +172,7 @@ public class PlayerController : MonoBehaviour
         foreach (char c in l)
         {
             if (finishedDialogueEarly) { break; }
-            ui.dialogueText.text += c;
+            currentDialogueText.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
         ui.dialogueTriangle.SetActive(true);
