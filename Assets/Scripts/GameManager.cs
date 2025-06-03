@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	public int day, month, year, dayofWeek, stepsSinceDayChange;
 	public MoonPhase moonPhase;
 	public int daysSinceMoonChange;
+	public int eyePhase, stepsSinceEyeChange;
 
 
 	void Awake()

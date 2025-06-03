@@ -319,6 +319,26 @@ public class PlayerController : MonoBehaviour
                         ui.popupTextParent.SetActive(false);
                     }
 
+                    // update eye or perfrom encounter
+                    if (t.eventOnWalk == false && t.noEncounter == false)
+                    {
+                        gm.stepsSinceEyeChange++;
+                        if (gm.stepsSinceEyeChange > dm.minimumStepsUntilEyeChange)
+                        {
+                            if (UnityEngine.Random.Range(0, 4) == 3)
+                            {
+                                gm.eyePhase++;
+                                ui.eyeSprite.sprite = ui.eyeSprites[gm.eyePhase - 1];
+                                gm.stepsSinceEyeChange = 0;
+                            }
+                        }
+
+                        if (gm.eyePhase >= 4)
+                        {
+                            // start encounter
+                        }
+                    }
+
                 }
                 else
                 {

@@ -7,6 +7,7 @@ public class DungeonManager : MonoBehaviour
 {
     public String dungeonName; // name of the dungeon that is displayed to the player
     public String dungeonID; // used for load/saving data, including the ids of tiles
+    public int minimumStepsUntilEyeChange;
     public Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
 
     public int lowestX,highestX,lowestY,highestY = 0;

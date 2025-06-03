@@ -651,6 +651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonName: Test Dungeon
   dungeonID: TestDungeon
+  minimumStepsUntilEyeChange: 10
   lowestX: 0
   highestX: 0
   lowestY: 0
@@ -4375,6 +4376,8 @@ MonoBehaviour:
   stepsSinceDayChange: 0
   moonPhase: 0
   daysSinceMoonChange: 0
+  eyePhase: 0
+  stepsSinceEyeChange: 0
 --- !u!4 &484089708
 Transform:
   m_ObjectHideFlags: 0
@@ -7023,6 +7026,7 @@ MonoBehaviour:
   dateText: {fileID: 239252996}
   dayText: {fileID: 821751179}
   moonSprite: {fileID: 265368614}
+  eyeSprite: {fileID: 1736353923}
   newMoon: {fileID: 21300000, guid: 5a056411f7b3ac8418a9748549ad5b14, type: 3}
   waxingCrescent: {fileID: 21300000, guid: 985330c0ac4e21241a2d1f60fee236eb, type: 3}
   firstQuarter: {fileID: 21300000, guid: ef368fc28461aef4ba8c03abdd7d6cd5, type: 3}
@@ -7031,6 +7035,12 @@ MonoBehaviour:
   waningGibbous: {fileID: 21300000, guid: 885ddcf1d613f094db3a7378b72fc156, type: 3}
   thirdQuarter: {fileID: 21300000, guid: 66b6fd6ac5ec68b4d8a884bacbdc1702, type: 3}
   waningCrescent: {fileID: 21300000, guid: fe428604d2a55284d8be2abb9d55a22e, type: 3}
+  eyeSprites:
+  - {fileID: 21300000, guid: 178791a5b3c65a144885af184257ae94, type: 3}
+  - {fileID: 21300000, guid: 646334652cc55e149b670bcd86b7d53c, type: 3}
+  - {fileID: 21300000, guid: dcedc349317b5014bb9876ad401aa665, type: 3}
+  - {fileID: 21300000, guid: 96285e9646ac7ba408d477582934d654, type: 3}
+  - {fileID: 21300000, guid: 5d8eea7a4d888de4b93e08586ec6d5aa, type: 3}
 --- !u!4 &841954005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6715300095531517979, guid: f911a2573f065a84e924d621b0d837c3, type: 3}
@@ -8819,6 +8829,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: noEncounter
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: interactType
       value: 1
       objectReference: {fileID: 0}
@@ -9230,6 +9244,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 71761495}
     m_Modifications:
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: noEncounter
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: interactType
       value: 1
@@ -9958,6 +9976,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 71761495}
     m_Modifications:
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: noEncounter
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6575038441906758128, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: m_Name
       value: Tile

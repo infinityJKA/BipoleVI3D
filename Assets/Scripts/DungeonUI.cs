@@ -12,9 +12,9 @@ public class DungeonUI : MonoBehaviour
     public GameObject popupTextParent, dialogueBox, dialogueTriangle;
     public DungeonPartyMemberUI[] partyMemberUIs;
     public TMP_Text dateText, dayText;
-    public Image moonSprite;
+    public Image moonSprite, eyeSprite;
     public Sprite newMoon, waxingCrescent, firstQuarter, waxingGibbous, fullMoon, waningGibbous, thirdQuarter, waningCrescent;
-
+    public Sprite[] eyeSprites;
     public void PopupText(String s)
     {
         popupTextParent.SetActive(true);

@@ -22,6 +22,7 @@ public class Tile : MonoBehaviour
     eventOnWalk = false;  // if an event will be triggered when the player walks onto this tile
     public InteractType interactType = InteractType.None; // used for displaying the interaction popup
     public DungeonDialogue[] dialogue; // dialogue read from when event is triggered (from walking or from interacting)
+    public bool noEncounter; // if you can get a random encounter here
 
     
 
