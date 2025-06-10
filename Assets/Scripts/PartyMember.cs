@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 using System;
+using Unity.Profiling;
 
 [CreateAssetMenu(fileName = "PartyMember", menuName = "Bipole VI/PartyMember")]
 public class PartyMember : ScriptableObject
@@ -26,6 +27,9 @@ public class PartyMember : ScriptableObject
     public BodyPart[] bodyParts;
 
     public ItemObject[] currentlyEquipped = new ItemObject[4];
+
+    [Header("Only for enemies in combat")]
+    public CombatEnemyDisplay display;
 
     public bool Weakness(EquipmentType e)
     {

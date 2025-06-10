@@ -10,11 +10,15 @@ public class GameManager : MonoBehaviour
 	public List<PartyMember> partyMembers;
 	public List<PartyMember> partyMembersInit;
 	public inventoryObject inventory, inventoryPrefab;
+
+	[Header("Calendar")]
 	public int day, month, year, dayofWeek, stepsSinceDayChange;
 	public MoonPhase moonPhase;
 	public int daysSinceMoonChange;
 	public int eyePhase, stepsSinceEyeChange;
 
+	[Header("Combat")]
+	public List<PartyMember> enemies; // the enemies you are currently fighting
 
 	void Awake()
 	{

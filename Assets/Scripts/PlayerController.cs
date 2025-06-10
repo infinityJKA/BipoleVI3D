@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerController : MonoBehaviour
 {
@@ -335,7 +336,10 @@ public class PlayerController : MonoBehaviour
 
                         if (gm.eyePhase >= 4)
                         {
+                            gm.eyePhase++;
+                            ui.eyeSprite.sprite = ui.eyeSprites[gm.eyePhase - 1];
                             // start encounter
+                            StartEncounter();
                         }
                     }
 
@@ -351,8 +355,43 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void StartEncounter()
+    {
+        inputState = DungeonInputControlState.Menu;
 
-    public void RotateLeft(){
+        //disable environemnt stuff here
+
+        EncounterObject encounter = dm.encounters[UnityEngine.Random.Range(0, dm.encounters.Count)]; // choose random encounter
+        gm.enemies.Clear(); // clear the previous encounter
+        foreach (PartyMember e in encounter.enemies)
+        {
+            var clone = Instantiate(e); // create clone of the enemy so it doesn't override during battle
+            gm.enemies.Add(clone); // add the clone to the current encounter
+        }
+
+        for (int i = 0; i < ui.combat.combatSprites.Length; i++) // adds the enemy sprites to the ui
+        {
+            if (i < gm.enemies.Count)
+            {
+                ui.combat.combatSprites[i].gameObject.SetActive(true); // enable enemy display
+                ui.combat.combatSprites[i].enemySprite.sprite = gm.enemies[i].sprite; // update the sprite
+                gm.enemies[i].display = ui.combat.combatSprites[i]; // connect the display to the clone
+                ui.combat.combatSprites[i].selectIcon.SetActive(false);
+            }
+            else
+            {
+                ui.combat.combatSprites[i].gameObject.SetActive(false); // hide display if not enough enemies
+            }
+        }
+
+        // should probably do encounter text before setting button
+        eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
+        ui.combat.gameObject.SetActive(true);
+    }
+
+
+    public void RotateLeft()
+    {
         if (DoneMoving)
         {
             if (playerFacing == PlayerFacing.North)
