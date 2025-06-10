@@ -33,6 +33,10 @@ MonoBehaviour:
   weaknesses: 02000000040000000b000000
   equippable: 000000000300000007000000
   sprite: {fileID: 21300000, guid: 82f532c9e7a45154c98efb8e24388c25, type: 3}
+  portrait: {fileID: 0}
+  damagedPortrait: {fileID: 0}
+  veryDamagedPortrait: {fileID: 0}
+  head: {fileID: 21300000, guid: 338fb6001551a7641930ff14ac2a354c, type: 3}
   bodyParts:
   - bodyPartName: Head
     conditionsOnBreak: []
@@ -45,3 +49,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  statusConditions: []
+  display: {fileID: 0}
+  isEnemy: 0

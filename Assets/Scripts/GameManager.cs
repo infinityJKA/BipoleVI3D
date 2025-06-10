@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
 	public inventoryObject inventory, inventoryPrefab;
 
 	[Header("Calendar")]
-	public int day, month, year, dayofWeek, stepsSinceDayChange;
+	public int day;
+	public int month, year, dayofWeek, stepsSinceDayChange;
 	public MoonPhase moonPhase;
 	public int daysSinceMoonChange;
 	public int eyePhase, stepsSinceEyeChange;

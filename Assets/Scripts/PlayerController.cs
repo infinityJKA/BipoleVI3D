@@ -366,6 +366,7 @@ public class PlayerController : MonoBehaviour
         foreach (PartyMember e in encounter.enemies)
         {
             var clone = Instantiate(e); // create clone of the enemy so it doesn't override during battle
+            clone.isEnemy = true; // mark the clone as an enemy for combat
             gm.enemies.Add(clone); // add the clone to the current encounter
         }
 
@@ -385,6 +386,10 @@ public class PlayerController : MonoBehaviour
         }
 
         // should probably do encounter text before setting button
+
+        ui.combat.InitializeBattleOrder();
+
+
         eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
         ui.combat.gameObject.SetActive(true);
     }

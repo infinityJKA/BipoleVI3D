@@ -1283,6 +1283,17 @@ MonoBehaviour:
   mainBox_FirstButton: {fileID: 1043039125}
   mainBox_Text: {fileID: 29802405}
   mainBox_Portrait: {fileID: 0}
+  orderIcons:
+  - {fileID: 1255712161}
+  - {fileID: 210957768}
+  - {fileID: 502891747}
+  - {fileID: 1513819245}
+  - {fileID: 1709468952}
+  - {fileID: 1161467906}
+  - {fileID: 1509150429}
+  - {fileID: 1812626782}
+  - {fileID: 417796916}
+  battlers: []
 --- !u!1 &101275637
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,7 +2184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -252.6, y: -3.2}
+  m_AnchoredPosition: {x: -261.2, y: -3.2}
   m_SizeDelta: {x: 81.5595, y: 35.8231}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &163186796
@@ -2196,7 +2207,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NEXT
+  m_text: ORDER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07a21c184293d984bb338e5f28f81795, type: 2}
   m_sharedMaterial: {fileID: -8784925539729039011, guid: 07a21c184293d984bb338e5f28f81795, type: 2}
@@ -13575,7 +13586,7 @@ GameObject:
   - component: {fileID: 1065395872}
   - component: {fileID: 1065395871}
   m_Layer: 5
-  m_Name: Next
+  m_Name: Turn Order
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
