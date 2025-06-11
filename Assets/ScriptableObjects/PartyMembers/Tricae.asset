@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a87975661796814eb6a5b3f3285b403, type: 3}
-  m_Name: test2
+  m_Name: Tricae
   m_EditorClassIdentifier: 
-  characterNameEn: Test2
-  characterNameJp: "\u30DE\u30B2\u30A4\u30EC"
+  characterNameEn: "Tr\u012Bcae"
+  characterNameJp: "\u30C8\u30EA\u30B1\u30FC"
   ATK: 80
   INT: 50
   DEF: 90
@@ -32,7 +32,11 @@ MonoBehaviour:
   VIZ: 100
   weaknesses: 02000000040000000b000000
   equippable: 000000000300000007000000
-  sprite: {fileID: 21300000, guid: 82f532c9e7a45154c98efb8e24388c25, type: 3}
+  sprite: {fileID: 21300000, guid: 1c93dbf8492817d46bb66cc317dc7121, type: 3}
+  portrait: {fileID: 0}
+  damagedPortrait: {fileID: 0}
+  veryDamagedPortrait: {fileID: 0}
+  head: {fileID: 25092515982114131, guid: d0296fa02269b5742963c986fed0204b, type: 3}
   bodyParts:
   - bodyPartName: Head
     conditionsOnBreak: []
@@ -45,3 +49,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  statusConditions: []
+  display: {fileID: 0}
+  isEnemy: 0

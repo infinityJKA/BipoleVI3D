@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a87975661796814eb6a5b3f3285b403, type: 3}
-  m_Name: Mageire
+  m_Name: "Wi\xFEfon"
   m_EditorClassIdentifier: 
-  characterNameEn: "M\xE1geire"
-  characterNameJp: "\u30DE\u30B2\u30A4\u30EC"
+  characterNameEn: "Wi\xFEfon"
+  characterNameJp: "\u30A6\u30A3\u30D5\u30A9\u30F3"
   ATK: 80
   INT: 50
   DEF: 90
@@ -32,7 +32,7 @@ MonoBehaviour:
   VIZ: 100
   weaknesses: 02000000040000000b000000
   equippable: 000000000300000007000000
-  sprite: {fileID: 21300000, guid: cecf1859fab2c0640a8adaa843a76213, type: 3}
+  sprite: {fileID: 21300000, guid: e3474ba2aebec61419583617c9f79e15, type: 3}
   portrait: {fileID: 0}
   damagedPortrait: {fileID: 0}
   veryDamagedPortrait: {fileID: 0}
