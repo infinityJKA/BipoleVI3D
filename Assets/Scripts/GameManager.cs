@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
 	public int eyePhase, stepsSinceEyeChange;
 
 	[Header("Combat")]
+	public DungeonDialogue battleStartDialogue, partyMemberDiedDialogue, battleCompleteDialogue;
 	public List<PartyMember> enemies; // the enemies you are currently fighting
+	public PartyMember currentBattler; // whoever's turn it is
 
 	void Awake()
 	{

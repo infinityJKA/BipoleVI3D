@@ -388,7 +388,9 @@ public class PlayerController : MonoBehaviour
         // should probably do encounter text before setting button
 
         ui.combat.InitializeBattleOrder();
+        gm.currentBattler = ui.combat.battlers[0];
 
+        
 
         eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
         ui.combat.gameObject.SetActive(true);

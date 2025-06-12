@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a87975661796814eb6a5b3f3285b403, type: 3}
   m_Name: testEnem2
   m_EditorClassIdentifier: 
-  characterNameEn: Test Enemy2
-  characterNameJp: "\u30A8\u30EA\u30A6\u30AF\u30B9"
+  characterNameEn: Shufflin Shrub
+  characterNameJp: error
   ATK: 80
   INT: 80
   DEF: 100
@@ -32,11 +32,11 @@ MonoBehaviour:
   VIZ: 100
   weaknesses: 020000000500000007000000
   equippable: 0000000001000000060000000e000000
-  sprite: {fileID: 21300000, guid: 82f532c9e7a45154c98efb8e24388c25, type: 3}
+  sprite: {fileID: 21300000, guid: 93ad603a46e559c41ac1267fdcf26de8, type: 3}
   portrait: {fileID: 0}
   damagedPortrait: {fileID: 0}
   veryDamagedPortrait: {fileID: 0}
-  head: {fileID: 21300000, guid: 50b7380b0e59c104d908f64be9997f7c, type: 3}
+  head: {fileID: 21300000, guid: 6c03ab6f5ba7ab94a989948d3ca6437e, type: 3}
   bodyParts:
   - bodyPartName: Head
     conditionsOnBreak: []

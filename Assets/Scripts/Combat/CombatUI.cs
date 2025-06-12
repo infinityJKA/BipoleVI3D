@@ -22,7 +22,7 @@ public class CombatUI : MonoBehaviour
     public Image[] orderIcons;
 
     [Header("Calculation Stuff (don't edit its automatic)")]
-    public List<PartyMember> battlers;
+    public List<PartyMember> battlers; // updated to be in correct SPD order
     private GameManager gm;
 
     public void InitializeBattleOrder()
