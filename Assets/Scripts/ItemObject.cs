@@ -54,6 +54,7 @@ public class EquipmentAction
     public DamageType damageType; // physical or magical
     public EquipmentAction damageEquipmentType; // for hitting weaknesses (sword, fire, etc.)
     public int PWR, HIT;
+    public bool setCost; // costs # if true, % if false
     public int costMP, costHP, costBP; // costBP is only used if the action is an ULT action
     public int gainBP,gainVIZ;
     public bool setVIZ; // increase VIZ by # if true, increase by % if false
@@ -73,7 +74,7 @@ public class StatusCondition
 
 public enum TargetType
 {
-    Self, OneTarget, Party, BothParties
+    Self, OneEnemy, OneAlly, Party, EnemyParty, BothParties
 }
 
 public enum ItemType

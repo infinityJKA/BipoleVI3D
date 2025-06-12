@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public EventSystem eventSystem;
     public GameObject buttonSelectOnDecline;
     private TMP_Text currentDialogueText;
+    public CombatReturnTo combatReturnTo;
 
     private void Start()
     {
@@ -125,6 +126,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void StartDialogueCombat(DungeonDialogue[] d)
+    {
+        inputState = DungeonInputControlState.Dialogue;
+        dialogueIndex = -1; // -1 bc +1s at the start of dialogue
+        currentDialogue = d;
+        ui.combat.HideMenusForDialogue();
+        ui.dialogueBox.SetActive(true);
+        finishedDialogueEarly = false;
+        ui.dialogueTriangle.SetActive(false);
+        ProgressDialogue();
+    }
+
     public void ProgressDialogue()
     {
         if (dialogueIndex == -1 || currentDialogue[dialogueIndex].textEn == currentDialogueText.text || finishedDialogueEarly) // makes sure dialogue is finished or skipped first
@@ -192,6 +205,13 @@ public class PlayerController : MonoBehaviour
             GameManager.gm.inventory.AddItem(currentDialogue[dialogueIndex].item, 1);
             finishedDialogueEarly = true;
             ProgressDialogue();
+        }
+        else if (command == "START_TURN") // for starting a turn of combat
+        {
+            ui.dialogueBox.SetActive(false);
+            ui.combat.mainBox.SetActive(true);
+            inputState = DungeonInputControlState.Combat;
+            StartCombatTurn();
         }
     }
 
@@ -357,7 +377,8 @@ public class PlayerController : MonoBehaviour
 
     public void StartEncounter()
     {
-        inputState = DungeonInputControlState.Menu;
+        inputState = DungeonInputControlState.Combat;
+        combatReturnTo = CombatReturnTo.None;
 
         //disable environemnt stuff here
 
@@ -385,15 +406,57 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // should probably do encounter text before setting button
-
         ui.combat.InitializeBattleOrder();
         gm.currentBattler = ui.combat.battlers[0];
 
-        
-
-        eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
         ui.combat.gameObject.SetActive(true);
+
+        StartDialogueCombat(gm.battleStartDialogue);
+    }
+
+    public void StartCombatTurn()
+    {
+        if (gm.currentBattler.isEnemy)
+        {
+            EnemyTurn();
+        }
+        else
+        {
+            ui.combat.mainBox_Text.text = gm.currentBattler.characterNameEn + "'s turn.";
+
+            // set portrait depending on damage
+            if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.66) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.portrait;
+            else if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.33) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.damagedPortrait;
+            else ui.combat.mainBox_Portrait.sprite = gm.currentBattler.veryDamagedPortrait;
+
+            combatReturnTo = CombatReturnTo.None;
+            eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
+        }
+    }
+
+    public void EnemyTurn()
+    {
+        
+    }
+
+    public void DeclineInCombat()
+    {
+        if (combatReturnTo == CombatReturnTo.Main)
+        {
+            ui.combat.HideMenusForDialogue();
+            ui.combat.mainBox.SetActive(true);
+            eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
+            combatReturnTo = CombatReturnTo.None;
+        }
+        else if (combatReturnTo == CombatReturnTo.ActSelect)
+        {
+            ui.combat.HideMenusForDialogue();
+            foreach (PartyMember enem in gm.enemies) enem.display.selectIcon.SetActive(false);
+            ui.combat.actBox.SetActive(true);
+            ui.combat.actDescriptionBox.SetActive(true);
+            eventSystem.SetSelectedGameObject(ui.combat.lastSelectedAction);
+            combatReturnTo = CombatReturnTo.Main;
+        }
     }
 
 
@@ -592,7 +655,10 @@ public class PlayerController : MonoBehaviour
 
 }
 
-
+public enum CombatReturnTo
+{
+    None, Main, ActSelect
+}
 
 public enum PlayerFacing{
     North,South,East,West

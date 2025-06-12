@@ -38,7 +38,7 @@ public class DungeonInputCheck : MonoBehaviour
             else if (InputManager.instance.options) controller.OpenOptions();
             else if (InputManager.instance.menu) controller.OpenMenu();
         }
-        
+
         else if (controller.inputState == DungeonInputControlState.Dialogue)
         {
             if (InputManager.instance.interact) controller.ProgressDialogue();
@@ -47,6 +47,11 @@ public class DungeonInputCheck : MonoBehaviour
         else if (controller.inputState == DungeonInputControlState.Menu)
         {
             if (InputManager.instance.decline) controller.DeclineInMenu();
+        }
+
+        else if (controller.inputState == DungeonInputControlState.Combat)
+        {
+            if (InputManager.instance.decline) controller.DeclineInCombat();
         }
 
     }

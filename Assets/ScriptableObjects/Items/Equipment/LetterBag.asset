@@ -63,13 +63,14 @@ MonoBehaviour:
     damageType: 0
     PWR: 0
     HIT: 0
+    setCost: 0
     costMP: 0
     costHP: 0
     costBP: 0
     gainBP: 0
     gainVIZ: 0
     setVIZ: 0
-    targetType: 1
+    targetType: 3
     statusConditions:
     - stat: 
       amount: 0
