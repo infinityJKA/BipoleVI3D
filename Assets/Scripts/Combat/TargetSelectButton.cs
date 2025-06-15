@@ -34,7 +34,21 @@ public class TargetSelectButton : MonoBehaviour, ISelectHandler
 
     public void OnClick()
     {
-
+        combatUI.gm.currentTarget = battler;
+        combatUI.targetSelectedButton = gameObject;
+        combatUI.HideMenusForDialogue();
+        if (combatUI.gm.currentAction.PWR > 0) // if damaging move, select body part
+        {
+            Debug.Log("pwr > 0");
+            combatUI.GenerateBodyPartSelection();
+        }
+        else // otherwise just start the action
+        {
+            Debug.Log("pwr = 0");
+            combatUI.gm.currentBodyPartIndex = -1;
+            combatUI.gm.dungeonPlayer.StartDialogueCombat(combatUI.gm.currentAction.attackDialogue);
+        }
+        
     }
 
 

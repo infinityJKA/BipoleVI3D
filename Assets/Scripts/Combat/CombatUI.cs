@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
@@ -32,6 +33,12 @@ public class CombatUI : MonoBehaviour
     public GameObject targetSelectBox;
     public GameObject targetSelectGrid;
     public TargetSelectButton targetSelectButtonPrefab;
+    public GameObject targetSelectedButton;
+
+    [Header("Body Part Select Box")]
+    public GameObject bodyPartSelectBox;
+    public GameObject bodyPartSelectGrid;
+    public BodyPartSelectButton bodyPartSelectButtonPrefab;
 
     [Header("Attack Order")]
     public Image[] orderIcons;
@@ -162,12 +169,39 @@ public class CombatUI : MonoBehaviour
         }
     }
 
+    public void GenerateBodyPartSelection()
+    {
+        foreach (Transform child in bodyPartSelectGrid.transform) Destroy(child.gameObject); // destroy old buttons
+
+        bodyPartSelectBox.SetActive(true);
+
+        gm.currentHitrates = gm.CalculateHitRate();
+
+        BodyPartSelectButton bpsb0 = Instantiate(bodyPartSelectButtonPrefab, bodyPartSelectBox.transform.position, bodyPartSelectBox.transform.rotation, bodyPartSelectGrid.transform);
+        bpsb0.nameText.text = "Don't target (" + Convert.ToInt32(gm.currentHitrates[0] * 100) + "%)";
+        bpsb0.bodyPartIndex = -1;
+
+        int EDR = gm.currentTarget.CalculateStat("EDR");
+
+        for (int i = 0; i < gm.currentTarget.bodyParts.Length; i++) // generate the buttons in the grid
+        {
+            BodyPartSelectButton bpsb = Instantiate(bodyPartSelectButtonPrefab, bodyPartSelectBox.transform.position, bodyPartSelectBox.transform.rotation, bodyPartSelectGrid.transform);
+            bpsb.nameText.text = gm.currentTarget.bodyParts[i].bodyPartName + " (" + Convert.ToInt32(gm.currentHitrates[1] * 100) + "%) " + gm.currentTarget.bodyParts[i].timesDamaged + "/" +EDR;
+            bpsb.bodyPartIndex = i;
+        }
+
+        gm.dungeonPlayer.eventSystem.SetSelectedGameObject(bpsb0.gameObject);
+
+        gm.dungeonPlayer.combatReturnTo = CombatReturnTo.TargetSelect;
+    }
+
     public void HideMenusForDialogue()
     {
         mainBox.SetActive(false);
         actBox.SetActive(false);
         actDescriptionBox.SetActive(false);
         targetSelectBox.SetActive(false);
+        bodyPartSelectBox.SetActive(false);
 
     }
 

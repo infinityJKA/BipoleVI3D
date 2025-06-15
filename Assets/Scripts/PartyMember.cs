@@ -38,6 +38,20 @@ public class PartyMember : ScriptableObject
     {
         return weaknesses.Contains(e);
     }
+    
+    public int CalculateStat(string stat, int PWR) // this version is used for calculating in the PWR of an action as well
+    {
+        float total = GetUnmodifiedStat(stat);
+        int[] equipBonus = CalculateBonus(stat);
+        float[] conditionsEffect = CalculateStatusConditions(stat);
+
+        // add modifiers
+        total = total * (1+(PWR/100f)+(equipBonus[0]/100f)+conditionsEffect[0]) + equipBonus[1]+ conditionsEffect[1];
+
+        Debug.Log(stat+" ("+GetUnmodifiedStat(stat)+") = "+total+" after modifiers");
+
+        return Convert.ToInt32(total);
+    }
 
     public int CalculateStat(string stat)
     {
@@ -45,13 +59,11 @@ public class PartyMember : ScriptableObject
         int[] equipBonus = CalculateBonus(stat);
         float[] conditionsEffect = CalculateStatusConditions(stat);
 
-        // calculate equip% first, the add equip# on top of that
-        total = total * (1 + (equipBonus[0] / 100)) + equipBonus[1];
+        // add modifiers
+        total = total * (1+(equipBonus[0]/100f)+conditionsEffect[0]) + equipBonus[1]+ conditionsEffect[1];
 
-        // then calculate modifs from status conditions 
-        total = total * (1 + (conditionsEffect[0] / 100)) + conditionsEffect[1];
 
-        Debug.Log("SPD ("+GetUnmodifiedStat(stat)+") = "+total+" after modifiers");
+        Debug.Log(stat+" (" + GetUnmodifiedStat(stat) + ") = " + total + " after modifiers");
 
         return Convert.ToInt32(total);
     }
@@ -187,7 +199,8 @@ public class BodyPart
 {
     public string bodyPartName;
 
-    public StatusCondition[] conditionsOnBreak; 
+    public StatusCondition[] conditionsOnBreak;
+    public int timesDamaged; // this will be reset at the start of each battle
 
 
 }

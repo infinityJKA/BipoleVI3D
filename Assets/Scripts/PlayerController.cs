@@ -222,10 +222,37 @@ public class PlayerController : MonoBehaviour
         {
             foreach (PartyMember enem in gm.enemies)
             {
-                Instantiate(currentDialogue[dialogueIndex].obj, enem.display.gameObject.transform, ui.combat.gameObject);   
+                Instantiate(currentDialogue[dialogueIndex].obj, enem.display.gameObject.transform, ui.combat.gameObject);
             }
             ProgressDialogue();
         }
+        else if (command == "ATTACK_SINGLE_ENEMY")
+        {
+            PerformAttack(gm.currentTarget);
+            ProgressDialogue();
+        }
+    }
+
+    
+
+    private int PerformAttack(PartyMember target)
+    {
+        int damage = 0;
+        int defense = 0;
+        if (gm.currentAction.damageType == DamageType.Physical)
+        {
+            damage = gm.currentBattler.CalculateStat("ATK", gm.currentAction.PWR);
+            defense = target.CalculateStat("DEF");
+        }
+        else
+        {
+            damage = gm.currentBattler.CalculateStat("INT", gm.currentAction.PWR);
+            defense = target.CalculateStat("RES");
+        }
+
+        return Convert.ToInt32(damage * damage / (damage + defense));
+
+
     }
 
     private void UpdatePartyUI()
@@ -470,6 +497,13 @@ public class PlayerController : MonoBehaviour
             eventSystem.SetSelectedGameObject(ui.combat.lastSelectedAction);
             combatReturnTo = CombatReturnTo.Main;
         }
+        else if (combatReturnTo == CombatReturnTo.TargetSelect)
+        {
+            ui.combat.HideMenusForDialogue();
+            ui.combat.targetSelectBox.SetActive(true);
+            eventSystem.SetSelectedGameObject(ui.combat.targetSelectedButton);
+            combatReturnTo = CombatReturnTo.ActSelect;
+        }
     }
 
 
@@ -670,7 +704,7 @@ public class PlayerController : MonoBehaviour
 
 public enum CombatReturnTo
 {
-    None, Main, ActSelect
+    None, Main, ActSelect, TargetSelect
 }
 
 public enum PlayerFacing{

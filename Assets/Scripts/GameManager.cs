@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
 	public PartyMember currentBattler; // whoever's turn it is
 	public EquipmentAction currentAction; // the currently selected action
 	public PartyMember currentTarget; // the target of the current single-target action
+	public int currentBodyPartIndex; // the target's body part that is being targeted, null if no specific target
+	public List<ItemObject> itemsDropped; // what items to recieve at the end of the battle
+	public float[] currentHitrates; // hitrates for the current target (normal, body, critical)
+	public int expEarned; // how much exp to earn at the end of battle
 
 	void Awake()
 	{
@@ -67,6 +71,33 @@ public class GameManager : MonoBehaviour
 		partyMembers[a] = partyMembers[b];
 		partyMembers[b] = temp;
 	}
+
+	public float[] CalculateHitRate()
+    {
+		int targetLCK = currentTarget.CalculateStat("LCK");
+		int userLCK = currentBattler.CalculateStat("LCK");
+		int targetAGL = currentTarget.CalculateStat("AGL");
+
+		float hitting = currentBattler.CalculateStat("ACR")*(currentAction.HIT/100f);
+		float dodge =targetAGL+(targetLCK*0.25f);
+
+		float hitrateNormal = hitting*2f/(hitting+dodge);
+		Debug.Log("hitrate normal " + hitrateNormal);
+
+		dodge = targetAGL+(targetLCK*0.5f);
+		float hitrateBody = hitting*1.5f/(hitting+dodge);
+		Debug.Log("hitrate body " + hitrateBody);
+
+		float criticalChance = userLCK / (userLCK + (targetLCK * 5));
+		Debug.Log("crit chance " + criticalChance);
+
+		float[] result = new float[3];
+		result[0] = hitrateNormal;
+		result[1] = hitrateBody;
+		result[2] = criticalChance;
+
+		return result;
+    }
 
 	private void OnApplicationQuit()
 	{
