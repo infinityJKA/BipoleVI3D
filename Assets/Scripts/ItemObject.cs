@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Bipole VI/Item")]
 public class ItemObject : ScriptableObject
@@ -52,7 +53,7 @@ public class EquipmentAction
     public bool isHealing; // true if healing action, false in all other cases
     public String actionName, actionName_jp;
     public DamageType damageType; // physical or magical
-    public EquipmentAction damageEquipmentType; // for hitting weaknesses (sword, fire, etc.)
+    public EquipmentType damageEquipmentType; // for hitting weaknesses (sword, fire, etc.)
     public int PWR, HIT;
     public bool setCost; // costs # if true, % if false
     public int costMP, costHP, costBP; // costBP is only used if the action is an ULT action
@@ -61,7 +62,7 @@ public class EquipmentAction
     public TargetType targetType; // who the action can target
     public StatusCondition[] statusConditions; // status condition(s) afficted onto the target
     public StatusCondition[] addtionalStatusOnUser; // additional condition(s) the user gets affected by, no matter the target
-    public DungeonDialogue[] attackDialogue;
+    public List<DungeonDialogue> attackDialogue;
 }
 
 [Serializable]

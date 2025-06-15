@@ -15,7 +15,9 @@ public class BodyPartSelectButton : MonoBehaviour
 
     public void OnClick()
     {
-        
+        combatUI.gm.currentBodyPartIndex = bodyPartIndex;
+        combatUI.HideMenusForDialogue();
+        combatUI.gm.dungeonPlayer.StartDialogueCombat(combatUI.gm.currentAction.attackDialogue);
         
     }
 

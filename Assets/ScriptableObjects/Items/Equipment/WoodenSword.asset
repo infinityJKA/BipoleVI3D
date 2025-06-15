@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: WoodenSword
   m_EditorClassIdentifier: 
   itemName: Wooden Sword
+  itemName_jp: 
   itemDescription: 'Equip Type: SWORD
 
     +10% ACR, +15% DEF, +25% RES, +30% ATK.'
+  itemDescription_jp: 
   itemType: 1
   value: 200
   sprite: {fileID: 0}
@@ -53,12 +55,16 @@ MonoBehaviour:
   equipmentAction:
     actionDescription: <WOODED SLICE> Peform a 20 PWR, +5% HIT physical sword attack
       on a single target. Increases the user's VIZ by 20%. Builds +3 BP.
+    actionDescription_jp: 
     isUlt: 0
     isHealing: 0
     actionName: Wooded Slice
+    actionName_jp: 
     damageType: 0
+    damageEquipmentType: 0
     PWR: 20
     HIT: 5
+    setCost: 0
     costMP: 0
     costHP: 0
     costBP: 0
@@ -72,6 +78,13 @@ MonoBehaviour:
       isPercentage: 0
       turns: 0
     addtionalStatusOnUser: []
+    attackDialogue:
+    - command: ATTACK_SINGLE_ENEMY
+      textEn: 
+      textJp: 
+      portrait: {fileID: 0}
+      item: {fileID: 0}
+      obj: {fileID: -2253911629886400664, guid: fe1a7ed906c86784cb44813150592f46, type: 3}
   pages: []
   coinValue: 0
   currencyType: 0

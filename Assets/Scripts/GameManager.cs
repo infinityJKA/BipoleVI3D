@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
 	public int eyePhase, stepsSinceEyeChange;
 
 	[Header("Combat")]
-	public DungeonDialogue[] battleStartDialogue;
-	public DungeonDialogue[] partyMemberDiedDialogue, battleCompleteDialogue;
+	public List<DungeonDialogue> battleStartDialogue;
+	public List<DungeonDialogue> partyMemberDiedDialogue, battleCompleteDialogue;
 	
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 	public List<ItemObject> itemsDropped; // what items to recieve at the end of the battle
 	public float[] currentHitrates; // hitrates for the current target (normal, body, critical)
 	public int expEarned; // how much exp to earn at the end of battle
+	public GameObject currentAttackAnim; // will despawn when finished
+	public bool inCombat;
 
 	void Awake()
 	{

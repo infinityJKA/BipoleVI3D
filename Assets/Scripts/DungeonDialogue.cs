@@ -13,4 +13,16 @@ public class DungeonDialogue //: MonoBehaviour
     public ItemObject item;
     public GameObject obj;
 
+    public DungeonDialogue()
+    {
+        
+    }
+    
+    public DungeonDialogue(String en, String jp)
+    {
+        textEn = en;
+        textJp = jp;
+    }
+
 }
+

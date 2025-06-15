@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.LowLevel;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite up,down,left,right;
     public DungeonInputControlState inputState = DungeonInputControlState.FreeMove;
     public int dialogueIndex;
-    public DungeonDialogue[] currentDialogue;
+    public List<DungeonDialogue> currentDialogue;
     public float textSpeed = 0.01f;
     private bool finishedDialogueEarly = false;
     [Header("UI Stuff")]
@@ -126,16 +127,42 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void StartDialogueCombat(DungeonDialogue[] d)
+    public void StartDialogueCombat(List<DungeonDialogue> d)
     {
         inputState = DungeonInputControlState.Dialogue;
         dialogueIndex = -1; // -1 bc +1s at the start of dialogue
-        currentDialogue = d;
+
+        List<DungeonDialogue> nd = new List<DungeonDialogue>();
+        for (int i = 0; i < d.Count; i++) // create a new list that can be modified as combat goes on
+        {
+            nd.Add(d[i]);
+        }
+
+        currentDialogue = nd;
         ui.combat.HideMenusForDialogue();
         ui.dialogueBox.SetActive(true);
         finishedDialogueEarly = false;
         ui.dialogueTriangle.SetActive(false);
         ProgressDialogue();
+    }
+
+    public void ProgressCombatTurn()
+    {
+        // this progresses the turn
+        ui.dialogueBox.SetActive(false);
+        ui.combat.mainBox.SetActive(true);
+        inputState = DungeonInputControlState.Combat;
+
+        int newIndex = (ui.combat.battlers.IndexOf(gm.currentBattler) + 1);
+        if (newIndex >= ui.combat.battlers.Count)
+        {
+            newIndex = 0;
+        }
+
+        // sets the next character to take a turn
+        gm.currentBattler = ui.combat.battlers[newIndex];
+
+        StartCombatTurn();
     }
 
     public void ProgressDialogue()
@@ -145,32 +172,43 @@ public class PlayerController : MonoBehaviour
             finishedDialogueEarly = false;
             ui.dialogueTriangle.SetActive(false);
             dialogueIndex++;
-            DungeonDialogue d = currentDialogue[dialogueIndex];
-            if (d.command != "")
+
+            if (dialogueIndex >= currentDialogue.Count)
             {
-                Debug.Log("Going to do command \"" + d.command + "\"");
-                PerformDialogueCommand(d.command);
+                if (gm.inCombat)
+                {
+                    ProgressCombatTurn();
+                }
             }
             else
             {
-                currentDialogueText.text = "";
-                Debug.Log("Going to say line \"" + d.textEn + "\"");
-                if (d.portrait == null)
+                DungeonDialogue d = currentDialogue[dialogueIndex];
+                if (d.command != "")
                 {
-                    currentDialogueText = ui.dialogueText;
-                    ui.dialogueText2.gameObject.SetActive(false);
-                    ui.dialogueText.gameObject.SetActive(true);
-                    ui.dialoguePortrait.gameObject.SetActive(false);
+                    Debug.Log("Going to do command \"" + d.command + "\"");
+                    PerformDialogueCommand(d.command);
                 }
                 else
                 {
-                    currentDialogueText = ui.dialogueText2;
-                    ui.dialogueText.gameObject.SetActive(false);
-                    ui.dialogueText2.gameObject.SetActive(true);
-                    ui.dialoguePortrait.sprite = d.portrait;
-                    ui.dialoguePortrait.gameObject.SetActive(true);
+                    currentDialogueText.text = "";
+                    Debug.Log("Going to say line \"" + d.textEn + "\"");
+                    if (d.portrait == null)
+                    {
+                        currentDialogueText = ui.dialogueText;
+                        ui.dialogueText2.gameObject.SetActive(false);
+                        ui.dialogueText.gameObject.SetActive(true);
+                        ui.dialoguePortrait.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        currentDialogueText = ui.dialogueText2;
+                        ui.dialogueText.gameObject.SetActive(false);
+                        ui.dialogueText2.gameObject.SetActive(true);
+                        ui.dialoguePortrait.sprite = d.portrait;
+                        ui.dialoguePortrait.gameObject.SetActive(true);
+                    }
+                    StartCoroutine(TypeLine(d.textEn));
                 }
-                StartCoroutine(TypeLine(d.textEn));
             }
         }
         else
@@ -213,11 +251,6 @@ public class PlayerController : MonoBehaviour
             inputState = DungeonInputControlState.Combat;
             StartCombatTurn();
         }
-        else if (command == "SPAWN_EFFECT_SINGLE_ENEMY")
-        {
-            Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform, ui.combat.gameObject);
-            ProgressDialogue();
-        }
         else if (command == "SPAWN_EFFECT_ALL_ENEMIES")
         {
             foreach (PartyMember enem in gm.enemies)
@@ -229,29 +262,124 @@ public class PlayerController : MonoBehaviour
         else if (command == "ATTACK_SINGLE_ENEMY")
         {
             PerformAttack(gm.currentTarget);
-            ProgressDialogue();
+            //ProgressDialogue();
         }
     }
 
-    
 
-    private int PerformAttack(PartyMember target)
+
+    private void PerformAttack(PartyMember target)
     {
-        int damage = 0;
-        int defense = 0;
-        if (gm.currentAction.damageType == DamageType.Physical)
+        currentDialogue.Add(new DungeonDialogue(
+            gm.currentBattler.characterNameEn + " used " + gm.currentAction.actionName + "!",
+            "japanese translation here"
+        ));
+
+        // spawn animation
+        GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform, ui.combat.gameObject);
+
+        // create a new dialogue object to show the result
+        DungeonDialogue d = new DungeonDialogue();
+
+        // calculate the hitrate
+        float hitrate;
+        if (gm.currentBodyPartIndex == -1) hitrate = gm.currentHitrates[0] * 100;
+        else hitrate = gm.currentHitrates[1] * 100;
+
+        if (UnityEngine.Random.Range(0, 100) >= hitrate) // this is a successful hit
         {
-            damage = gm.currentBattler.CalculateStat("ATK", gm.currentAction.PWR);
-            defense = target.CalculateStat("DEF");
+            int damage = 0;
+            int defense = 0;
+            if (gm.currentAction.damageType == DamageType.Physical)
+            {
+                damage = gm.currentBattler.CalculateStat("ATK", gm.currentAction.PWR);
+                defense = target.CalculateStat("DEF");
+            }
+            else
+            {
+                damage = gm.currentBattler.CalculateStat("INT", gm.currentAction.PWR);
+                defense = target.CalculateStat("RES");
+            }
+
+            // check for weakness
+            float weakness = 1f;
+            String weaknessStr = "";
+            foreach (EquipmentType w in gm.currentTarget.weaknesses)
+            {
+                if (w == gm.currentAction.damageEquipmentType)
+                {
+                    weakness = 1.5f;
+                    weaknessStr = " (Weakness applied!)";
+                }
+            }
+
+            // deal damage differently if crit
+            if (UnityEngine.Random.Range(0, 100) >= gm.currentHitrates[2] * 100)
+            {
+                int dmg = Convert.ToInt32(damage * damage * (weakness + 1.5) / (damage + defense));
+                d.textEn = "CRITICAL HIT! " + gm.currentTarget.characterNameEn + " took " + dmg + " damage!"+ weaknessStr;
+                gm.currentTarget.currentHP -= dmg;
+            }
+            else
+            {
+                int dmg = Convert.ToInt32(damage * damage * weakness / (damage + defense));
+                d.textEn = gm.currentTarget.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
+                gm.currentTarget.currentHP -= dmg;
+            }
+
+            // add the damage dialogue
+            currentDialogue.Add(d);
+
+            // check for BREAKs
+            if (gm.currentBodyPartIndex != -1)
+            {
+                gm.currentTarget.bodyParts[gm.currentBodyPartIndex].timesDamaged += 1;
+                if (gm.currentTarget.bodyParts[gm.currentBodyPartIndex].timesDamaged >= gm.currentTarget.EDR) // if broken
+                {
+                    DungeonDialogue d2 = new DungeonDialogue();
+                    d2.textEn = gm.currentTarget.characterNameEn + "'s " + gm.currentTarget.bodyParts[gm.currentBodyPartIndex].bodyPartName + " broke!";
+                    currentDialogue.Add(d2);
+
+                    StatusCondition[] scs = gm.currentTarget.bodyParts[gm.currentBodyPartIndex].conditionsOnBreak;
+                    foreach (StatusCondition sc in scs)
+                    {
+                        currentDialogue.Add(new DungeonDialogue(
+                            gm.currentTarget.characterNameEn + " " + sc.amount + "x " + sc.stat + " for " + sc.turns + " turns",
+                            "japanese stuff here"
+                        ));
+                        var effectClone = sc;
+                        gm.currentTarget.statusConditions.Add(effectClone);
+                    }
+                }
+            }
+
+            // check if dead
+            if (gm.currentTarget.currentHP <= 0)
+            {
+                // create knockout dialogue
+                DungeonDialogue d2 = new DungeonDialogue();
+                d2.textEn = gm.currentTarget.characterNameEn + " was defeated!";
+                currentDialogue.Add(d2);
+
+                // destroy character if they are an enemy
+                if (gm.currentTarget.isEnemy)
+                {
+                    gm.enemies.Remove(gm.currentTarget);
+                    ui.combat.battlers.Remove(gm.currentTarget);
+                    gm.currentTarget.display.gameObject.SetActive(false);
+                    Destroy(gm.currentTarget);
+                    ui.combat.UpdateOrderGraphic();
+                }
+            }
         }
+        // if the attack misses
         else
         {
-            damage = gm.currentBattler.CalculateStat("INT", gm.currentAction.PWR);
-            defense = target.CalculateStat("RES");
+            d.textEn = "Attack missed!";
+            currentDialogue.Add(d);
         }
 
-        return Convert.ToInt32(damage * damage / (damage + defense));
-
+        ProgressDialogue();
 
     }
 
@@ -420,6 +548,8 @@ public class PlayerController : MonoBehaviour
         inputState = DungeonInputControlState.Combat;
         combatReturnTo = CombatReturnTo.None;
 
+        gm.inCombat = true;
+
         //disable environemnt stuff here
 
         EncounterObject encounter = dm.encounters[UnityEngine.Random.Range(0, dm.encounters.Count)]; // choose random encounter
@@ -476,7 +606,8 @@ public class PlayerController : MonoBehaviour
 
     public void EnemyTurn()
     {
-        
+        Debug.Log("Skipping enemy turn, not implemented yet");
+        ProgressCombatTurn();
     }
 
     public void DeclineInCombat()
