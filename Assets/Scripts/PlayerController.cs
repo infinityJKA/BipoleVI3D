@@ -213,6 +213,19 @@ public class PlayerController : MonoBehaviour
             inputState = DungeonInputControlState.Combat;
             StartCombatTurn();
         }
+        else if (command == "SPAWN_EFFECT_SINGLE_ENEMY")
+        {
+            Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform, ui.combat.gameObject);
+            ProgressDialogue();
+        }
+        else if (command == "SPAWN_EFFECT_ALL_ENEMIES")
+        {
+            foreach (PartyMember enem in gm.enemies)
+            {
+                Instantiate(currentDialogue[dialogueIndex].obj, enem.display.gameObject.transform, ui.combat.gameObject);   
+            }
+            ProgressDialogue();
+        }
     }
 
     private void UpdatePartyUI()

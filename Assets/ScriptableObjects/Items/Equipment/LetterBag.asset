@@ -77,6 +77,7 @@ MonoBehaviour:
       isPercentage: 0
       turns: 0
     addtionalStatusOnUser: []
+    attackDialogue: []
   pages: []
   coinValue: 0
   currencyType: 0

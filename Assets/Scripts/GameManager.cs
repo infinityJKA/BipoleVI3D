@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 	public List<PartyMember> enemies; // the enemies you are currently fighting
 	public PartyMember currentBattler; // whoever's turn it is
 	public EquipmentAction currentAction; // the currently selected action
+	public PartyMember currentTarget; // the target of the current single-target action
 
 	void Awake()
 	{

@@ -56,11 +56,12 @@ public class EquipmentAction
     public int PWR, HIT;
     public bool setCost; // costs # if true, % if false
     public int costMP, costHP, costBP; // costBP is only used if the action is an ULT action
-    public int gainBP,gainVIZ;
+    public int gainBP, gainVIZ;
     public bool setVIZ; // increase VIZ by # if true, increase by % if false
     public TargetType targetType; // who the action can target
     public StatusCondition[] statusConditions; // status condition(s) afficted onto the target
     public StatusCondition[] addtionalStatusOnUser; // additional condition(s) the user gets affected by, no matter the target
+    public DungeonDialogue[] attackDialogue;
 }
 
 [Serializable]

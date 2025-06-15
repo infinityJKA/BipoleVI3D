@@ -11,5 +11,6 @@ public class DungeonDialogue //: MonoBehaviour
     textEn, textJp;
     public Sprite portrait;
     public ItemObject item;
+    public GameObject obj;
 
 }
