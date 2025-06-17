@@ -84,7 +84,7 @@ MonoBehaviour:
       textJp: 
       portrait: {fileID: 0}
       item: {fileID: 0}
-      obj: {fileID: -2253911629886400664, guid: fe1a7ed906c86784cb44813150592f46, type: 3}
+      obj: {fileID: 4179405031530732623, guid: 07e5d364ebf3a2e448cae7f943f2cfc8, type: 3}
   pages: []
   coinValue: 0
   currencyType: 0

@@ -77,7 +77,9 @@ public class GameManager : MonoBehaviour
 	public float[] CalculateHitRate()
     {
 		int targetLCK = currentTarget.CalculateStat("LCK");
+		Debug.Log("targetLCK " + targetLCK);
 		int userLCK = currentBattler.CalculateStat("LCK");
+		Debug.Log("userLCK: " + userLCK);
 		int targetAGL = currentTarget.CalculateStat("AGL");
 
 		float hitting = currentBattler.CalculateStat("ACR")*(currentAction.HIT/100f);
@@ -90,7 +92,7 @@ public class GameManager : MonoBehaviour
 		float hitrateBody = hitting*1.5f/(hitting+dodge);
 		Debug.Log("hitrate body " + hitrateBody);
 
-		float criticalChance = userLCK / (userLCK + (targetLCK * 5));
+		float criticalChance = 1f* userLCK / (userLCK + (targetLCK * 7));
 		Debug.Log("crit chance " + criticalChance);
 
 		float[] result = new float[3];

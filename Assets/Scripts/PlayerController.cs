@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
         ));
 
         // spawn animation
-        GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform, ui.combat.gameObject);
+        GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity,ui.combat.transform);
 
         // create a new dialogue object to show the result
         DungeonDialogue d = new DungeonDialogue();
@@ -285,6 +285,8 @@ public class PlayerController : MonoBehaviour
         float hitrate;
         if (gm.currentBodyPartIndex == -1) hitrate = gm.currentHitrates[0] * 100;
         else hitrate = gm.currentHitrates[1] * 100;
+
+        Debug.Log("hitrate: " + hitrate);
 
         if (UnityEngine.Random.Range(0, 100) >= hitrate) // this is a successful hit
         {
@@ -314,10 +316,11 @@ public class PlayerController : MonoBehaviour
             }
 
             // deal damage differently if crit
+            Debug.Log("crit rate: " + gm.currentHitrates[2] * 100);
             if (UnityEngine.Random.Range(0, 100) >= gm.currentHitrates[2] * 100)
             {
                 int dmg = Convert.ToInt32(damage * damage * (weakness + 1.5) / (damage + defense));
-                d.textEn = "CRITICAL HIT! " + gm.currentTarget.characterNameEn + " took " + dmg + " damage!"+ weaknessStr;
+                d.textEn = "CRITICAL HIT! " + gm.currentTarget.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
                 gm.currentTarget.currentHP -= dmg;
             }
             else
