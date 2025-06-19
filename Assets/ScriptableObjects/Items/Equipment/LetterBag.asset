@@ -61,6 +61,7 @@ MonoBehaviour:
     actionName: Lucky Letter
     actionName_jp: 
     damageType: 0
+    damageEquipmentType: 0
     PWR: 0
     HIT: 0
     setCost: 0
@@ -71,11 +72,7 @@ MonoBehaviour:
     gainVIZ: 0
     setVIZ: 0
     targetType: 3
-    statusConditions:
-    - stat: 
-      amount: 0
-      isPercentage: 0
-      turns: 0
+    statusConditions: []
     addtionalStatusOnUser: []
     attackDialogue: []
   pages: []

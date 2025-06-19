@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
-  m_Name: SmallDagger
+  m_Name: TEST_damageANDboost
   m_EditorClassIdentifier: 
-  itemName: Small Dagger
+  itemName: Atk&Effect
   itemName_jp: 
-  itemDescription: 'Equip Type: SWORD
-
-    +15% SPD, +20% ATK/LCK, +40% AGL/ACR.'
+  itemDescription: this is a test action description
   itemDescription_jp: 
   itemType: 1
   value: 200
@@ -53,12 +51,11 @@ MonoBehaviour:
   nMP: 0
   equipmentEffect: 0
   equipmentAction:
-    actionDescription: <QUICK CUT> Peform a 10 PWR, +15% HIT physical sword attack
-      on a single target. Reduces the user's VIZ by 10%. Builds +4 BP.
+    actionDescription: this is a test action description
     actionDescription_jp: 
     isUlt: 0
     isHealing: 0
-    actionName: Quick Cut
+    actionName: Atk&Effect
     actionName_jp: 
     damageType: 0
     damageEquipmentType: 0
@@ -72,15 +69,27 @@ MonoBehaviour:
     gainVIZ: -10
     setVIZ: 0
     targetType: 1
-    statusConditions: []
-    addtionalStatusOnUser: []
+    statusConditions:
+    - stat: ATK
+      amount: 0.8
+      isPercentage: 0
+      turns: 2
+    - stat: SPD
+      amount: 0.5
+      isPercentage: 0
+      turns: 4
+    addtionalStatusOnUser:
+    - stat: LCK
+      amount: 1.1
+      isPercentage: 0
+      turns: 3
     attackDialogue:
     - command: ATTACK_SINGLE_ENEMY
       textEn: 
       textJp: 
       portrait: {fileID: 0}
       item: {fileID: 0}
-      obj: {fileID: -2253911629886400664, guid: fe1a7ed906c86784cb44813150592f46, type: 3}
+      obj: {fileID: 4179405031530732623, guid: 07e5d364ebf3a2e448cae7f943f2cfc8, type: 3}
   pages: []
   coinValue: 0
   currencyType: 0

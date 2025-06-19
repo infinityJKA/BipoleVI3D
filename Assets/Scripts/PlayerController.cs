@@ -264,6 +264,11 @@ public class PlayerController : MonoBehaviour
             PerformAttack(gm.currentTarget);
             //ProgressDialogue();
         }
+        else if (command == "ATTACK_ALL_ENEMIES")
+        {
+            PerformAttackAll();
+            //ProgressDialogue();
+        }
     }
 
 
@@ -277,6 +282,63 @@ public class PlayerController : MonoBehaviour
 
         // spawn animation
         GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity,ui.combat.transform);
+
+        PerformAttackOnTarget(target);
+        GiveSelfStatusesFromAttack();
+
+        ProgressDialogue();
+
+    }
+
+    private void PerformAttackAll()
+    {
+        currentDialogue.Add(new DungeonDialogue(
+            gm.currentBattler.characterNameEn + " used " + gm.currentAction.actionName + "!",
+            "japanese translation here"
+        ));
+
+        if (gm.currentBattler.isEnemy == false) // spawn anim on each enemy if enemy is attacking
+        {
+            foreach (PartyMember enem in gm.enemies)
+            {
+                Instantiate(currentDialogue[dialogueIndex].obj, enem.display.gameObject.transform.position, Quaternion.identity, ui.combat.transform);
+            }
+        }
+
+        // create list of targets depending on who is attacking
+        List<PartyMember> targets;
+        if (gm.currentBattler.isEnemy == false) // if player is attacking
+        {
+            targets = gm.enemies;
+        }
+        else // if enemy is attacking
+        {
+            targets = new List<PartyMember>();
+            foreach (PartyMember battler in ui.combat.battlers)
+            {
+                if (battler.isEnemy == false)
+                {
+                    targets.Add(battler);
+                    Debug.Log(battler.characterNameEn + " is being targeted in party attack");
+                }
+            }
+        }
+
+        // loop the attack for each target
+        foreach (PartyMember target in targets)
+        {
+            gm.currentTarget = target;
+            gm.currentHitrates = gm.CalculateHitRate();
+            PerformAttackOnTarget(target);
+        }
+        GiveSelfStatusesFromAttack();
+        ProgressDialogue();
+
+    }
+
+    private void PerformAttackOnTarget(PartyMember target)
+    {
+        Debug.Log(target.characterNameEn + " is being attacked");
 
         // create a new dialogue object to show the result
         DungeonDialogue d = new DungeonDialogue();
@@ -306,7 +368,7 @@ public class PlayerController : MonoBehaviour
             // check for weakness
             float weakness = 1f;
             String weaknessStr = "";
-            foreach (EquipmentType w in gm.currentTarget.weaknesses)
+            foreach (EquipmentType w in target.weaknesses)
             {
                 if (w == gm.currentAction.damageEquipmentType)
                 {
@@ -320,57 +382,68 @@ public class PlayerController : MonoBehaviour
             if (UnityEngine.Random.Range(0, 100) >= gm.currentHitrates[2] * 100)
             {
                 int dmg = Convert.ToInt32(damage * damage * (weakness + 1.5) / (damage + defense));
-                d.textEn = "CRITICAL HIT! " + gm.currentTarget.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
-                gm.currentTarget.currentHP -= dmg;
+                d.textEn = "CRITICAL HIT! " + target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
+                target.currentHP -= dmg;
             }
             else
             {
                 int dmg = Convert.ToInt32(damage * damage * weakness / (damage + defense));
-                d.textEn = gm.currentTarget.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
-                gm.currentTarget.currentHP -= dmg;
+                d.textEn = target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
+                target.currentHP -= dmg;
             }
 
             // add the damage dialogue
             currentDialogue.Add(d);
 
+            // add status effects to target
+            foreach (StatusCondition sc in gm.currentAction.statusConditions)
+            {
+                currentDialogue.Add(new DungeonDialogue(
+                    "Inflicted "+ sc.amount + "x " + sc.stat + " on " +target.characterNameEn + " for " + sc.turns + " turns",
+                    "japanese stuff here"
+                ));
+                var effectClone = sc;
+                target.statusConditions.Add(effectClone);
+            }
+
             // check for BREAKs
             if (gm.currentBodyPartIndex != -1)
             {
-                gm.currentTarget.bodyParts[gm.currentBodyPartIndex].timesDamaged += 1;
-                if (gm.currentTarget.bodyParts[gm.currentBodyPartIndex].timesDamaged >= gm.currentTarget.EDR) // if broken
+                target.bodyParts[gm.currentBodyPartIndex].timesDamaged += 1;
+                if (target.bodyParts[gm.currentBodyPartIndex].timesDamaged >= target.EDR) // if broken
                 {
                     DungeonDialogue d2 = new DungeonDialogue();
-                    d2.textEn = gm.currentTarget.characterNameEn + "'s " + gm.currentTarget.bodyParts[gm.currentBodyPartIndex].bodyPartName + " broke!";
+                    d2.textEn = target.characterNameEn + "'s " + target.bodyParts[gm.currentBodyPartIndex].bodyPartName + " broke!";
                     currentDialogue.Add(d2);
 
-                    StatusCondition[] scs = gm.currentTarget.bodyParts[gm.currentBodyPartIndex].conditionsOnBreak;
+                    StatusCondition[] scs = target.bodyParts[gm.currentBodyPartIndex].conditionsOnBreak;
                     foreach (StatusCondition sc in scs)
                     {
                         currentDialogue.Add(new DungeonDialogue(
-                            gm.currentTarget.characterNameEn + " " + sc.amount + "x " + sc.stat + " for " + sc.turns + " turns",
+                            "BREAK! " + target.characterNameEn + " " + sc.amount + "x " + sc.stat + " for " + sc.turns + " turns",
                             "japanese stuff here"
                         ));
                         var effectClone = sc;
-                        gm.currentTarget.statusConditions.Add(effectClone);
+                        target.statusConditions.Add(effectClone);
                     }
                 }
             }
 
             // check if dead
-            if (gm.currentTarget.currentHP <= 0)
+            if (target.currentHP <= 0)
             {
                 // create knockout dialogue
                 DungeonDialogue d2 = new DungeonDialogue();
-                d2.textEn = gm.currentTarget.characterNameEn + " was defeated!";
+                d2.textEn = target.characterNameEn + " was defeated!";
                 currentDialogue.Add(d2);
 
                 // destroy character if they are an enemy
-                if (gm.currentTarget.isEnemy)
+                if (target.isEnemy)
                 {
-                    gm.enemies.Remove(gm.currentTarget);
-                    ui.combat.battlers.Remove(gm.currentTarget);
-                    gm.currentTarget.display.gameObject.SetActive(false);
-                    Destroy(gm.currentTarget);
+                    gm.enemies.Remove(target);
+                    ui.combat.battlers.Remove(target);
+                    target.display.gameObject.SetActive(false);
+                    Destroy(target);
                     ui.combat.UpdateOrderGraphic();
                 }
             }
@@ -381,9 +454,20 @@ public class PlayerController : MonoBehaviour
             d.textEn = "Attack missed!";
             currentDialogue.Add(d);
         }
+    }
 
-        ProgressDialogue();
-
+    private void GiveSelfStatusesFromAttack()
+    {
+         // add status effects to user
+        foreach (StatusCondition sc in gm.currentAction.addtionalStatusOnUser)
+        {
+            currentDialogue.Add(new DungeonDialogue(
+                gm.currentBattler.characterNameEn + " gained "+ sc.amount + "x " + sc.stat + " for " + sc.turns + " turns",
+                "japanese stuff here"
+            ));
+            var effectClone = sc;
+            gm.currentBattler.statusConditions.Add(effectClone);
+        }
     }
 
     private void UpdatePartyUI()

@@ -127,7 +127,9 @@ public class CombatUI : MonoBehaviour
         EquipmentAction ea = gm.currentAction;
         if (ea.targetType == TargetType.Self || ea.targetType == TargetType.BothParties || ea.targetType == TargetType.EnemyParty || ea.targetType == TargetType.Party)
         {
-            // start the action here
+            gm.currentBodyPartIndex = -1;
+            HideMenusForDialogue();
+            gm.dungeonPlayer.StartDialogueCombat(gm.currentAction.attackDialogue);
         }
         else // generate a list of selectable targets
         {

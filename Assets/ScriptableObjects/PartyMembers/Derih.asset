@@ -40,13 +40,16 @@ MonoBehaviour:
   bodyParts:
   - bodyPartName: Head
     conditionsOnBreak: []
+    timesDamaged: 0
   - bodyPartName: Arms
     conditionsOnBreak: []
+    timesDamaged: 0
   - bodyPartName: Legs
     conditionsOnBreak: []
+    timesDamaged: 0
   currentlyEquipped:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: a8ce46cceadf9bc43b28a9ed74818eca, type: 2}
+  - {fileID: 11400000, guid: 0d940868462462446811ecec097ee775, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   statusConditions: []

@@ -18,7 +18,7 @@ MonoBehaviour:
   INT: 80
   DEF: 100
   RES: 80
-  AGL: 30
+  AGL: 10
   ACR: 40
   SPD: 9
   LCK: 10
@@ -39,11 +39,22 @@ MonoBehaviour:
   head: {fileID: 21300000, guid: 209ae2d1ad004144c83b26fa431d5cde, type: 3}
   bodyParts:
   - bodyPartName: Head
-    conditionsOnBreak: []
+    conditionsOnBreak:
+    - stat: SPD
+      amount: 0.7
+      isPercentage: 0
+      turns: 3
+    - stat: AGL
+      amount: 0.2
+      isPercentage: 0
+      turns: 5
+    timesDamaged: 0
   - bodyPartName: Arms
     conditionsOnBreak: []
+    timesDamaged: 0
   - bodyPartName: Legs
     conditionsOnBreak: []
+    timesDamaged: 0
   currentlyEquipped:
   - {fileID: 11400000, guid: 8bc63249a0ecc6c4280569ad050ee32a, type: 2}
   - {fileID: 11400000, guid: 7d9889a493a174a4fa06b151b83563bc, type: 2}
