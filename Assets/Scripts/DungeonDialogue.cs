@@ -12,10 +12,11 @@ public class DungeonDialogue //: MonoBehaviour
     public Sprite portrait;
     public ItemObject item;
     public GameObject obj;
+    public PartyMember battler;
 
     public DungeonDialogue()
     {
-        
+
     }
     
     public DungeonDialogue(String en, String jp)

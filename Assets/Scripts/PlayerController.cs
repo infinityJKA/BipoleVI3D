@@ -262,12 +262,19 @@ public class PlayerController : MonoBehaviour
         else if (command == "ATTACK_SINGLE_ENEMY")
         {
             PerformAttack(gm.currentTarget);
-            //ProgressDialogue();
         }
         else if (command == "ATTACK_ALL_ENEMIES")
         {
             PerformAttackAll();
-            //ProgressDialogue();
+        }
+        else if (command == "ENEM_DIED") // removes the enemy from the list of enemies (done here bc it messes up if done mid-loop of a multitarget attack)
+        {
+            gm.enemies.Remove(currentDialogue[dialogueIndex].battler);
+            ui.combat.battlers.Remove(currentDialogue[dialogueIndex].battler);
+            Destroy(currentDialogue[dialogueIndex].battler);
+            ui.combat.UpdateOrderGraphic();
+
+            ProgressDialogue();
         }
     }
 
@@ -350,7 +357,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("hitrate: " + hitrate);
 
-        if (UnityEngine.Random.Range(0, 100) >= hitrate) // this is a successful hit
+        if (UnityEngine.Random.Range(0, 100) <= hitrate) // this is a successful hit
         {
             int damage = 0;
             int defense = 0;
@@ -379,7 +386,7 @@ public class PlayerController : MonoBehaviour
 
             // deal damage differently if crit
             Debug.Log("crit rate: " + gm.currentHitrates[2] * 100);
-            if (UnityEngine.Random.Range(0, 100) >= gm.currentHitrates[2] * 100)
+            if (UnityEngine.Random.Range(0, 100) <= gm.currentHitrates[2] * 100)
             {
                 int dmg = Convert.ToInt32(damage * damage * (weakness + 1.5) / (damage + defense));
                 d.textEn = "CRITICAL HIT! " + target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
@@ -440,11 +447,12 @@ public class PlayerController : MonoBehaviour
                 // destroy character if they are an enemy
                 if (target.isEnemy)
                 {
-                    gm.enemies.Remove(target);
-                    ui.combat.battlers.Remove(target);
                     target.display.gameObject.SetActive(false);
-                    Destroy(target);
-                    ui.combat.UpdateOrderGraphic();
+
+                    DungeonDialogue death = new DungeonDialogue();
+                    death.command = "ENEM_DIED";
+                    death.battler = target;
+                    currentDialogue.Add(death);
                 }
             }
         }
@@ -458,16 +466,29 @@ public class PlayerController : MonoBehaviour
 
     private void GiveSelfStatusesFromAttack()
     {
-         // add status effects to user
+        // add status effects to user
         foreach (StatusCondition sc in gm.currentAction.addtionalStatusOnUser)
         {
             currentDialogue.Add(new DungeonDialogue(
-                gm.currentBattler.characterNameEn + " gained "+ sc.amount + "x " + sc.stat + " for " + sc.turns + " turns",
+                gm.currentBattler.characterNameEn + " gained " + sc.amount + "x " + sc.stat + " for " + sc.turns + " turns",
                 "japanese stuff here"
             ));
             var effectClone = sc;
             gm.currentBattler.statusConditions.Add(effectClone);
         }
+
+        // modify VIZ
+        if (gm.currentAction.setVIZ == true)
+        {
+            gm.currentBattler.VIZ += gm.currentAction.gainVIZ;
+        }
+        else
+        {
+            gm.currentBattler.VIZ *= gm.currentAction.gainVIZ;
+        }
+
+        // gain BP
+        gm.BP += gm.currentAction.gainBP;
     }
 
     private void UpdatePartyUI()

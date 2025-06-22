@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 	[Header("Combat")]
 	public List<DungeonDialogue> battleStartDialogue;
 	public List<DungeonDialogue> partyMemberDiedDialogue, battleCompleteDialogue;
+	public int BP;
 	
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
@@ -82,8 +83,10 @@ public class GameManager : MonoBehaviour
 		Debug.Log("userLCK: " + userLCK);
 		int targetAGL = currentTarget.CalculateStat("AGL");
 
-		float hitting = currentBattler.CalculateStat("ACR")*(currentAction.HIT/100f);
-		float dodge =targetAGL+(targetLCK*0.25f);
+		float hitting = currentBattler.CalculateStat("ACR")*(100+currentAction.HIT/100f);
+		Debug.Log("ACR*(Hit/100) = " + hitting);
+		float dodge = targetAGL+(targetLCK*0.25f);
+		Debug.Log("targetAGL+(Lck*0.25) = "+dodge);
 
 		float hitrateNormal = hitting*2f/(hitting+dodge);
 		Debug.Log("hitrate normal " + hitrateNormal);
@@ -92,7 +95,7 @@ public class GameManager : MonoBehaviour
 		float hitrateBody = hitting*1.5f/(hitting+dodge);
 		Debug.Log("hitrate body " + hitrateBody);
 
-		float criticalChance = 1f* userLCK / (userLCK + (targetLCK * 7));
+		float criticalChance = 1f* userLCK / (userLCK + (targetLCK * 9));
 		Debug.Log("crit chance " + criticalChance);
 
 		float[] result = new float[3];
