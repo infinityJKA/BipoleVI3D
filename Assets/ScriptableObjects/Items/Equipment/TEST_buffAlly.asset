@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
+  m_Name: TEST_buffAlly
+  m_EditorClassIdentifier: 
+  itemName: BuffAlly
+  itemName_jp: 
+  itemDescription: this is a test action description
+  itemDescription_jp: 
+  itemType: 1
+  value: 200
+  sprite: {fileID: 0}
+  restoreHP: 0
+  restoreMP: 0
+  restoreSetAmount: 0
+  targetType: 0
+  canUseInBattle: 0
+  canUseInInventory: 0
+  isAttack: 0
+  equipmentType: 0
+  pDEF: 0
+  nDEF: 0
+  pRES: 0
+  nRES: 0
+  pATK: 20
+  nATK: 0
+  pINT: 0
+  nINT: 0
+  pAGL: 40
+  nAGL: 0
+  pACR: 40
+  nACR: 0
+  pSPD: 15
+  nSPD: 0
+  pLCK: 20
+  nLCK: 0
+  pEDR: 0
+  nEDR: 0
+  pHP: 0
+  nHP: 0
+  pMP: 0
+  nMP: 0
+  equipmentEffect: 0
+  equipmentAction:
+    actionDescription: this is a test action description
+    actionDescription_jp: 
+    isUlt: 0
+    isHealing: 0
+    actionName: BuffAlly
+    actionName_jp: 
+    damageType: 0
+    damageEquipmentType: 0
+    PWR: 0
+    HIT: 15
+    setCost: 0
+    costMP: 0
+    costHP: 0
+    costBP: 0
+    gainBP: 4
+    gainVIZ: -10
+    setVIZ: 0
+    targetType: 2
+    statusConditions:
+    - stat: DEF
+      amount: 1.3
+      isPercentage: 0
+      turns: 2
+    - stat: ATK
+      amount: 1.8
+      isPercentage: 0
+      turns: 4
+    addtionalStatusOnUser: []
+    attackDialogue:
+    - command: EFFECT_SINGLE_ALLY
+      textEn: 
+      textJp: 
+      portrait: {fileID: 0}
+      item: {fileID: 0}
+      obj: {fileID: 4179405031530732623, guid: 07e5d364ebf3a2e448cae7f943f2cfc8, type: 3}
+      battler: {fileID: 0}
+  pages: []
+  coinValue: 0
+  currencyType: 0
+  condition: 0
+  mintYear: 0
+  design: 

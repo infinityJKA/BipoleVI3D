@@ -261,19 +261,27 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "ATTACK_SINGLE_ENEMY")
         {
-            PerformAttack(gm.currentTarget,true);
+            PerformAttack(gm.currentTarget,true, false);
         }
         else if (command == "ATTACK_ALL_ENEMIES")
         {
-            PerformAttackAll(true);
+            PerformAttackAll(true, false);
         }
         else if (command == "EFFECT_SINGLE_ENEMY")
         {
-            PerformAttack(gm.currentTarget,false);
+            PerformAttack(gm.currentTarget,false, false);
         }
         else if (command == "EFFECT_ALL_ENEMIES")
         {
-            PerformAttackAll(false);
+            PerformAttackAll(false, false);
+        }
+        else if (command == "EFFECT_SINGLE_ALLY")
+        {
+            PerformAttack(gm.currentTarget,false, true);
+        }
+        else if (command == "EFFECT_ALL_ALLIES")
+        {
+            PerformAttackAll(false, true);
         }
         else if (command == "ENEM_DIED") // removes the enemy from the list of enemies (done here bc it messes up if done mid-loop of a multitarget attack)
         {
@@ -288,7 +296,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private void PerformAttack(PartyMember target, bool dealDamage)
+    private void PerformAttack(PartyMember target, bool dealDamage, bool unmissable)
     {
         currentDialogue.Add(new DungeonDialogue(
             gm.currentBattler.characterNameEn + " used " + gm.currentAction.actionName + "!",
@@ -296,23 +304,26 @@ public class PlayerController : MonoBehaviour
         ));
 
         // spawn animation
-        GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity,ui.combat.transform);
+        if (target.isEnemy)
+        {
+            GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity, ui.combat.transform);
+        }
 
-        PerformAttackOnTarget(target,dealDamage);
+        PerformAttackOnTarget(target,dealDamage, unmissable);
         GiveSelfStatusesFromAttack();
 
         ProgressDialogue();
 
     }
 
-    private void PerformAttackAll(bool dealDamage)
+    private void PerformAttackAll(bool dealDamage, bool unmissable)
     {
         currentDialogue.Add(new DungeonDialogue(
             gm.currentBattler.characterNameEn + " used " + gm.currentAction.actionName + "!",
             "japanese translation here"
         ));
 
-        if (gm.currentBattler.isEnemy == false) // spawn anim on each enemy if enemy is attacking
+        if (gm.currentBattler.isEnemy == false) // spawn anim on each enemy if player is attacking
         {
             foreach (PartyMember enem in gm.enemies)
             {
@@ -344,14 +355,14 @@ public class PlayerController : MonoBehaviour
         {
             gm.currentTarget = target;
             gm.currentHitrates = gm.CalculateHitRate();
-            PerformAttackOnTarget(target,dealDamage);
+            PerformAttackOnTarget(target,dealDamage, unmissable);
         }
         GiveSelfStatusesFromAttack();
         ProgressDialogue();
 
     }
 
-    private void PerformAttackOnTarget(PartyMember target, bool dealDamage)
+    private void PerformAttackOnTarget(PartyMember target, bool dealDamage, bool unmissable)
     {
         Debug.Log(target.characterNameEn + " is being attacked");
 
@@ -359,9 +370,14 @@ public class PlayerController : MonoBehaviour
         DungeonDialogue d = new DungeonDialogue();
 
         // calculate the hitrate
-        float hitrate;
-        if (gm.currentBodyPartIndex == -1) hitrate = gm.currentHitrates[0] * 100;
-        else hitrate = gm.currentHitrates[1] * 100;
+        float hitrate = 0;
+        if (!unmissable)
+        {
+            if (gm.currentBodyPartIndex == -1) hitrate = gm.currentHitrates[0] * 100;
+            else hitrate = gm.currentHitrates[1] * 100;
+        }
+
+        if (unmissable) hitrate = 999f;
 
         Debug.Log("hitrate: " + hitrate);
 
