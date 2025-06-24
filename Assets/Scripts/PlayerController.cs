@@ -261,11 +261,19 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "ATTACK_SINGLE_ENEMY")
         {
-            PerformAttack(gm.currentTarget);
+            PerformAttack(gm.currentTarget,true);
         }
         else if (command == "ATTACK_ALL_ENEMIES")
         {
-            PerformAttackAll();
+            PerformAttackAll(true);
+        }
+        else if (command == "EFFECT_SINGLE_ENEMY")
+        {
+            PerformAttack(gm.currentTarget,false);
+        }
+        else if (command == "EFFECT_ALL_ENEMIES")
+        {
+            PerformAttackAll(false);
         }
         else if (command == "ENEM_DIED") // removes the enemy from the list of enemies (done here bc it messes up if done mid-loop of a multitarget attack)
         {
@@ -280,7 +288,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private void PerformAttack(PartyMember target)
+    private void PerformAttack(PartyMember target, bool dealDamage)
     {
         currentDialogue.Add(new DungeonDialogue(
             gm.currentBattler.characterNameEn + " used " + gm.currentAction.actionName + "!",
@@ -290,14 +298,14 @@ public class PlayerController : MonoBehaviour
         // spawn animation
         GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity,ui.combat.transform);
 
-        PerformAttackOnTarget(target);
+        PerformAttackOnTarget(target,dealDamage);
         GiveSelfStatusesFromAttack();
 
         ProgressDialogue();
 
     }
 
-    private void PerformAttackAll()
+    private void PerformAttackAll(bool dealDamage)
     {
         currentDialogue.Add(new DungeonDialogue(
             gm.currentBattler.characterNameEn + " used " + gm.currentAction.actionName + "!",
@@ -336,14 +344,14 @@ public class PlayerController : MonoBehaviour
         {
             gm.currentTarget = target;
             gm.currentHitrates = gm.CalculateHitRate();
-            PerformAttackOnTarget(target);
+            PerformAttackOnTarget(target,dealDamage);
         }
         GiveSelfStatusesFromAttack();
         ProgressDialogue();
 
     }
 
-    private void PerformAttackOnTarget(PartyMember target)
+    private void PerformAttackOnTarget(PartyMember target, bool dealDamage)
     {
         Debug.Log(target.characterNameEn + " is being attacked");
 
@@ -372,46 +380,50 @@ public class PlayerController : MonoBehaviour
                 defense = target.CalculateStat("RES");
             }
 
-            // check for weakness
-            float weakness = 1f;
-            String weaknessStr = "";
-            foreach (EquipmentType w in target.weaknesses)
+            if (dealDamage) // do attack damage if this action can deal damage
             {
-                if (w == gm.currentAction.damageEquipmentType)
+
+                // check for weakness
+                float weakness = 1f;
+                String weaknessStr = "";
+                foreach (EquipmentType w in target.weaknesses)
                 {
-                    weakness = 1.5f;
-                    weaknessStr = " (Weakness applied!)";
+                    if (w == gm.currentAction.damageEquipmentType)
+                    {
+                        weakness = 1.5f;
+                        weaknessStr = " (Weakness applied!)";
+                    }
                 }
-            }
 
-            // deal damage differently if crit
-            Debug.Log("crit rate: " + gm.currentHitrates[2] * 100);
-            if (UnityEngine.Random.Range(0, 100) <= gm.currentHitrates[2] * 100)
-            {
-                int dmg = Convert.ToInt32(damage * damage * (weakness + 1.5) / (damage + defense));
-                d.textEn = "CRITICAL HIT! " + target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
-                target.currentHP -= dmg;
-            }
-            else
-            {
-                int dmg = Convert.ToInt32(damage * damage * weakness / (damage + defense));
-                d.textEn = target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
-                target.currentHP -= dmg;
-            }
+                // deal damage differently if crit
+                Debug.Log("crit rate: " + gm.currentHitrates[2] * 100);
+                if (UnityEngine.Random.Range(0, 100) <= gm.currentHitrates[2] * 100)
+                {
+                    int dmg = Convert.ToInt32(damage * damage * (weakness + 1.5) / (damage + defense));
+                    d.textEn = "CRITICAL HIT! " + target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
+                    target.currentHP -= dmg;
+                }
+                else
+                {
+                    int dmg = Convert.ToInt32(damage * damage * weakness / (damage + defense));
+                    d.textEn = target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
+                    target.currentHP -= dmg;
+                }
 
-            // add the damage dialogue
-            currentDialogue.Add(d);
+                // add the damage dialogue
+                currentDialogue.Add(d);
+            }
 
             // add status effects to target
-            foreach (StatusCondition sc in gm.currentAction.statusConditions)
-            {
-                currentDialogue.Add(new DungeonDialogue(
-                    "Inflicted "+ sc.amount + "x " + sc.stat + " on " +target.characterNameEn + " for " + sc.turns + " turns",
-                    "japanese stuff here"
-                ));
-                var effectClone = sc;
-                target.statusConditions.Add(effectClone);
-            }
+                foreach (StatusCondition sc in gm.currentAction.statusConditions)
+                {
+                    currentDialogue.Add(new DungeonDialogue(
+                        "Inflicted " + sc.amount + "x " + sc.stat + " on " + target.characterNameEn + " for " + sc.turns + " turns",
+                        "japanese stuff here"
+                    ));
+                    var effectClone = sc;
+                    target.statusConditions.Add(effectClone);
+                }
 
             // check for BREAKs
             if (gm.currentBodyPartIndex != -1)
