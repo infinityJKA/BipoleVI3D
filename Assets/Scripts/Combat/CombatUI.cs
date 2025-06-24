@@ -135,11 +135,15 @@ public class CombatUI : MonoBehaviour
         {
             Debug.Log("Need to manually select a target for this aciton");
 
-            List<PartyMember> chars = gm.enemies; // default to current enemies
 
-            if (ea.targetType == TargetType.OneAlly) // create a list of valid allies if targeting ally
+            List<PartyMember> chars = new List<PartyMember>();
+
+            if (ea.targetType == TargetType.OneEnemy) // generate list of targets based on target type
             {
-                chars.Clear();
+                chars = gm.enemies; 
+            }
+            else
+            {
                 for (int i = 0; i < 4; i++)
                 {
                     if (i < gm.partyMembers.Count)

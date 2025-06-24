@@ -758,7 +758,10 @@ public class PlayerController : MonoBehaviour
         else if (combatReturnTo == CombatReturnTo.ActSelect)
         {
             ui.combat.HideMenusForDialogue();
-            foreach (PartyMember enem in gm.enemies) enem.display.selectIcon.SetActive(false);
+            foreach (PartyMember enem in gm.enemies)
+            {
+                enem.display.selectIcon.SetActive(false);
+            }
             ui.combat.actBox.SetActive(true);
             ui.combat.actDescriptionBox.SetActive(true);
             eventSystem.SetSelectedGameObject(ui.combat.lastSelectedAction);
