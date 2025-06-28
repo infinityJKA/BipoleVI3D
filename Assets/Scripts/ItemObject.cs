@@ -60,6 +60,7 @@ public class EquipmentAction
     public int gainBP, gainVIZ;
     public bool setVIZ; // increase VIZ by # if true, increase by % if false
     public TargetType targetType; // who the action can target
+    public bool dontTargetBodyPart; // makes it so you can't target a body part with this move, used for single-target non-damaging attacks
     public StatusCondition[] statusConditions; // status condition(s) afficted onto the target
     public StatusCondition[] addtionalStatusOnUser; // additional condition(s) the user gets affected by, no matter the target
     public List<DungeonDialogue> attackDialogue;
@@ -70,7 +71,6 @@ public class StatusCondition
 {
     public String stat;
     public float amount;
-    public bool isPercentage; // uses amount% percent if true, otherwise affects stat by amount#
     public int turns; // counts down every turn
 }
 

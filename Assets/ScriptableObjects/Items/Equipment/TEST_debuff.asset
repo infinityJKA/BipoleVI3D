@@ -69,19 +69,17 @@ MonoBehaviour:
     gainVIZ: -10
     setVIZ: 0
     targetType: 1
+    dontTargetBodyPart: 1
     statusConditions:
     - stat: DEF
       amount: 0.8
-      isPercentage: 0
       turns: 2
     - stat: RES
       amount: 0.5
-      isPercentage: 0
       turns: 4
     addtionalStatusOnUser:
     - stat: LCK
       amount: 1.1
-      isPercentage: 0
       turns: 3
     attackDialogue:
     - command: EFFECT_SINGLE_ENEMY

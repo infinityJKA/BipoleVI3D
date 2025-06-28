@@ -79,14 +79,9 @@ public class PartyMember : ScriptableObject
             {
                 if (sc.stat == stat)
                 {
-                    if (sc.isPercentage)
-                    {
-                        pTotal += sc.amount;
-                    }
-                    else
-                    {
-                        nTotal += sc.amount;
-                    }
+                    
+                    nTotal += sc.amount;
+                    
                 }
             }
         }

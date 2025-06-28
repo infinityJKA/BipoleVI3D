@@ -42,6 +42,13 @@ public class CombatUI : MonoBehaviour
 
     [Header("Attack Order")]
     public Image[] orderIcons;
+    [Header("Check Menu")]
+    public CheckSelectButton checkSelectButtonPrefab;
+    public GameObject checkMenu;
+    public GameObject checkSelectBox, checkSelectGrid;
+    public TMP_Text checkName, checkHP, checkMP, checkEffects;
+    public Image checkPortrait, checkMiniPortrait, checkSprite;
+
 
     [Header("Calculation Stuff (don't edit its automatic)")]
     public List<PartyMember> battlers; // updated to be in correct SPD order
@@ -203,6 +210,36 @@ public class CombatUI : MonoBehaviour
         gm.dungeonPlayer.combatReturnTo = CombatReturnTo.TargetSelect;
     }
 
+    public void ClickedCheck()
+    {
+        mainBox.SetActive(false);
+        GenerateCheckSelection();
+    }
+
+    public void GenerateCheckSelection()
+    {
+        foreach (Transform child in checkSelectGrid.transform) Destroy(child.gameObject); // destroy old buttons
+
+        checkMenu.SetActive(true);
+
+        CheckSelectButton csb0 = Instantiate(checkSelectButtonPrefab, checkSelectGrid.transform.position, checkSelectGrid.transform.rotation, checkSelectGrid.transform);
+        csb0.combatUI = this;
+        csb0.battler = battlers[0];
+        csb0.nameText.text = csb0.battler.characterNameEn;
+
+        for (int i = 1; i < battlers.Count; i++) // generate the buttons in the grid
+        {
+            CheckSelectButton csb = Instantiate(checkSelectButtonPrefab, checkSelectGrid.transform.position, checkSelectGrid.transform.rotation, checkSelectGrid.transform);
+            csb.combatUI = this;
+            csb.battler = battlers[i];
+            csb.nameText.text = csb.battler.characterNameEn;
+        }
+
+        gm.dungeonPlayer.eventSystem.SetSelectedGameObject(csb0.gameObject);
+
+        gm.dungeonPlayer.combatReturnTo = CombatReturnTo.Main;
+    }
+
     public void HideMenusForDialogue()
     {
         mainBox.SetActive(false);
@@ -210,6 +247,7 @@ public class CombatUI : MonoBehaviour
         actDescriptionBox.SetActive(false);
         targetSelectBox.SetActive(false);
         bodyPartSelectBox.SetActive(false);
+        checkMenu.SetActive(false);
 
     }
 

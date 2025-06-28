@@ -37,7 +37,7 @@ public class TargetSelectButton : MonoBehaviour, ISelectHandler
         combatUI.gm.currentTarget = battler;
         combatUI.targetSelectedButton = gameObject;
         combatUI.HideMenusForDialogue();
-        if (combatUI.gm.currentAction.PWR > 0) // if damaging move, select body part
+        if (combatUI.gm.currentAction.PWR > 0 && combatUI.gm.currentAction.dontTargetBodyPart == false) // if damaging move, select body part
         {
             Debug.Log("pwr > 0");
             combatUI.GenerateBodyPartSelection();
