@@ -18,11 +18,18 @@ public class DungeonDialogue //: MonoBehaviour
     {
 
     }
-    
+
     public DungeonDialogue(String en, String jp)
     {
         textEn = en;
         textJp = jp;
+    }
+
+    public DungeonDialogue(String en, String jp, Sprite s)
+    {
+        textEn = en;
+        textJp = jp;
+        portrait = s;
     }
 
 }

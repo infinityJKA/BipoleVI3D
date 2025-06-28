@@ -5838,13 +5838,6 @@ MonoBehaviour:
     item: {fileID: 0}
     obj: {fileID: 0}
     battler: {fileID: 0}
-  - command: 
-    textEn: test
-    textJp: 
-    portrait: {fileID: 0}
-    item: {fileID: 0}
-    obj: {fileID: 0}
-    battler: {fileID: 0}
   - command: START_TURN
     textEn: 
     textJp: 
@@ -5853,7 +5846,21 @@ MonoBehaviour:
     obj: {fileID: 0}
     battler: {fileID: 0}
   partyMemberDiedDialogue: []
-  battleCompleteDialogue: []
+  battleCompleteDialogue:
+  - command: 
+    textEn: Battle complete!
+    textJp: 
+    portrait: {fileID: 0}
+    item: {fileID: 0}
+    obj: {fileID: 0}
+    battler: {fileID: 0}
+  - command: END_COMBAT
+    textEn: 
+    textJp: 
+    portrait: {fileID: 0}
+    item: {fileID: 0}
+    obj: {fileID: 0}
+    battler: {fileID: 0}
   BP: 0
   enemies: []
   currentBattler: {fileID: 0}
@@ -8831,6 +8838,7 @@ MonoBehaviour:
   dialogueText: {fileID: 531178622}
   dialogueText2: {fileID: 411544804}
   facingText: {fileID: 948320531}
+  bpText: {fileID: 1068504221}
   dialoguePortrait: {fileID: 1526381986}
   popupTextParent: {fileID: 1635340892}
   dialogueBox: {fileID: 1438299024}
@@ -11944,7 +11952,7 @@ GameObject:
   - component: {fileID: 1068504222}
   - component: {fileID: 1068504221}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: BP Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21401,7 +21409,7 @@ GameObject:
   - component: {fileID: 1994380175}
   - component: {fileID: 1994380174}
   m_Layer: 5
-  m_Name: Party Power
+  m_Name: Battle Power
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22532,7 +22540,7 @@ GameObject:
   - component: {fileID: 2132288466}
   - component: {fileID: 2132288465}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: BP Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -30,6 +30,7 @@ MonoBehaviour:
   EXP: 0
   LV: 1
   VIZ: 100
+  expDrop: 750
   weaknesses: 000000000500000007000000
   equippable: 0000000001000000060000000e000000
   sprite: {fileID: 21300000, guid: 93ad603a46e559c41ac1267fdcf26de8, type: 3}

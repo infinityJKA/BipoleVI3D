@@ -30,6 +30,7 @@ MonoBehaviour:
   EXP: 0
   LV: 1
   VIZ: 100
+  expDrop: 500
   weaknesses: 020000000500000007000000
   equippable: 0000000001000000060000000e000000
   sprite: {fileID: 21300000, guid: 84967501c5bd45b45bea1abf73af100f, type: 3}
@@ -42,11 +43,9 @@ MonoBehaviour:
     conditionsOnBreak:
     - stat: SPD
       amount: 0.7
-      isPercentage: 0
       turns: 3
     - stat: AGL
       amount: 0.2
-      isPercentage: 0
       turns: 5
     timesDamaged: 0
   - bodyPartName: Arms

@@ -21,7 +21,8 @@ public class PartyMember : ScriptableObject
     maxHP, currentHP, // health points
     maxMP, currentMP, // used for spells and abilities
     EXP, LV, // experience points, level goes up every 1000 EXP
-    VIZ; // visibility, only used in combat and reset to 100 outside of battle
+    VIZ, // visibility, only used in combat and reset to 100 outside of battle
+    expDrop; // exp dropped (for enemies)
 
     public EquipmentType[] weaknesses, equippable;
     public Sprite sprite, portrait, damagedPortrait, veryDamagedPortrait, head;

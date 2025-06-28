@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.LowLevel;
@@ -167,6 +169,8 @@ public class PlayerController : MonoBehaviour
 
     public void ProgressDialogue()
     {
+        UpdatePartyUI();
+
         if (dialogueIndex == -1 || currentDialogue[dialogueIndex].textEn == currentDialogueText.text || finishedDialogueEarly) // makes sure dialogue is finished or skipped first
         {
             finishedDialogueEarly = false;
@@ -261,7 +265,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "ATTACK_SINGLE_ENEMY")
         {
-            PerformAttack(gm.currentTarget,true, false);
+            PerformAttack(gm.currentTarget, true, false);
         }
         else if (command == "ATTACK_ALL_ENEMIES")
         {
@@ -269,7 +273,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "EFFECT_SINGLE_ENEMY")
         {
-            PerformAttack(gm.currentTarget,false, false);
+            PerformAttack(gm.currentTarget, false, false);
         }
         else if (command == "EFFECT_ALL_ENEMIES")
         {
@@ -277,7 +281,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "EFFECT_SINGLE_ALLY")
         {
-            PerformAttack(gm.currentTarget,false, true);
+            PerformAttack(gm.currentTarget, false, true);
         }
         else if (command == "EFFECT_ALL_ALLIES")
         {
@@ -292,8 +296,51 @@ public class PlayerController : MonoBehaviour
 
             ProgressDialogue();
         }
+        else if (command == "END_COMBAT")
+        {
+            ui.combat.HideMenusForDialogue();
+            ui.dialogueBox.SetActive(false);
+            ui.popupTextParent.SetActive(true);
+            gm.stepsSinceEyeChange = 0;
+            gm.eyePhase = 0;
+            inputState = DungeonInputControlState.FreeMove;
+        }
     }
 
+
+    public void CombatEXP(int xp, int expld) {
+        foreach (PartyMember pm in ui.combat.battlers)
+        {
+            if (pm.isEnemy == false)
+            {
+                int exp = xp;
+
+                if (pm.LV > expld) // if over-leveled
+                {
+                    exp = xp / ((pm.LV - expld) * (pm.LV / expld));
+                }
+
+                currentDialogue.Add(new DungeonDialogue(
+                    pm.characterNameEn + " gained " + exp + " EXP!",
+                    "japanese translation here",
+                    pm.portrait
+                ));
+
+                pm.EXP += exp;
+                if (pm.EXP >= 1000)
+                {
+                    currentDialogue.Add(new DungeonDialogue(
+                        pm.characterNameEn + " leveled up!",
+                        "japanese translation here",
+                        pm.portrait
+                    ));
+
+                    pm.EXP -= 1000;
+                    pm.LV++;
+                }
+            }
+        }
+    }
 
 
     private void PerformAttack(PartyMember target, bool dealDamage, bool unmissable)
@@ -309,7 +356,7 @@ public class PlayerController : MonoBehaviour
             GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity, ui.combat.transform);
         }
 
-        PerformAttackOnTarget(target,dealDamage, unmissable);
+        PerformAttackOnTarget(target, dealDamage, unmissable);
         GiveSelfStatusesFromAttack();
 
         ProgressDialogue();
@@ -472,13 +519,16 @@ public class PlayerController : MonoBehaviour
                 d2.textEn = target.characterNameEn + " was defeated!";
                 currentDialogue.Add(d2);
 
-                // destroy character if they are an enemy
+                // give exp and destroy character if they are an enemy
                 if (target.isEnemy)
                 {
+                    CombatEXP(target.expDrop, target.LV);
+
                     target.display.gameObject.SetActive(false);
 
                     DungeonDialogue death = new DungeonDialogue();
                     death.command = "ENEM_DIED";
+                    death.textEn = null;
                     death.battler = target;
                     currentDialogue.Add(death);
                 }
@@ -512,7 +562,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            gm.currentBattler.VIZ *= gm.currentAction.gainVIZ;
+            gm.currentBattler.VIZ = (int)(gm.currentBattler.VIZ* (1f+((float)gm.currentAction.gainVIZ/100)) );
         }
 
         // gain BP
@@ -521,6 +571,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdatePartyUI()
     {
+        ui.bpText.text = ""+gm.BP;
+
         UpdatePartyUISingle(0);
 
         if (gm.partyMembers.Count >= 2)
@@ -686,6 +738,8 @@ public class PlayerController : MonoBehaviour
 
         gm.inCombat = true;
 
+        gm.BP = 0; // reset BP
+
         //disable environemnt stuff here
 
         EncounterObject encounter = dm.encounters[UnityEngine.Random.Range(0, dm.encounters.Count)]; // choose random encounter
@@ -717,26 +771,42 @@ public class PlayerController : MonoBehaviour
 
         ui.combat.gameObject.SetActive(true);
 
+        // reset VIZ
+        foreach (PartyMember b in ui.combat.battlers)
+        {
+            b.VIZ = 500;
+        }
+
         StartDialogueCombat(gm.battleStartDialogue);
     }
 
     public void StartCombatTurn()
     {
-        if (gm.currentBattler.isEnemy)
+        UpdatePartyUI();
+
+        if (gm.enemies.Count == 0) // player wins
         {
-            EnemyTurn();
+            StartDialogueCombat(gm.battleCompleteDialogue);
         }
-        else
+
+        else // still in combat
         {
-            ui.combat.mainBox_Text.text = gm.currentBattler.characterNameEn + "'s turn.";
+            if (gm.currentBattler.isEnemy)
+            {
+                EnemyTurn();
+            }
+            else
+            {
+                ui.combat.mainBox_Text.text = gm.currentBattler.characterNameEn + "'s turn.";
 
-            // set portrait depending on damage
-            if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.66) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.portrait;
-            else if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.33) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.damagedPortrait;
-            else ui.combat.mainBox_Portrait.sprite = gm.currentBattler.veryDamagedPortrait;
+                // set portrait depending on damage
+                if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.66) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.portrait;
+                else if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.33) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.damagedPortrait;
+                else ui.combat.mainBox_Portrait.sprite = gm.currentBattler.veryDamagedPortrait;
 
-            combatReturnTo = CombatReturnTo.None;
-            eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
+                combatReturnTo = CombatReturnTo.None;
+                eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
+            }
         }
     }
 
