@@ -169,6 +169,8 @@ public class PlayerController : MonoBehaviour
 
     public void ProgressDialogue()
     {
+        Debug.Log("ProgressDialogue()");
+
         UpdatePartyUI();
 
         if (dialogueIndex == -1 || currentDialogue[dialogueIndex].textEn == currentDialogueText.text || finishedDialogueEarly) // makes sure dialogue is finished or skipped first
@@ -217,6 +219,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            Debug.Log("Finished dialogue early");
             finishedDialogueEarly = true;
             currentDialogueText.text = currentDialogue[dialogueIndex].textEn;
             ui.dialogueTriangle.SetActive(true);
@@ -293,6 +296,8 @@ public class PlayerController : MonoBehaviour
             ui.combat.battlers.Remove(currentDialogue[dialogueIndex].battler);
             Destroy(currentDialogue[dialogueIndex].battler);
             ui.combat.UpdateOrderGraphic();
+
+            finishedDialogueEarly = true; // <-- makes you click through a blank textbox if I don't do this, genuinely can't figure out why lmao
 
             ProgressDialogue();
         }
@@ -528,7 +533,6 @@ public class PlayerController : MonoBehaviour
 
                     DungeonDialogue death = new DungeonDialogue();
                     death.command = "ENEM_DIED";
-                    death.textEn = null;
                     death.battler = target;
                     currentDialogue.Add(death);
                 }
