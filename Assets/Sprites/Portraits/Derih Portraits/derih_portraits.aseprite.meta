@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -224,7 +225,12 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 260375573
+    uuid:
+      value0: 3527505577
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -767461719
     name: derih_portraits
     layerFlags: 0
     layerType: 0
@@ -294,3 +300,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 75, y: 75}
+  previousTextureSize: {x: 256, y: 256}
