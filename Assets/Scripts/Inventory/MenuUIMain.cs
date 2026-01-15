@@ -10,6 +10,11 @@ public class MenuUIMain : MonoBehaviour
     public EquipInMenuUI equipUI;
     public PartyInMenuUI partyUI;
 
+    void OnEnable()
+    {
+        GameManager.gm.dungeonPlayer.buttonSelectOnDecline = returnButton.gameObject;
+    }
+
 
     public void DisableAllButThis(GameObject obj)
     {
