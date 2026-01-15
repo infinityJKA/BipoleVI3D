@@ -50,6 +50,8 @@ public class PartyInMenuUIButton : MonoBehaviour, ISelectHandler
                 GameManager.gm.PartySwap(partyUI.charToSwitch1, itemNumber);
                 partyUI.CreateDisplay();
                 GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.sidebarPartyButton;
+
+                GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(partyUI.firstButton.gameObject);
             }
         }
     }
