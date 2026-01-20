@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 	public int expEarned; // how much exp to earn at the end of battle
 	public GameObject currentAttackAnim; // will despawn when finished
 	public bool inCombat;
+	public InventorySlot itemToUse;
 
 	void Awake()
 	{

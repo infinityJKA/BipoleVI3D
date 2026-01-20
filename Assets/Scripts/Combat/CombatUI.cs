@@ -29,6 +29,11 @@ public class CombatUI : MonoBehaviour
     public ActionSelectButton actionSelectButtonPrefab;
     public GameObject lastSelectedAction;
 
+    [Header("Items Box")]
+    public GameObject itemsBox, itemsGrid;
+    public TMP_Text itemDescription;
+    public CombatItemSelectButton combatItemSelectButtonPrefab;
+
     [Header("Target Select Box")]
     public GameObject targetSelectBox;
     public GameObject targetSelectGrid;
@@ -54,6 +59,7 @@ public class CombatUI : MonoBehaviour
     public List<PartyMember> battlers; // updated to be in correct SPD order
     public GameManager gm;
     public List<EquipmentAction> validActions;
+    
 
     public void InitializeBattleOrder()
     {
@@ -248,6 +254,7 @@ public class CombatUI : MonoBehaviour
         targetSelectBox.SetActive(false);
         bodyPartSelectBox.SetActive(false);
         checkMenu.SetActive(false);
+        itemsBox.SetActive(false);
 
     }
 
@@ -313,6 +320,46 @@ public class CombatUI : MonoBehaviour
         }
 
         actDescriptionBox.SetActive(true);
+        gm.dungeonPlayer.combatReturnTo = CombatReturnTo.Main;
+    }
+
+    public void ItemsSelected()
+    {
+        mainBox.SetActive(false);
+        foreach (Transform child in itemsGrid.transform) Destroy(child.gameObject); // destroy old buttons
+
+        List<InventorySlot> items = new List<InventorySlot>();
+
+        foreach (InventorySlot i in gm.inventory.Container) // create a list of each equipment that has a usable action
+        {
+            if (i.item.itemType == ItemType.Consumable)
+            {
+                items.Add(i);
+            }
+        }
+
+        if (items.Count == 0)
+        {
+            itemDescription.text = "No consumable items in inventory.";
+        }
+        else // iterate through each valid action and create buttons for them
+        {
+            GameObject firstSelected = null;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                CombatItemSelectButton button = Instantiate(combatItemSelectButtonPrefab, itemsBox.transform.position, itemsBox.transform.rotation, itemsGrid.transform);
+                if (firstSelected == null) firstSelected = button.gameObject;
+                button.inventorySlot = items[i];
+                button.combatUI = this;
+                String buttonText = items[i].item.itemName + " (" + items[i].amount + "x)";
+                button.nameText.text = buttonText;
+            }
+
+            itemsBox.SetActive(true);
+            gm.dungeonPlayer.eventSystem.SetSelectedGameObject(firstSelected);
+        }
+
         gm.dungeonPlayer.combatReturnTo = CombatReturnTo.Main;
     }
 
