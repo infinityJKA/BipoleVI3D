@@ -795,6 +795,36 @@ public class PlayerController : MonoBehaviour
 
         else // still in combat
         {
+            // tick down all status conditions
+            if(gm.currentBattler.statusConditions.Count > 0)
+            {
+                List<StatusCondition> toRemove = new List<StatusCondition>();
+                bool willRemove = false;
+
+                foreach(StatusCondition s in gm.currentBattler.statusConditions)
+                {
+                    if(s.turns <= 1)
+                    {
+                        toRemove.Add(s);
+                        willRemove = true;
+                    }
+                    else
+                    {
+                        s.turns -= 1;
+                    }
+                }
+
+                if (willRemove)
+                {
+                    foreach(StatusCondition s in toRemove)
+                    {
+                        gm.currentBattler.statusConditions.Remove(s);
+                    }
+                }
+
+            }
+
+
             if (gm.currentBattler.isEnemy)
             {
                 EnemyTurn();
