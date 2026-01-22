@@ -151,6 +151,8 @@ MonoBehaviour:
     item: {fileID: 0}
     amount: 0
   nameText: {fileID: 165440398348853073}
+  rectTransform: {fileID: 2676084725351548399}
+  itemNumber: 0
 --- !u!1 &6456322391154336059
 GameObject:
   m_ObjectHideFlags: 0

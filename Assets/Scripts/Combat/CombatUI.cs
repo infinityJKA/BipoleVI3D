@@ -30,9 +30,11 @@ public class CombatUI : MonoBehaviour
     public GameObject lastSelectedAction;
 
     [Header("Items Box")]
-    public GameObject itemsBox, itemsGrid;
+    public GameObject itemsBox;
+    public GameObject itemsGrid;
     public TMP_Text itemDescription;
     public CombatItemSelectButton combatItemSelectButtonPrefab;
+    public ScrollSnapTo itemsSnap;
 
     [Header("Target Select Box")]
     public GameObject targetSelectBox;
@@ -344,6 +346,10 @@ public class CombatUI : MonoBehaviour
         }
         else // iterate through each valid action and create buttons for them
         {
+            itemsSnap.rectTransforms.Clear();
+            itemsSnap.itemCount = 0;
+
+
             GameObject firstSelected = null;
 
             for (int i = 0; i < items.Count; i++)
@@ -354,6 +360,9 @@ public class CombatUI : MonoBehaviour
                 button.combatUI = this;
                 String buttonText = items[i].item.itemName + " (" + items[i].amount + "x)";
                 button.nameText.text = buttonText;
+                itemsSnap.rectTransforms.Add(button.rectTransform);
+                itemsSnap.itemCount++;
+
             }
 
             itemsBox.SetActive(true);

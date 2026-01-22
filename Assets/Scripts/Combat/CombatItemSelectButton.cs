@@ -12,7 +12,8 @@ public class CombatItemSelectButton : MonoBehaviour, ISelectHandler
     public CombatUI combatUI;
     public InventorySlot inventorySlot;
     public TMP_Text nameText;
-
+    public RectTransform rectTransform;
+    public int itemNumber;
 
     public void OnClick()
     {
@@ -25,6 +26,11 @@ public class CombatItemSelectButton : MonoBehaviour, ISelectHandler
     public void OnSelect(BaseEventData eventData)
     {
         combatUI.itemDescription.text = inventorySlot.item.itemName + "\n" + inventorySlot.item.itemDescription;
+
+        Debug.Log("selected button worldPos: " + rectTransform.position.y);
+        Debug.Log("selected button localPos: " + rectTransform.localPosition.y);
+
+        combatUI.itemsSnap.SnapTo(rectTransform, itemNumber);
     }
 
 
