@@ -62,7 +62,8 @@ public class CombatUI : MonoBehaviour
     public List<PartyMember> battlers; // updated to be in correct SPD order
     public GameManager gm;
     public List<EquipmentAction> validActions;
-    
+    public bool usingConsumable;
+
 
     public void InitializeBattleOrder()
     {
@@ -140,55 +141,110 @@ public class CombatUI : MonoBehaviour
         actBox.SetActive(false);
         actDescriptionBox.SetActive(false);
 
-        EquipmentAction ea = gm.currentAction;
-        if (ea.targetType == TargetType.Self || ea.targetType == TargetType.BothParties || ea.targetType == TargetType.EnemyParty || ea.targetType == TargetType.Party)
+        if (usingConsumable == false)
         {
-            gm.currentBodyPartIndex = -1;
-            HideMenusForDialogue();
-            gm.dungeonPlayer.StartDialogueCombat(gm.currentAction.attackDialogue);
-        }
-        else // generate a list of selectable targets
-        {
-            Debug.Log("Need to manually select a target for this aciton");
-
-
-            List<PartyMember> chars = new List<PartyMember>();
-
-            if (ea.targetType == TargetType.OneEnemy) // generate list of targets based on target type
+            EquipmentAction ea = gm.currentAction;
+            if (ea.targetType == TargetType.Self || ea.targetType == TargetType.BothParties || ea.targetType == TargetType.EnemyParty || ea.targetType == TargetType.Party)
             {
-                chars = gm.enemies; 
+                gm.currentBodyPartIndex = -1;
+                HideMenusForDialogue();
+                gm.dungeonPlayer.StartDialogueCombat(gm.currentAction.attackDialogue);
             }
-            else
+            else // generate a list of selectable targets
             {
-                for (int i = 0; i < 4; i++)
+                Debug.Log("Need to manually select a target for this aciton");
+
+
+                List<PartyMember> chars = new List<PartyMember>();
+
+                if (ea.targetType == TargetType.OneEnemy) // generate list of targets based on target type
                 {
-                    if (i < gm.partyMembers.Count)
+                    chars = gm.enemies;
+                }
+                else
+                {
+                    for (int i = 0; i < 4; i++)
                     {
-                        chars.Add(gm.partyMembers[i]);
+                        if (i < gm.partyMembers.Count)
+                        {
+                            chars.Add(gm.partyMembers[i]);
+                        }
                     }
                 }
+
+                GameObject firstSelected = null;
+
+                foreach (Transform child in targetSelectGrid.transform) Destroy(child.gameObject); // destroy old buttons
+
+                for (int i = 0; i < chars.Count; i++) // generate the buttons in the gird
+                {
+                    TargetSelectButton tsb = Instantiate(targetSelectButtonPrefab, targetSelectBox.transform.position, targetSelectBox.transform.rotation, targetSelectGrid.transform);
+                    if (firstSelected == null) firstSelected = tsb.gameObject;
+                    tsb.battler = chars[i];
+                    tsb.combatUI = this;
+                    tsb.nameText.text = tsb.battler.characterNameEn;
+                }
+
+                targetSelectBox.SetActive(true);
+                gm.dungeonPlayer.eventSystem.SetSelectedGameObject(firstSelected);
+
+                gm.dungeonPlayer.combatReturnTo = CombatReturnTo.ActSelect;
+
+
             }
-
-            GameObject firstSelected = null;
-
-            foreach (Transform child in targetSelectGrid.transform) Destroy(child.gameObject); // destroy old buttons
-
-            for (int i = 0; i < chars.Count; i++) // generate the buttons in the gird
-            {
-                TargetSelectButton tsb = Instantiate(targetSelectButtonPrefab, targetSelectBox.transform.position, targetSelectBox.transform.rotation, targetSelectGrid.transform);
-                if (firstSelected == null) firstSelected = tsb.gameObject;
-                tsb.battler = chars[i];
-                tsb.combatUI = this;
-                tsb.nameText.text = tsb.battler.characterNameEn;
-            }
-
-            targetSelectBox.SetActive(true);
-            gm.dungeonPlayer.eventSystem.SetSelectedGameObject(firstSelected);
-
-            gm.dungeonPlayer.combatReturnTo = CombatReturnTo.ActSelect;
-
-
         }
+        else // if using consumable
+        {
+            ItemObject item = gm.itemToUse.item;
+            if (item.targetType == TargetType.Self || item.targetType == TargetType.BothParties || item.targetType == TargetType.EnemyParty || item.targetType == TargetType.Party)
+            {
+                gm.currentBodyPartIndex = -1;
+                HideMenusForDialogue();
+                //gm.dungeonPlayer.StartDialogueCombatItem(item);
+
+            }
+            else // generate a list of selectable targets
+            {
+                Debug.Log("Need to manually select a target for this action");
+
+                List<PartyMember> chars = new List<PartyMember>();
+
+                if (item.targetType == TargetType.OneEnemy) // generate list of targets based on target type
+                {
+                    chars = gm.enemies;
+                }
+                else
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (i < gm.partyMembers.Count)
+                        {
+                            chars.Add(gm.partyMembers[i]);
+                        }
+                    }
+                }
+
+                GameObject firstSelected = null;
+
+                foreach (Transform child in targetSelectGrid.transform) Destroy(child.gameObject); // destroy old buttons
+
+                for (int i = 0; i < chars.Count; i++) // generate the buttons in the gird
+                {
+                    TargetSelectButton tsb = Instantiate(targetSelectButtonPrefab, targetSelectBox.transform.position, targetSelectBox.transform.rotation, targetSelectGrid.transform);
+                    if (firstSelected == null) firstSelected = tsb.gameObject;
+                    tsb.battler = chars[i];
+                    tsb.combatUI = this;
+                    tsb.nameText.text = tsb.battler.characterNameEn;
+                }
+
+                targetSelectBox.SetActive(true);
+                gm.dungeonPlayer.eventSystem.SetSelectedGameObject(firstSelected);
+
+                gm.dungeonPlayer.combatReturnTo = CombatReturnTo.ItemSelect;
+
+            }
+        }
+
     }
 
     public void GenerateBodyPartSelection()
@@ -347,7 +403,7 @@ public class CombatUI : MonoBehaviour
         }
         else // iterate through each valid action and create buttons for them
         {
-            foreach(Transform c in itemsGrid.transform)
+            foreach (Transform c in itemsGrid.transform)
             {
                 Destroy(c);
             }

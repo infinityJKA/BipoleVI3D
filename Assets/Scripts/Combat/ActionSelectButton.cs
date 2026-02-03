@@ -21,6 +21,7 @@ public class ActionSelectButton : MonoBehaviour, ISelectHandler
     public void OnClick()
     {
         combatUI.gm.currentAction = action;
+        combatUI.usingConsumable = false;
         combatUI.PlayerCombatAction();
 
     }

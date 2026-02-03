@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: LesserHealingPotion
   m_EditorClassIdentifier: 
   itemName: Lesser Healing Potion
+  itemName_jp: 
   itemDescription: Restores 120 HP.
+  itemDescription_jp: 
   itemType: 0
   value: 50
   sprite: {fileID: 0}
   restoreHP: 120
   restoreMP: 0
   restoreSetAmount: 1
-  targetType: 0
+  targetType: 2
   canUseInBattle: 1
   canUseInInventory: 1
   isAttack: 0
@@ -49,20 +51,28 @@ MonoBehaviour:
   nMP: 0
   equipmentEffect: 0
   equipmentAction:
+    actionDescription: 
+    actionDescription_jp: 
     isUlt: 0
     isHealing: 0
     actionName: 
+    actionName_jp: 
     damageType: 0
+    damageEquipmentType: 0
     PWR: 0
     HIT: 0
+    setCost: 0
     costMP: 0
     costHP: 0
     costBP: 0
-    VIZ: 0
+    gainBP: 0
+    gainVIZ: 0
     setVIZ: 0
     targetType: 0
+    dontTargetBodyPart: 0
     statusConditions: []
     addtionalStatusOnUser: []
+    attackDialogue: []
   pages: []
   coinValue: 0
   currencyType: 0

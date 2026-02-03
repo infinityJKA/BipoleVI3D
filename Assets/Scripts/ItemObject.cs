@@ -18,10 +18,11 @@ public class ItemObject : ScriptableObject
     public int restoreHP;
     public int restoreMP;
     public bool restoreSetAmount; // restore # if true, restore % if false
-    public bool targetType;
+    public TargetType targetType;
     public bool canUseInBattle; // if this can be used in battle
     public bool canUseInInventory; // if this can be used in inventory
-    public bool isAttack; // treats this as an action when used in battle
+    public bool isAttack; // treats this as an attack when used in battle
+   
 
     [Header("Equipment")]
     // pXXX = stat% boost, nXXX = +stat boost

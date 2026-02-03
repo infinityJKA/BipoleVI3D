@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,8 +19,9 @@ public class CombatItemSelectButton : MonoBehaviour, ISelectHandler
     public void OnClick()
     {
         combatUI.gm.itemToUse = inventorySlot;
-        combatUI.HideMenusForDialogue();
-        combatUI.gm.dungeonPlayer.StartDialogueCombat(combatUI.gm.currentAction.attackDialogue);
+        combatUI.usingConsumable = true;
+        combatUI.itemsBox.SetActive(false);
+        combatUI.PlayerCombatAction();
 
     }
 

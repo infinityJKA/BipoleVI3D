@@ -878,6 +878,13 @@ public class PlayerController : MonoBehaviour
             eventSystem.SetSelectedGameObject(ui.combat.targetSelectedButton);
             combatReturnTo = CombatReturnTo.ActSelect;
         }
+        else if (combatReturnTo == CombatReturnTo.ItemSelect)
+        {
+            ui.combat.HideMenusForDialogue();
+            ui.combat.itemsBox.SetActive(true);
+            eventSystem.SetSelectedGameObject(ui.combat.itemsGrid.transform.GetChild(0).gameObject);
+            combatReturnTo = CombatReturnTo.Main;
+        }
     }
 
 
@@ -1078,7 +1085,7 @@ public class PlayerController : MonoBehaviour
 
 public enum CombatReturnTo
 {
-    None, Main, ActSelect, TargetSelect
+    None, Main, ActSelect, TargetSelect, ItemSelect
 }
 
 public enum PlayerFacing{
