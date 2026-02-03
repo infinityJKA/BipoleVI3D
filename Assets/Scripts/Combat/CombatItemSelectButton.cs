@@ -30,7 +30,8 @@ public class CombatItemSelectButton : MonoBehaviour, ISelectHandler
         Debug.Log("selected button worldPos: " + rectTransform.position.y);
         Debug.Log("selected button localPos: " + rectTransform.localPosition.y);
 
-        combatUI.itemsSnap.SnapTo(rectTransform, itemNumber);
+        combatUI.itemsSnap.SnapTo(rectTransform);
+
     }
 
 
