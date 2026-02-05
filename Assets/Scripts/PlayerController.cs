@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.LowLevel;
@@ -146,6 +147,49 @@ public class PlayerController : MonoBehaviour
         finishedDialogueEarly = false;
         ui.dialogueTriangle.SetActive(false);
         ProgressDialogue();
+    }
+
+    public void StartDialogueCombatItem(ItemObject item)
+    {
+        inputState = DungeonInputControlState.Dialogue;
+        dialogueIndex = -1; // -1 bc +1s at the start of dialogue
+
+        List<DungeonDialogue> nd = new List<DungeonDialogue>();
+
+        nd.Add(new DungeonDialogue(
+            gm.currentBattler.characterNameEn + " used " + item.itemName + "!",
+            "japanese translation here"
+        ));
+
+        if (item.equipmentAction.attackDialogue.Count > 0)
+        {
+            for (int i = 0; i < item.equipmentAction.attackDialogue.Count; i++) // create a new list that can be modified as combat goes on
+            {
+                nd.Add(item.equipmentAction.attackDialogue[i]);
+            }
+        }
+
+        currentDialogue = nd;
+        ui.combat.HideMenusForDialogue();
+        ui.dialogueBox.SetActive(true);
+        finishedDialogueEarly = false;
+        ui.dialogueTriangle.SetActive(false);
+
+        if (item.restoreHP > 0 || item.restoreMP > 0)
+        {
+            if(item.targetType == TargetType.Party || item.targetType == TargetType.EnemyParty)
+            {
+                PerformHealItemAll(false, true);
+            }
+            else
+            {
+                PerformHealItem(gm.currentTarget, true);
+            }
+        }
+        else
+        {
+            ProgressDialogue();
+        }
     }
 
     public void ProgressCombatTurn()
@@ -368,6 +412,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void PerformHealItem(PartyMember target, bool unmissable)
+    {
+
+        // spawn animation
+        if (target.isEnemy)
+        {
+            GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity, ui.combat.transform);
+        }
+
+        PerformHealItemOnTarget(target, unmissable);
+
+        ProgressDialogue();
+
+    }
+
     private void PerformAttackAll(bool dealDamage, bool unmissable)
     {
         currentDialogue.Add(new DungeonDialogue(
@@ -409,6 +468,47 @@ public class PlayerController : MonoBehaviour
             gm.currentHitrates = gm.CalculateHitRate();
             PerformAttackOnTarget(target,dealDamage, unmissable);
         }
+        GiveSelfStatusesFromAttack();
+        ProgressDialogue();
+
+    }
+
+    private void PerformHealItemAll(bool dealDamage, bool unmissable)
+    {
+        if (gm.currentBattler.isEnemy == false) // spawn anim on each enemy if player is attacking
+        {
+            foreach (PartyMember enem in gm.enemies)
+            {
+                Instantiate(currentDialogue[dialogueIndex].obj, enem.display.gameObject.transform.position, Quaternion.identity, ui.combat.transform);
+            }
+        }
+
+        // create list of targets depending on who is using
+        List<PartyMember> targets;
+        if (gm.currentBattler.isEnemy == false) // if player is using
+        {
+            targets = gm.enemies;
+        }
+        else // if enemy is using
+        {
+            targets = new List<PartyMember>();
+            foreach (PartyMember battler in ui.combat.battlers)
+            {
+                if (battler.isEnemy == false)
+                {
+                    targets.Add(battler);
+                    Debug.Log(battler.characterNameEn + " is being targeted in party target");
+                }
+            }
+        }
+
+        // loop the item for each target
+        foreach (PartyMember target in targets)
+        {
+            gm.currentTarget = target;
+            PerformHealItemOnTarget(target, unmissable);
+        }
+
         GiveSelfStatusesFromAttack();
         ProgressDialogue();
 
@@ -546,8 +646,130 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void PerformHealItemOnTarget(PartyMember target, bool unmissable)
+    {
+        Debug.Log(target.characterNameEn + " is being attacked");
+
+        // create a new dialogue object to show the result
+        DungeonDialogue d = new DungeonDialogue();
+
+        // calculate the hitrate
+        float hitrate = 0;
+        if (!unmissable)
+        {
+            if (gm.currentBodyPartIndex == -1) hitrate = gm.currentHitrates[0] * 100;
+            else hitrate = gm.currentHitrates[1] * 100;
+        }
+
+        if (unmissable) hitrate = 999f;
+
+        Debug.Log("hitrate: " + hitrate);
+
+        if (UnityEngine.Random.Range(0, 100) <= hitrate) // this is a successful hit
+        {
+            int amountHP = 0;
+            int amountMP = 0;
+
+            if (gm.itemToUse.item.restoreHP > 0) // do attack damage if this action can deal damage
+            {
+                if (gm.itemToUse.item.restoreSetAmount)
+                {
+                    amountHP = gm.itemToUse.item.restoreHP;
+                }
+                else
+                {
+                    amountHP = Convert.ToInt32(target.maxHP * (gm.itemToUse.item.restoreHP / 100f));
+                }
+
+                d.textEn = "Restored " + amountHP + " HP from " + target.characterNameEn + "!";
+                target.currentHP += amountHP;
+
+                if (target.currentHP > target.maxHP) {
+                    target.currentHP = target.maxHP;
+                }
+
+                // add the dialogue
+                currentDialogue.Add(d);
+            }
+
+            if (gm.itemToUse.item.restoreMP > 0) // do attack damage if this action can deal damage
+            {
+                if (gm.itemToUse.item.restoreSetAmount)
+                {
+                    amountMP = gm.itemToUse.item.restoreMP;
+                }
+                else
+                {
+                    amountMP = Convert.ToInt32(target.maxMP * (gm.itemToUse.item.restoreMP / 100f));
+                }
+
+                if (amountHP > 0)
+                {
+                    currentDialogue.Add(new DungeonDialogue(
+                            "Restored " + amountMP + " MP from " + target.characterNameEn + "!",
+                            "insert japanese stuff here"
+                        ));
+                }
+                else
+                {
+                    d.textEn = "Restored " + amountMP + " MP from " + target.characterNameEn + "!";
+                    target.currentMP += amountMP;
+
+                    currentDialogue.Add(d);
+                }
+
+                if (target.currentMP > target.maxMP)
+                {
+                    target.currentMP = target.maxMP;
+                }
+            }
+
+            // add status effects to target
+            if (gm.itemToUse.item.equipmentAction.statusConditions.Count() > 0) { 
+                foreach (StatusCondition sc in gm.itemToUse.item.equipmentAction.statusConditions)
+                {
+                    currentDialogue.Add(new DungeonDialogue(
+                        "Inflicted " + sc.amount + "x " + sc.stat + " on " + target.characterNameEn + " for " + sc.turns + " turns",
+                        "japanese stuff here"
+                    ));
+                    var effectClone = sc;
+                    target.statusConditions.Add(effectClone);
+                }
+            }
+
+            // check if dead
+            if (target.currentHP <= 0)
+            {
+                // create knockout dialogue
+                DungeonDialogue d2 = new DungeonDialogue();
+                d2.textEn = target.characterNameEn + " was defeated!";
+                currentDialogue.Add(d2);
+
+                // give exp and destroy character if they are an enemy
+                if (target.isEnemy)
+                {
+                    CombatEXP(target.expDrop, target.LV);
+
+                    target.display.gameObject.SetActive(false);
+
+                    DungeonDialogue death = new DungeonDialogue();
+                    death.command = "ENEM_DIED";
+                    death.battler = target;
+                    currentDialogue.Add(death);
+                }
+            }
+        }
+        // if the attack misses
+        else
+        {
+            d.textEn = "Item missed!";
+            currentDialogue.Add(d);
+        }
+    }
+
     private void GiveSelfStatusesFromAttack()
     {
+
         // add status effects to user
         foreach (StatusCondition sc in gm.currentAction.addtionalStatusOnUser)
         {
@@ -568,6 +790,40 @@ public class PlayerController : MonoBehaviour
         {
             gm.currentBattler.VIZ = (int)(gm.currentBattler.VIZ* (1f+((float)gm.currentAction.gainVIZ/100)) );
         }
+
+        // gain BP
+        gm.BP += gm.currentAction.gainBP;
+    }
+
+    private void GiveSelfStatusesFromItem()
+    {
+        // modify VIZ
+        if (gm.itemToUse.item.equipmentAction.setVIZ == true)
+        {
+            gm.currentBattler.VIZ += gm.itemToUse.item.equipmentAction.gainVIZ;
+        }
+        else
+        {
+            gm.currentBattler.VIZ = (int)(gm.currentBattler.VIZ * (1f + ((float)gm.itemToUse.item.equipmentAction.gainVIZ / 100)));
+        }
+
+        if (gm.itemToUse.item.equipmentAction.addtionalStatusOnUser.Count() <= 0)
+        {
+            return;
+        }
+
+        // add status effects to user
+        foreach (StatusCondition sc in gm.itemToUse.item.equipmentAction.addtionalStatusOnUser)
+        {
+            currentDialogue.Add(new DungeonDialogue(
+                gm.currentBattler.characterNameEn + " gained " + sc.amount + "x " + sc.stat + " for " + sc.turns + " turns",
+                "japanese stuff here"
+            ));
+            var effectClone = sc;
+            gm.currentBattler.statusConditions.Add(effectClone);
+        }
+
+        
 
         // gain BP
         gm.BP += gm.currentAction.gainBP;

@@ -200,7 +200,7 @@ public class CombatUI : MonoBehaviour
             {
                 gm.currentBodyPartIndex = -1;
                 HideMenusForDialogue();
-                //gm.dungeonPlayer.StartDialogueCombatItem(item);
+                gm.dungeonPlayer.StartDialogueCombatItem(item);
 
             }
             else // generate a list of selectable targets
@@ -335,6 +335,8 @@ public class CombatUI : MonoBehaviour
 
     public void ActSelected()
     {
+        gm.itemToUse = null;
+
         mainBox.SetActive(false);
         validActions.Clear(); // clear old action list
         foreach (Transform child in actGrid.transform) Destroy(child.gameObject); // destroy old buttons
@@ -384,6 +386,8 @@ public class CombatUI : MonoBehaviour
 
     public void ItemsSelected()
     {
+        gm.currentAction = null;
+
         mainBox.SetActive(false);
         foreach (Transform child in itemsGrid.transform) Destroy(child.gameObject); // destroy old buttons
 

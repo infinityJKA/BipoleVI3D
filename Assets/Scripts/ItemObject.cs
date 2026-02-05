@@ -22,6 +22,7 @@ public class ItemObject : ScriptableObject
     public bool canUseInBattle; // if this can be used in battle
     public bool canUseInInventory; // if this can be used in inventory
     public bool isAttack; // treats this as an attack when used in battle
+    public bool destoryOnUse; // destory item after being used
    
 
     [Header("Equipment")]
@@ -32,7 +33,7 @@ public class ItemObject : ScriptableObject
     public EquipmentAction equipmentAction; // the action to be used if the equipment effect isn't passvie
 
     [Header("Book")]
-    public DungeonDialogue[] pages;
+    public DungeonDialogue[] pages, pages_jp;
 
     [Header("Coin")]
     public int coinValue; // used to determine your wealth, etc 1G coin would have 1 coinValue
