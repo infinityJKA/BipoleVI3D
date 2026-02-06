@@ -24,12 +24,13 @@ MonoBehaviour:
   LCK: 18
   EDR: 3
   maxHP: 200
-  currentHP: 0
+  currentHP: 100
   maxMP: 75
   currentMP: 75
   EXP: 0
   LV: 1
   VIZ: 100
+  expDrop: 0
   weaknesses: 02000000040000000b000000
   equippable: 000000000300000007000000
   sprite: {fileID: 21300000, guid: 4e733a2d55f4a9a439209c4ac9db72b1, type: 3}

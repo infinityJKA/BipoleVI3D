@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
+using UnityEngine.Localization;
 
 public class CombatUI : MonoBehaviour
 {

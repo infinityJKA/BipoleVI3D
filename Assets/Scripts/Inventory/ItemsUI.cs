@@ -5,7 +5,7 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
+using UnityEngine.Localization;
 
 public class ItemsUI : MonoBehaviour
 {

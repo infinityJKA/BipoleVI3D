@@ -12991,7 +12991,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: fb1b86ef9d6707d45b4b54c441ecdeab, type: 3}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[0].textEn
@@ -13000,16 +13000,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[1].textEn
-      value: 'Stellein: New Bipole VI attempt may or may not now be in developement.
-        Dabbaholics, real trap shit we make it look easy.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
-      propertyPath: dialogue.Array.data[2].textEn
       value: 'Stellein: Bipole VI try to exist challenge.'
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
-      propertyPath: dialogue.Array.data[2].command
+      propertyPath: dialogue.Array.data[2].textEn
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[2].command
+      value: END
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[3].command
@@ -13022,11 +13021,11 @@ PrefabInstance:
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[1].portrait
       value: 
-      objectReference: {fileID: 21300000, guid: 30f5a57da6687fb4d9641b19e62f2ed8, type: 3}
+      objectReference: {fileID: 21300000, guid: 4590e629dba3a824082f3e1f1caec90d, type: 3}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[2].portrait
       value: 
-      objectReference: {fileID: 21300000, guid: 4590e629dba3a824082f3e1f1caec90d, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 6575038441906758128, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: m_Name
       value: Tile

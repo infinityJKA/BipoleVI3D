@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using System;
-using UnityEditor;
+using UnityEngine.Localization;
 
 public class PartyInMenuUIButton : MonoBehaviour, ISelectHandler
 {
