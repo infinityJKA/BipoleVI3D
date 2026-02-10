@@ -51,6 +51,7 @@ public class TargetSelectButton : MonoBehaviour, ISelectHandler
                 Debug.Log("pwr = 0");
                 combatUI.gm.currentBodyPartIndex = -1;
                 combatUI.HideMenusForDialogue();
+                combatUI.gm.currentHitrates = combatUI.gm.CalculateHitRate();
                 combatUI.gm.dungeonPlayer.StartDialogueCombat(combatUI.gm.currentAction.attackDialogue);
             }
         }
