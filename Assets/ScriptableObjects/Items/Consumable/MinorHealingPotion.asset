@@ -26,6 +26,7 @@ MonoBehaviour:
   canUseInBattle: 1
   canUseInInventory: 1
   isAttack: 0
+  destoryOnUse: 1
   equipmentType: 0
   pDEF: 0
   nDEF: 0
@@ -74,6 +75,7 @@ MonoBehaviour:
     addtionalStatusOnUser: []
     attackDialogue: []
   pages: []
+  pages_jp: []
   coinValue: 0
   currencyType: 0
   condition: 0

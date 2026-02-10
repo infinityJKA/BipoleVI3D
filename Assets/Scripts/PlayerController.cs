@@ -169,6 +169,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (item.destoryOnUse)
+        {
+            Debug.Log("Destorying consumable " + item.itemName);
+            gm.inventory.RemoveItem(item, 1);
+        }
+
         currentDialogue = nd;
         ui.combat.HideMenusForDialogue();
         ui.dialogueBox.SetActive(true);
