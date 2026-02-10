@@ -1108,7 +1108,10 @@ public class PlayerController : MonoBehaviour
 
     public void EnemyTurn()
     {
-        Debug.Log("Skipping enemy turn, not implemented yet");
+        Debug.Log("EnemyTurn() Skipping enemy turn, not implemented yet");
+
+         
+
         ProgressCombatTurn();
     }
 

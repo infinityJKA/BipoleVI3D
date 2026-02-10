@@ -32,8 +32,13 @@ public class PartyMember : ScriptableObject
     public List<StatusCondition> statusConditions;
 
     [Header("Only for enemies in combat")]
+    public EnemyAction[] enemyActions;
+    public EnemyCombatDialogue[] combatDialogues;
+
+    [Header("Only for enemies in combat (automated)")]
     public CombatEnemyDisplay display;
     public bool isEnemy = false;
+    
 
     public bool Weakness(EquipmentType e)
     {
@@ -199,4 +204,31 @@ public class BodyPart
     public int timesDamaged; // this will be reset at the start of each battle
 
 
+}
+
+[Serializable]
+public class EnemyAction
+{
+    public int HpMin, HpMax; // HP requirements for using this
+    public int MpMin, MpMax; // MP requirements for using this
+    public int priority; // higher number = more likely
+    public EquipmentAction action; // action
+}
+
+[Serializable]
+public class EnemyCombatDialogue
+{
+    EnemyCombatDialogueTrigger trigger;
+    bool hasAlreadyTriggered = false;
+    public DungeonDialogue[] dialogue;
+}
+
+public enum EnemyCombatDialogueTrigger
+{
+       OnStart,
+       WhenHpBelow,
+       WhenMpBelow,
+       WhenBroken,
+       WhenOtherEnemyDies,
+       WhenPlayerCharacterDies
 }

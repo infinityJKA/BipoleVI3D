@@ -60,5 +60,63 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   statusConditions: []
+  enemyActions:
+  - HpMin: 0
+    HpMax: 0
+    MpMin: 0
+    MpMax: 0
+    priority: 0
+    action:
+      actionDescription: 
+      actionDescription_jp: 
+      isUlt: 0
+      isHealing: 0
+      actionName: 
+      actionName_jp: 
+      damageType: 0
+      damageEquipmentType: 0
+      PWR: 0
+      HIT: 0
+      setCost: 0
+      costMP: 0
+      costHP: 0
+      costBP: 0
+      gainBP: 0
+      gainVIZ: 0
+      setVIZ: 0
+      targetType: 0
+      dontTargetBodyPart: 0
+      statusConditions: []
+      addtionalStatusOnUser: []
+      attackDialogue: []
+  - HpMin: 0
+    HpMax: 0
+    MpMin: 0
+    MpMax: 0
+    priority: 0
+    action:
+      actionDescription: 
+      actionDescription_jp: 
+      isUlt: 0
+      isHealing: 0
+      actionName: 
+      actionName_jp: 
+      damageType: 0
+      damageEquipmentType: 0
+      PWR: 0
+      HIT: 0
+      setCost: 0
+      costMP: 0
+      costHP: 0
+      costBP: 0
+      gainBP: 0
+      gainVIZ: 0
+      setVIZ: 0
+      targetType: 0
+      dontTargetBodyPart: 0
+      statusConditions: []
+      addtionalStatusOnUser: []
+      attackDialogue: []
+  combatDialogues: []
   display: {fileID: 0}
   isEnemy: 0
