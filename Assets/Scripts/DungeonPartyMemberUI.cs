@@ -19,8 +19,8 @@ public class DungeonPartyMemberUI : MonoBehaviour
         mpText.text = cMP + "/" + mMP;
         vizText.text = viz + " VIZ";
 
-        hpBar.fillAmount = cHP / mHP;
-        mpBar.fillAmount = cHP / mHP;
+        hpBar.fillAmount = (float) cHP / mHP;
+        mpBar.fillAmount = (float) cHP / mHP;
     
     }
 
