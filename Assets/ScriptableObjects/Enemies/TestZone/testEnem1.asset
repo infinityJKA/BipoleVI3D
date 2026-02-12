@@ -62,21 +62,21 @@ MonoBehaviour:
   statusConditions: []
   enemyActions:
   - HpMin: 0
-    HpMax: 0
+    HpMax: 100
     MpMin: 0
-    MpMax: 0
-    priority: 0
+    MpMax: 100
+    priority: 1
     action:
       actionDescription: 
       actionDescription_jp: 
       isUlt: 0
       isHealing: 0
-      actionName: 
+      actionName: Slam
       actionName_jp: 
       damageType: 0
-      damageEquipmentType: 0
-      PWR: 0
-      HIT: 0
+      damageEquipmentType: 3
+      PWR: 10
+      HIT: 5
       setCost: 0
       costMP: 0
       costHP: 0
@@ -84,27 +84,37 @@ MonoBehaviour:
       gainBP: 0
       gainVIZ: 0
       setVIZ: 0
-      targetType: 0
+      targetType: 1
       dontTargetBodyPart: 0
       statusConditions: []
-      addtionalStatusOnUser: []
-      attackDialogue: []
+      addtionalStatusOnUser:
+      - stat: ATK
+        amount: 5
+        turns: 2
+      attackDialogue:
+      - command: ATTACK_SINGLE_ENEMY
+        textEn: 
+        textJp: 
+        portrait: {fileID: 0}
+        item: {fileID: 0}
+        obj: {fileID: 0}
+        battler: {fileID: 0}
   - HpMin: 0
-    HpMax: 0
+    HpMax: 100
     MpMin: 0
-    MpMax: 0
-    priority: 0
+    MpMax: 100
+    priority: 1
     action:
       actionDescription: 
       actionDescription_jp: 
       isUlt: 0
       isHealing: 0
-      actionName: 
+      actionName: Ram
       actionName_jp: 
       damageType: 0
-      damageEquipmentType: 0
-      PWR: 0
-      HIT: 0
+      damageEquipmentType: 3
+      PWR: 20
+      HIT: -5
       setCost: 0
       costMP: 0
       costHP: 0
@@ -112,11 +122,21 @@ MonoBehaviour:
       gainBP: 0
       gainVIZ: 0
       setVIZ: 0
-      targetType: 0
+      targetType: 1
       dontTargetBodyPart: 0
       statusConditions: []
-      addtionalStatusOnUser: []
-      attackDialogue: []
+      addtionalStatusOnUser:
+      - stat: DEF
+        amount: 0.5
+        turns: 3
+      attackDialogue:
+      - command: ATTACK_SINGLE_ENEMY
+        textEn: 
+        textJp: 
+        portrait: {fileID: 0}
+        item: {fileID: 0}
+        obj: {fileID: 0}
+        battler: {fileID: 0}
   combatDialogues: []
   display: {fileID: 0}
   isEnemy: 0

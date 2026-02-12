@@ -1108,11 +1108,94 @@ public class PlayerController : MonoBehaviour
 
     public void EnemyTurn()
     {
-        Debug.Log("EnemyTurn() Skipping enemy turn, not implemented yet");
+        Debug.Log("EnemyTurn()"); // Skipping enemy turn, not implemented yet");
 
-         
+        List<EquipmentAction> possibleActions = new List<EquipmentAction>();
+        foreach (EnemyAction e in gm.currentBattler.enemyActions)
+        {
+            float hpPercent = (float)gm.currentBattler.currentHP / gm.currentBattler.maxHP;
+            if (e.HpMin <= hpPercent && e.HpMax >= hpPercent)
+            {
+                Debug.Log("HP requirments met");
 
-        ProgressCombatTurn();
+                float mpPercent = (float)gm.currentBattler.currentMP / gm.currentBattler.maxMP;
+                if (e.MpMin <= mpPercent && e.MpMax >= mpPercent)
+                {
+                    Debug.Log("MP requirements met");
+                    for (int i = 0; i < e.priority; i++)
+                    {
+                        possibleActions.Add(e.action);
+                    }
+                }
+            }
+        }
+
+        if(possibleActions.Count == 0)
+        {
+            currentDialogue.Clear();
+            currentDialogue.Add(new DungeonDialogue(
+                gm.currentBattler.characterNameEn + " did nothing.",
+                "japanese translation here"
+            ));
+            StartDialogueCombat(currentDialogue);
+        }
+        else
+        {
+            EquipmentAction actionToUse = possibleActions[UnityEngine.Random.Range(0, possibleActions.Count)];
+            gm.currentAction = actionToUse;
+
+            if (actionToUse.targetType == TargetType.OneEnemy)
+            {
+                int index = 0;
+                List<EnemyAttackTarget> targets = new List<EnemyAttackTarget>();
+
+                foreach (PartyMember p in ui.combat.battlers)
+                {
+                    if (!p.isEnemy && p.currentHP > 0)
+                    {
+                        targets.Add(new EnemyAttackTarget(p, index, index + p.VIZ));
+                        Debug.Log(p.characterNameEn + " is a potential target (" + index + " to " + (index + p.VIZ) + ")");
+
+                        index += p.VIZ;   
+                    }
+
+                }
+
+                int rand = UnityEngine.Random.Range(0, index);
+                Debug.Log("rand = " + rand);
+                foreach (EnemyAttackTarget t in targets)
+                {
+                    if (rand <= t.maxPriority && rand >= t.minPriority)
+                    {
+                        gm.currentTarget = t.target;
+                        Debug.Log(t.target.characterNameEn + " was selected as the target");
+                        break;
+                    }
+                }
+
+
+
+                if (gm.currentAction.dontTargetBodyPart == false)
+                {
+                    gm.currentBodyPartIndex = UnityEngine.Random.Range(0, gm.currentTarget.bodyParts.Count());
+                }
+                else
+                {
+                    gm.currentBodyPartIndex = -1;
+                }
+
+                gm.currentHitrates = gm.CalculateHitRate();
+
+
+
+            }
+
+            StartDialogueCombat(gm.currentAction.attackDialogue);
+       
+
+        }
+
+        //ProgressCombatTurn();
     }
 
     public void DeclineInCombat()

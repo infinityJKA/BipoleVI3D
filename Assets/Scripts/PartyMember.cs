@@ -232,3 +232,17 @@ public enum EnemyCombatDialogueTrigger
        WhenOtherEnemyDies,
        WhenPlayerCharacterDies
 }
+
+public class EnemyAttackTarget
+{
+    public PartyMember target;
+    public int minPriority;
+    public int maxPriority;
+
+    public EnemyAttackTarget(PartyMember target, int minPriority, int maxPriority)
+    {
+        this.target = target;
+        this.minPriority = minPriority;
+        this.maxPriority = maxPriority;
+    }
+}
