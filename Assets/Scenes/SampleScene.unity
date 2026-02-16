@@ -7164,6 +7164,28 @@ MonoBehaviour:
     item: {fileID: 0}
     obj: {fileID: 0}
     battler: {fileID: 0}
+  gameOverDialogue:
+  - command: 
+    textEn: Your party was defeated!
+    textJp: jp
+    portrait: {fileID: 0}
+    item: {fileID: 0}
+    obj: {fileID: 0}
+    battler: {fileID: 0}
+  - command: 
+    textEn: Game Over!
+    textJp: jp
+    portrait: {fileID: 0}
+    item: {fileID: 0}
+    obj: {fileID: 0}
+    battler: {fileID: 0}
+  - command: RESTART_SCENE
+    textEn: 
+    textJp: 
+    portrait: {fileID: 0}
+    item: {fileID: 0}
+    obj: {fileID: 0}
+    battler: {fileID: 0}
   BP: 0
   enemies: []
   currentBattler: {fileID: 0}

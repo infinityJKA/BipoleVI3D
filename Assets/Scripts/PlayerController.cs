@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Localization;
+using UnityEngine.SceneManagement;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -359,6 +360,11 @@ public class PlayerController : MonoBehaviour
             gm.stepsSinceEyeChange = 0;
             gm.eyePhase = 0;
             inputState = DungeonInputControlState.FreeMove;
+        }
+        else if (command == "RESTART_SCENE")
+        {
+            Destroy(gm.gameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
@@ -1053,6 +1059,11 @@ public class PlayerController : MonoBehaviour
         if (gm.enemies.Count == 0) // player wins
         {
             StartDialogueCombat(gm.battleCompleteDialogue);
+        }
+
+        else if (gm.PartyAlive() == false) // player loses
+        {
+            StartDialogueCombat(gm.gameOverDialogue);
         }
 
         else // still in combat

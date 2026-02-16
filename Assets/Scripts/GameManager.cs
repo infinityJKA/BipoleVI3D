@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
 
 	[Header("Combat")]
 	public List<DungeonDialogue> battleStartDialogue;
-	public List<DungeonDialogue> partyMemberDiedDialogue, battleCompleteDialogue;
+	public List<DungeonDialogue> partyMemberDiedDialogue, battleCompleteDialogue, gameOverDialogue;
 	public int BP;
 	
 	[Header("Combat (automatic don't edit)")]
@@ -106,6 +107,23 @@ public class GameManager : MonoBehaviour
 
 		return result;
     }
+
+	public bool PartyAlive()
+	{
+		bool isAlive = false;
+		for(int i = 0; i < 4; i++)
+		{
+			if(partyMembers.Count > i)
+			{
+				if(partyMembers[i].currentHP > 0)
+				{
+					isAlive = true;
+				}	
+			}
+		}
+
+		return isAlive;
+	}
 
 	private void OnApplicationQuit()
 	{
