@@ -1093,15 +1093,26 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                ui.combat.mainBox_Text.text = gm.currentBattler.characterNameEn + "'s turn.";
+                if(gm.currentBattler.currentHP <= 0)
+                {
+                    currentDialogue.Clear();
+                    currentDialogue.Add(new DungeonDialogue(
+                        gm.currentBattler.characterNameEn + " is knocked out and can't act!",
+                        "japanese translation here"
+                    ));
+                    StartDialogueCombat(currentDialogue);
+                }
+                else{
+                    ui.combat.mainBox_Text.text = gm.currentBattler.characterNameEn + "'s turn.";
 
-                // set portrait depending on damage
-                if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.66) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.portrait;
-                else if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.33) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.damagedPortrait;
-                else ui.combat.mainBox_Portrait.sprite = gm.currentBattler.veryDamagedPortrait;
+                    // set portrait depending on damage
+                    if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.66) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.portrait;
+                    else if (gm.currentBattler.currentHP > gm.currentBattler.maxHP * 0.33) ui.combat.mainBox_Portrait.sprite = gm.currentBattler.damagedPortrait;
+                    else ui.combat.mainBox_Portrait.sprite = gm.currentBattler.veryDamagedPortrait;
 
-                combatReturnTo = CombatReturnTo.None;
-                eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
+                    combatReturnTo = CombatReturnTo.None;
+                    eventSystem.SetSelectedGameObject(ui.combat.mainBox_FirstButton);
+                }
             }
         }
     }

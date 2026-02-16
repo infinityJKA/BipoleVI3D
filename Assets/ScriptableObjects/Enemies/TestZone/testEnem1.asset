@@ -18,7 +18,7 @@ MonoBehaviour:
   INT: 80
   DEF: 100
   RES: 80
-  AGL: 10
+  AGL: 70
   ACR: 40
   SPD: 9
   LCK: 10

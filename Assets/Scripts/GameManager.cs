@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 		Debug.Log("userLCK: " + userLCK);
 		int targetAGL = currentTarget.CalculateStat("AGL");
 
-		float hitting = currentBattler.CalculateStat("ACR")*(100+currentAction.HIT/100f);
+		float hitting = currentBattler.CalculateStat("ACR")*((100+currentAction.HIT)/100f);
 		Debug.Log("ACR*(Hit/100) = " + hitting);
 		float dodge = targetAGL+(targetLCK*0.25f);
 		Debug.Log("targetAGL+(Lck*0.25) = "+dodge);

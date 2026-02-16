@@ -24,7 +24,7 @@ MonoBehaviour:
   LCK: 15
   EDR: 3
   maxHP: 300
-  currentHP: 120
+  currentHP: 300
   maxMP: 100
   currentMP: 100
   EXP: 0
@@ -50,9 +50,11 @@ MonoBehaviour:
     timesDamaged: 0
   currentlyEquipped:
   - {fileID: 11400000, guid: 33e219d0bcd0a6242be7ecf97586167e, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0d940868462462446811ecec097ee775, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   statusConditions: []
+  enemyActions: []
+  combatDialogues: []
   display: {fileID: 0}
   isEnemy: 0
