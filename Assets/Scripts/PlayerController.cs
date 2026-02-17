@@ -414,6 +414,8 @@ public class PlayerController : MonoBehaviour
 
     private void PerformAttack(PartyMember target, bool dealDamage, bool unmissable)
     {
+        Debug.Log("PerformAttack() on " + target.characterNameEn);
+
         currentDialogue.Add(new DungeonDialogue(
             gm.currentBattler.characterNameEn + " used " + gm.currentAction.actionName + "!",
             "japanese translation here"

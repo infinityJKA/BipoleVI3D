@@ -23,8 +23,8 @@ MonoBehaviour:
   SPD: 7
   LCK: 10
   EDR: 2
-  maxHP: 300
-  currentHP: 300
+  maxHP: 200
+  currentHP: 200
   maxMP: 100
   currentMP: 100
   EXP: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
       gainBP: 0
       gainVIZ: 0
       setVIZ: 0
-      targetType: 2
+      targetType: 1
       dontTargetBodyPart: 1
       statusConditions:
       - stat: ATK

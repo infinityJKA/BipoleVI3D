@@ -23,8 +23,8 @@ MonoBehaviour:
   SPD: 9
   LCK: 10
   EDR: 2
-  maxHP: 300
-  currentHP: 300
+  maxHP: 175
+  currentHP: 175
   maxMP: 100
   currentMP: 100
   EXP: 0
