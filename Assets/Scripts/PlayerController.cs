@@ -201,6 +201,7 @@ public class PlayerController : MonoBehaviour
 
     public void ProgressCombatTurn()
     {
+        Debug.Log("ProgressCombatTurn()");
         // this progresses the turn
         ui.dialogueBox.SetActive(false);
         ui.combat.mainBox.SetActive(true);
@@ -234,6 +235,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (gm.inCombat)
                 {
+                    Debug.Log("End of dialogue in combat, going to ProgressCombatTurn()");
                     ProgressCombatTurn();
                 }
             }
@@ -270,10 +272,16 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Finished dialogue early");
+            Debug.Log("Finished dialogue early (" + currentDialogue[dialogueIndex].textEn +")");
             finishedDialogueEarly = true;
             currentDialogueText.text = currentDialogue[dialogueIndex].textEn;
             ui.dialogueTriangle.SetActive(true);
+
+            if(currentDialogueText.text == "")
+            {
+                Debug.Log("Textbox is empty for some reason, progressing dialogue");
+                ProgressDialogue();
+            }
         }
     }
 
@@ -1054,6 +1062,8 @@ public class PlayerController : MonoBehaviour
 
     public void StartCombatTurn()
     {
+        Debug.Log("StartCombatTurn()");
+
         UpdatePartyUI();
 
         if (gm.enemies.Count == 0) // player wins
@@ -1100,6 +1110,7 @@ public class PlayerController : MonoBehaviour
 
             if (gm.currentBattler.isEnemy)
             {
+                currentDialogue.Clear();
                 EnemyTurn();
             }
             else

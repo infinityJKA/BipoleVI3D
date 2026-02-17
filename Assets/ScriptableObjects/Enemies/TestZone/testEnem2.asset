@@ -56,16 +56,16 @@ MonoBehaviour:
   statusConditions: []
   enemyActions:
   - HpMin: 0
-    HpMax: 50
+    HpMax: 100
     MpMin: 0
     MpMax: 100
-    priority: 0
+    priority: 1
     action:
       actionDescription: 
       actionDescription_jp: 
       isUlt: 0
       isHealing: 1
-      actionName: Desperate Boost
+      actionName: Desperate Debuff
       actionName_jp: 
       damageType: 1
       damageEquipmentType: 9
@@ -82,10 +82,10 @@ MonoBehaviour:
       dontTargetBodyPart: 1
       statusConditions:
       - stat: ATK
-        amount: 1.2
+        amount: 0.9
         turns: 3
       - stat: DEF
-        amount: 1.15
+        amount: 0.5
         turns: 4
       addtionalStatusOnUser: []
       attackDialogue:
