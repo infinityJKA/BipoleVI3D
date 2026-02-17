@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEditor.Localization.Plugins.XLIFF.V20;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -61,9 +62,11 @@ public class GameManager : MonoBehaviour
 
 		var invenotryClone = Instantiate(inventoryPrefab);
 		inventory = invenotryClone;
-	}
 
-	public void PartySwap(int a, int b)
+
+    }
+
+    public void PartySwap(int a, int b)
 	{
 
 		PartyMember temp = partyMembers[a];
