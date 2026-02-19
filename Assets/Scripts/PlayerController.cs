@@ -363,10 +363,16 @@ public class PlayerController : MonoBehaviour
         else if (command == "END_COMBAT")
         {
             ui.combat.HideMenusForDialogue();
+
+            ui.combat.gameObject.SetActive(false);
+            
             ui.dialogueBox.SetActive(false);
-            ui.popupTextParent.SetActive(true);
+            //ui.popupTextParent.SetActive(true);
             gm.stepsSinceEyeChange = 0;
             gm.eyePhase = 0;
+
+            UpdatePartyUI();
+
             inputState = DungeonInputControlState.FreeMove;
         }
         else if (command == "RESTART_SCENE")

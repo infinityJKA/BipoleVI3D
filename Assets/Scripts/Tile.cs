@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [Header("Sustem Stuff")]
+    [Header("System Stuff")]
     public int x, y; // used for getting position
     public DungeonManager dm;
     public bool playerHasDiscovered; // if the player has previously walked on this tile before, used for minimap discovery
