@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 	public List<DungeonDialogue> battleStartDialogue;
 	public List<DungeonDialogue> partyMemberDiedDialogue, battleCompleteDialogue, gameOverDialogue;
 	public int BP;
-	
+
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
 	public PartyMember currentBattler; // whoever's turn it is
@@ -62,9 +62,9 @@ public class GameManager : MonoBehaviour
 		inventory = invenotryClone;
 
 
-    }
+	}
 
-    public void PartySwap(int a, int b)
+	public void PartySwap(int a, int b)
 	{
 
 		PartyMember temp = partyMembers[a];
@@ -79,26 +79,26 @@ public class GameManager : MonoBehaviour
 	}
 
 	public float[] CalculateHitRate()
-    {
+	{
 		int targetLCK = currentTarget.CalculateStat("LCK");
 		Debug.Log("targetLCK " + targetLCK);
 		int userLCK = currentBattler.CalculateStat("LCK");
 		Debug.Log("userLCK: " + userLCK);
 		int targetAGL = currentTarget.CalculateStat("AGL");
 
-		float hitting = currentBattler.CalculateStat("ACR")*((100+currentAction.HIT)/100f);
+		float hitting = currentBattler.CalculateStat("ACR") * ((100 + currentAction.HIT) / 100f);
 		Debug.Log("ACR*(Hit/100) = " + hitting);
-		float dodge = targetAGL+(targetLCK*0.25f);
-		Debug.Log("targetAGL+(Lck*0.25) = "+dodge);
+		float dodge = targetAGL + (targetLCK * 0.25f);
+		Debug.Log("targetAGL+(Lck*0.25) = " + dodge);
 
-		float hitrateNormal = hitting*2f/(hitting+dodge);
+		float hitrateNormal = hitting * 2f / (hitting + dodge);
 		Debug.Log("hitrate normal " + hitrateNormal);
 
-		dodge = targetAGL+(targetLCK*0.5f);
-		float hitrateBody = hitting*1.5f/(hitting+dodge);
+		dodge = targetAGL + (targetLCK * 0.5f);
+		float hitrateBody = hitting * 1.5f / (hitting + dodge);
 		Debug.Log("hitrate body " + hitrateBody);
 
-		float criticalChance = 1f* userLCK / (userLCK + (targetLCK * 9));
+		float criticalChance = 1f * userLCK / (userLCK + (targetLCK * 9));
 		Debug.Log("crit chance " + criticalChance);
 
 		float[] result = new float[3];
@@ -107,19 +107,19 @@ public class GameManager : MonoBehaviour
 		result[2] = criticalChance;
 
 		return result;
-    }
+	}
 
 	public bool PartyAlive()
 	{
 		bool isAlive = false;
-		for(int i = 0; i < 4; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			if(partyMembers.Count > i)
+			if (partyMembers.Count > i)
 			{
-				if(partyMembers[i].currentHP > 0)
+				if (partyMembers[i].currentHP > 0)
 				{
 					isAlive = true;
-				}	
+				}
 			}
 		}
 
@@ -132,7 +132,74 @@ public class GameManager : MonoBehaviour
 	}
 
 
+	public bool CanAffordAction(EquipmentAction action, PartyMember user)
+	{
+		if (action.costHP > 0)
+		{
+			if (action.setCost)
+			{
+				if (user.currentHP - action.costHP <= 0)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (user.currentHP - ((float)user.currentHP) * (action.costHP / 100f) <= 0)
+				{
+					return false;
+				}
+			}
+		}
+		else if (action.costMP > 0)
+		{
+			if (action.setCost)
+			{
+				if (user.currentMP - action.costMP < 0)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (user.currentMP - ((float)user.currentMP) * (action.costMP / 100f) < 0)
+				{
+					return false;
+				}
+			}
+		}
 
+		return true;
+	}
+
+	public void PayAction(EquipmentAction action, PartyMember user)
+	{
+		if (action.costHP > 0)
+		{
+			if (action.setCost)
+			{
+				user.currentHP -= action.costHP;
+			}
+			else
+			{
+				user.currentHP -= (int)(((float)user.currentHP) * (action.costHP / 100f));
+			}
+            Debug.Log("Paid HP");
+        }
+		else if (action.costMP > 0)
+		{
+			if (action.setCost)
+			{
+				user.currentMP -= action.costMP;
+			}
+			else
+			{
+				user.currentMP -= (int)(((float)user.currentMP) * (action.costMP / 100f));
+			}
+			Debug.Log("Paid MP");
+		}
+
+	}
 }
 
 public enum MoonPhase {

@@ -20,9 +20,18 @@ public class ActionSelectButton : MonoBehaviour, ISelectHandler
 
     public void OnClick()
     {
-        combatUI.gm.currentAction = action;
-        combatUI.usingConsumable = false;
-        combatUI.PlayerCombatAction();
+        if (combatUI.gm.CanAffordAction(action, combatUI.gm.currentBattler))
+        {
+            combatUI.gm.PayAction(action, combatUI.gm.currentBattler);
+
+            combatUI.gm.currentAction = action;
+            combatUI.usingConsumable = false;
+            combatUI.PlayerCombatAction();
+        }
+        else
+        {
+            Debug.Log("Can't afford action!");
+        }
 
     }
 

@@ -372,8 +372,9 @@ public class CombatUI : MonoBehaviour
                 string cost = "";
                 asb.costText.text = "FREE";
                 if (asb.action.setCost == false) cost = "%";
+
                 if (asb.action.costHP != 0) asb.costText.text = asb.action.costHP + cost + " HP";
-                if (asb.action.costMP != 0) asb.costText.text = asb.action.costHP + cost + " MP";
+                if (asb.action.costMP != 0) asb.costText.text = asb.action.costMP + cost + " MP";
             }
 
             actBox.SetActive(true);
