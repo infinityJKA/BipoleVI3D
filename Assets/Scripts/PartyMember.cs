@@ -32,6 +32,7 @@ public class PartyMember : ScriptableObject
     public List<StatusCondition> statusConditions;
 
     [Header("Only for enemies in combat")]
+    public AnimationClip combatAnimation;
     public EnemyAction[] enemyActions;
     public EnemyCombatDialogue[] combatDialogues;
 

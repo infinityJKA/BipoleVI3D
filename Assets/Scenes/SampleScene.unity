@@ -8650,6 +8650,7 @@ GameObject:
   - component: {fileID: 601091696}
   - component: {fileID: 601091695}
   - component: {fileID: 601091697}
+  - component: {fileID: 601091698}
   m_Layer: 5
   m_Name: SpriteMidRight
   m_TagString: Untagged
@@ -8729,6 +8730,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySprite: {fileID: 601091695}
   selectIcon: {fileID: 720635748}
+  animator: {fileID: 601091698}
+--- !u!95 &601091698
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601091693}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4849965df77df6b4f92315bf4e87d1f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &619357613 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2676084725351548399, guid: 67cb9af4d3614e945a1ad5499ef4da91, type: 3}
@@ -12690,6 +12713,7 @@ GameObject:
   - component: {fileID: 983635228}
   - component: {fileID: 983635227}
   - component: {fileID: 983635229}
+  - component: {fileID: 983635230}
   m_Layer: 5
   m_Name: SpriteMidLeft
   m_TagString: Untagged
@@ -12769,6 +12793,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySprite: {fileID: 983635227}
   selectIcon: {fileID: 1714006869}
+  animator: {fileID: 983635230}
+--- !u!95 &983635230
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983635225}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4849965df77df6b4f92315bf4e87d1f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &988788389
 GameObject:
   m_ObjectHideFlags: 0
@@ -21374,7 +21420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1670624038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21410,7 +21456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5154415, g: 0.7563788, b: 0.764151, a: 0.7529412}
+  m_Color: {r: 0.73018867, g: 0.9922912, b: 1, a: 0.30588236}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -22096,6 +22142,7 @@ GameObject:
   - component: {fileID: 1727595033}
   - component: {fileID: 1727595032}
   - component: {fileID: 1727595034}
+  - component: {fileID: 1727595035}
   m_Layer: 5
   m_Name: SpriteMiddle
   m_TagString: Untagged
@@ -22175,6 +22222,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySprite: {fileID: 1727595032}
   selectIcon: {fileID: 2025046951}
+  animator: {fileID: 1727595035}
+--- !u!95 &1727595035
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727595030}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4849965df77df6b4f92315bf4e87d1f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &1734229300 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2676084725351548399, guid: 67cb9af4d3614e945a1ad5499ef4da91, type: 3}
@@ -22693,6 +22762,7 @@ GameObject:
   - component: {fileID: 1797817982}
   - component: {fileID: 1797817981}
   - component: {fileID: 1797817983}
+  - component: {fileID: 1797817984}
   m_Layer: 5
   m_Name: SpriteLeft
   m_TagString: Untagged
@@ -22772,6 +22842,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySprite: {fileID: 1797817981}
   selectIcon: {fileID: 1920345514}
+  animator: {fileID: 1797817984}
+--- !u!95 &1797817984
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797817979}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4849965df77df6b4f92315bf4e87d1f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1812626780
 GameObject:
   m_ObjectHideFlags: 0
@@ -24251,6 +24343,7 @@ GameObject:
   - component: {fileID: 1946513895}
   - component: {fileID: 1946513894}
   - component: {fileID: 1946513896}
+  - component: {fileID: 1946513897}
   m_Layer: 5
   m_Name: SpriteRight
   m_TagString: Untagged
@@ -24330,6 +24423,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySprite: {fileID: 1946513894}
   selectIcon: {fileID: 733954473}
+  animator: {fileID: 1946513897}
+--- !u!95 &1946513897
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946513892}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4849965df77df6b4f92315bf4e87d1f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1947737867
 PrefabInstance:
   m_ObjectHideFlags: 0

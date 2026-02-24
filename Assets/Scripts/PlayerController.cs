@@ -1039,20 +1039,7 @@ public class PlayerController : MonoBehaviour
             gm.enemies.Add(clone); // add the clone to the current encounter
         }
 
-        for (int i = 0; i < ui.combat.combatSprites.Length; i++) // adds the enemy sprites to the ui
-        {
-            if (i < gm.enemies.Count)
-            {
-                ui.combat.combatSprites[i].gameObject.SetActive(true); // enable enemy display
-                ui.combat.combatSprites[i].enemySprite.sprite = gm.enemies[i].sprite; // update the sprite
-                gm.enemies[i].display = ui.combat.combatSprites[i]; // connect the display to the clone
-                ui.combat.combatSprites[i].selectIcon.SetActive(false);
-            }
-            else
-            {
-                ui.combat.combatSprites[i].gameObject.SetActive(false); // hide display if not enough enemies
-            }
-        }
+        
 
         ui.combat.InitializeBattleOrder();
         gm.currentBattler = ui.combat.battlers[0];
@@ -1066,6 +1053,24 @@ public class PlayerController : MonoBehaviour
         }
 
         StartDialogueCombat(gm.battleStartDialogue);
+
+        for (int i = 0; i < ui.combat.combatSprites.Length; i++) // adds the enemy sprites to the ui
+        {
+            if (i < gm.enemies.Count)
+            {
+                ui.combat.combatSprites[i].gameObject.SetActive(true); // enable enemy display
+                ui.combat.combatSprites[i].enemySprite.sprite = gm.enemies[i].sprite; // update the sprite
+                gm.enemies[i].display = ui.combat.combatSprites[i]; // connect the display to the clone
+                ui.combat.combatSprites[i].selectIcon.SetActive(false);
+
+                Debug.Log("Going to play " + gm.enemies[i].combatAnimation.name);
+                ui.combat.combatSprites[i].animator.Play(gm.enemies[i].combatAnimation.name);
+            }
+            else
+            {
+                ui.combat.combatSprites[i].gameObject.SetActive(false); // hide display if not enough enemies
+            }
+        }
     }
 
     public void StartCombatTurn()

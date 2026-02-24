@@ -60,6 +60,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   statusConditions: []
+  combatAnimation: {fileID: 7400000, guid: c737fffce83dbfc4f9178b9fbb3574eb, type: 2}
   enemyActions:
   - HpMin: 0
     HpMax: 100

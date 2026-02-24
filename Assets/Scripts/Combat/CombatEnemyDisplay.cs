@@ -8,6 +8,7 @@ public class CombatEnemyDisplay : MonoBehaviour
 {
     public Image enemySprite; // the sprite
     public GameObject selectIcon; // enable/disable to show you are selecting this guy
+    public Animator animator;
 
 
 }
