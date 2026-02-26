@@ -567,12 +567,22 @@ public class PlayerController : MonoBehaviour
             int defense = 0;
             if (gm.currentAction.damageType == DamageType.Physical)
             {
-                damage = gm.currentBattler.CalculateStat("ATK", gm.currentAction.PWR);
+                //damage = gm.currentBattler.CalculateStat("ATK", gm.currentAction.PWR);
+                int a = gm.currentBattler.CalculateStat("ATK");
+                int p = gm.currentAction.PWR;
+                damage = ((a * p * a) / (a + p)) * 10;
+                Debug.Log(damage + " = ((a*p*a)/(a+p))*10");
+                Debug.Log("a = " + a + " | p = " + p);
                 defense = target.CalculateStat("DEF");
             }
             else
             {
-                damage = gm.currentBattler.CalculateStat("INT", gm.currentAction.PWR);
+                //damage = gm.currentBattler.CalculateStat("INT", gm.currentAction.PWR);
+                int a = gm.currentBattler.CalculateStat("INT");
+                int p = gm.currentAction.PWR;
+                damage = ((a * p * a) / (a + p)) *10 ;
+                Debug.Log(damage + " = ((a*p*a)/(a+p))*10");
+                Debug.Log("a = " + a + " | p = " + p);
                 defense = target.CalculateStat("RES");
             }
 
@@ -595,13 +605,15 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("crit rate: " + gm.currentHitrates[2] * 100);
                 if (UnityEngine.Random.Range(0, 100) <= gm.currentHitrates[2] * 100)
                 {
-                    int dmg = Convert.ToInt32(damage * damage * (weakness + 1.5) / (damage + defense));
+                    int dmg = Convert.ToInt32(damage * damage * (weakness + 1.5) / (damage * defense));
+                    Debug.Log("dmg ("+dmg+") = d*d*(w("+weakness+")+1.5)/(d+def("+defense+"))");
                     d.textEn = "CRITICAL HIT! " + target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
                     target.currentHP -= dmg;
                 }
                 else
                 {
-                    int dmg = Convert.ToInt32(damage * damage * weakness / (damage + defense));
+                    int dmg = Convert.ToInt32(damage * damage * weakness / (damage * defense));
+                    Debug.Log("dmg (" + dmg + ") = d*d*w(" + weakness + ")/(d+def(" + defense + "))");
                     d.textEn = target.characterNameEn + " took " + dmg + " damage!" + weaknessStr;
                     target.currentHP -= dmg;
                 }

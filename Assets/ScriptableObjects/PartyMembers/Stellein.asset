@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6687753af6b64af49a05cdb364e06b7c, type: 2}
   - {fileID: 11400000, guid: 7d9889a493a174a4fa06b151b83563bc, type: 2}
   statusConditions: []
+  combatAnimation: {fileID: 0}
   enemyActions: []
   combatDialogues: []
   display: {fileID: 0}
