@@ -264,10 +264,13 @@ public class CombatUI : MonoBehaviour
 
         for (int i = 0; i < gm.currentTarget.bodyParts.Length; i++) // generate the buttons in the grid
         {
-            BodyPartSelectButton bpsb = Instantiate(bodyPartSelectButtonPrefab, bodyPartSelectBox.transform.position, bodyPartSelectBox.transform.rotation, bodyPartSelectGrid.transform);
-            bpsb.nameText.text = gm.currentTarget.bodyParts[i].bodyPartName + " (" + Convert.ToInt32(gm.currentHitrates[1] * 100) + "%) " + gm.currentTarget.bodyParts[i].timesDamaged + "/" + EDR;
-            bpsb.bodyPartIndex = i;
-            bpsb.combatUI = this;
+            if (gm.currentTarget.bodyParts[i].timesDamaged < EDR)
+            {
+                BodyPartSelectButton bpsb = Instantiate(bodyPartSelectButtonPrefab, bodyPartSelectBox.transform.position, bodyPartSelectBox.transform.rotation, bodyPartSelectGrid.transform);
+                bpsb.nameText.text = gm.currentTarget.bodyParts[i].bodyPartName + " (" + Convert.ToInt32(gm.currentHitrates[1] * 100) + "%) " + gm.currentTarget.bodyParts[i].timesDamaged + "/" + EDR;
+                bpsb.bodyPartIndex = i;
+                bpsb.combatUI = this;
+            }
         }
 
         gm.dungeonPlayer.eventSystem.SetSelectedGameObject(bpsb0.gameObject);
