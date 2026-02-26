@@ -352,7 +352,10 @@ public class CombatUI : MonoBehaviour
             {
                 if (act.equipmentEffect == EquipmentEffect.Action)
                 {
-                    validActions.Add(act.equipmentAction);
+                    if (act.equipmentAction.isUlt == false)
+                    {
+                        validActions.Add(act.equipmentAction);
+                    }
                 }
             }
         }
@@ -378,6 +381,82 @@ public class CombatUI : MonoBehaviour
 
                 if (asb.action.costHP != 0) asb.costText.text = asb.action.costHP + cost + " HP";
                 if (asb.action.costMP != 0) asb.costText.text = asb.action.costMP + cost + " MP";
+            }
+
+            actBox.SetActive(true);
+            gm.dungeonPlayer.eventSystem.SetSelectedGameObject(firstSelected);
+        }
+
+        actDescriptionBox.SetActive(true);
+        gm.dungeonPlayer.combatReturnTo = CombatReturnTo.Main;
+    }
+
+    public void UltSelected()
+    {
+        gm.itemToUse = null;
+
+        mainBox.SetActive(false);
+        validActions.Clear(); // clear old action list
+        foreach (Transform child in actGrid.transform) Destroy(child.gameObject); // destroy old buttons
+
+        ItemObject[] equipment = gm.currentBattler.currentlyEquipped;
+
+        foreach (ItemObject act in equipment) // create a list of each equipment that has a usable action
+        {
+            if (act != null)
+            {
+                if (act.equipmentEffect == EquipmentEffect.Action)
+                {
+                    validActions.Add(act.equipmentAction);
+                }
+            }
+        }
+
+        if (validActions.Count == 0)
+        {
+            actDescriptionText.text = "No valid actions equipped.";
+        }
+        else // iterate through each valid action and create buttons for them
+        {
+            GameObject firstSelected = null;
+
+            for (int i = 0; i < validActions.Count; i++)
+            {
+                ActionSelectButton asb = Instantiate(actionSelectButtonPrefab, actBox.transform.position, actBox.transform.rotation, actGrid.transform);
+                if (firstSelected == null) firstSelected = asb.gameObject;
+                asb.action = validActions[i];
+                asb.combatUI = this;
+                if (validActions[i].isUlt)
+                {
+                    asb.buttonText.text = asb.action.actionName;
+                }
+                else
+                {
+                    asb.buttonText.text = "EX "+asb.action.actionName;
+                    asb.buttonText.fontStyle = FontStyles.Italic;
+                }
+                    string cost = "";
+                asb.costText.text = "";
+                if (validActions[i].isUlt == false)
+                {
+                    asb.costText.text = "15 BP";
+
+                    if (asb.action.setCost == false) cost = "%";
+
+                    if (asb.action.costHP != 0) asb.costText.text = asb.costText.text + "\n" + asb.action.costHP + cost + " HP";
+                    if (asb.action.costMP != 0) asb.costText.text = asb.costText.text + "\n" + asb.action.costMP + cost + " MP";
+                }
+                else
+                {
+                    asb.costText.text = validActions[i].costBP + " BP";
+
+                    if (asb.action.setCost == false) cost = "%";
+
+                    if (asb.action.costHP != 0) asb.costText.text = asb.costText.text + "\n" + asb.action.costHP + cost + " HP";
+                    if (asb.action.costMP != 0) asb.costText.text = asb.costText.text + "\n" + asb.action.costMP + cost + " MP";
+                }
+
+                
             }
 
             actBox.SetActive(true);

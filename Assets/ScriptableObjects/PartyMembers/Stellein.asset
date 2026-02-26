@@ -51,8 +51,8 @@ MonoBehaviour:
   currentlyEquipped:
   - {fileID: 11400000, guid: 90b74b5aef0e4e441b46d726b9340d62, type: 2}
   - {fileID: 11400000, guid: 4dc127a94b9ed9a4b9fa66b8ccac4598, type: 2}
-  - {fileID: 11400000, guid: 6687753af6b64af49a05cdb364e06b7c, type: 2}
   - {fileID: 11400000, guid: 7d9889a493a174a4fa06b151b83563bc, type: 2}
+  - {fileID: 11400000, guid: 01a0c62df0e36494abe224f7bdfb7787, type: 2}
   statusConditions: []
   combatAnimation: {fileID: 0}
   enemyActions: []
