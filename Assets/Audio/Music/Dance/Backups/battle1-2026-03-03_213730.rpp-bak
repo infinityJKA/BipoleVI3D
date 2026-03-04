@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "7.59/win64" 1768856154 0
+<REAPER_PROJECT 0.1 "7.59/win64" 1772595450 0
   <NOTES 0 2
   >
   RIPPLE 0 0
@@ -137,11 +137,11 @@
       BYPASS 0 0 0
       <VST "VST3i: sforzando (Plogue Art et Technologie, Inc)" sforzando.vst3 0 "" 395535903{5C5CA79682FC437AB6539BA204BAB349} ""
         H2aTF+5e7f4AAAAAAgAAAAEAAAAAAAAAAgAAAAAAAADfAQAAAQAAAP//EAA=
-        zwEAAAEAAAAAAAAAxwEAAENFR1DSBAAAeJyNVE2PmzAQvVfqf7B8ag+72ISmiQRdZbtRxYG2EukZDY6Tovpji020/fcdnEBy2BVwwTPzPB8P3qQPL1qRk2xdY01G+T2j
-        5OHL+3fppm2ghJO8ia1XnJLn1u474fMndDCeUMQSfNJSet+YoyN/O1CN/4dhSpxvJWh0Z3QRU6LhpQyejVJWFI8ZjVmyoqTIn/IfnS/sXoZr0HmrwWPVUlmfUexJNSd5
-        jqPhBN5c9m9QgB5O7ojs6947oS7ur9J42WZ0ifijsjWoXWdCJ+iIxq4xP2n2wWlAY3p3iKOy2JXft+WHOHnMdx+r3sUYi9hiUUklRVWDcxX2WYP5k+PlBKP0ShSexW8w
-        RqqM3vWUWYV0LBNK/LWF57pqwRzlBeLRcCGgb45WePwE48xIle58sC8DhCEKaMwwxAlUdyYxehXCRwh7CxJPQxbTkGQa8mkaspyGfJ6GrKYh62kIZzMwM/jlMwjmMxjm
-        Myjmb3P8E1rQl2L8tR8njXp1DMb2cJDC3+plUOFZNxtdN9IIeVVFWA+36yNZh/UhRh2Plb79yoesIDxKPR+Ff7a3o+16BXq530E95kijYVuh8R+XjkGXAAAAAAAAAAA=
+        zwEAAAEAAAAAAAAAxwEAAENFR1DTBAAAeJyNVMFuozAQvVfaf7B86h5abEKziQSt0jZacWB3JdIzGhwnRWvsFpuo+/c7OIHk0Aq44Hnz7Jl58Bw/fNSKHGRjK6MTym8Z
+        JQ/3367iVVNBDgd5kVsuOCVvjdm2wqXPCDAeUeQSfOJcOlfpvSXvLajK/cM0JdY1EmqEEzoLKanhI/fISikjsseEhixaUJKlz+nv1mVmK/02aJ2pwWHVXBmXUOxJVQd5
+        zGNgBe5cdG9QgAgnN0R2dW+tUCf4SWonm4TOkb9XpgS1abXvBIFg6BrPJ9XWgxpqPN7uwiDPNvmvdX4dRo/p5nvRQYyxgM1mhVRSFCVYW2CfJei/KW6OMEvPQuFavILW
+        UiX0ppPMKJRjHlHizi28lUUDei9PFIeB9Yn6YmmEw08wzMw7rHUeOE3gp8ig0v0UB1DtUcXgUwofKOwrSjhOmY1TonHK3ThlPk75MU5ZjFOW4xTOJnAm6MsnCMwnKMwn
+        SMy/1vgPNFCfivHPfpw46OzRB+vdTgp3aZjehkfjrOqyklrIsy38/XB5f0RLf3+IwchDpZ8vaX8qCIdeTwfnH+P1ENvOgk5uN1AOZ8RBf11h8B+ioEHEAAAAAAAAAAA=
         AAAQAAAA
       >
       FLOATPOS 0 0 0 0
@@ -157,7 +157,7 @@
       FADEIN 1 0 0 1 0 0 0
       FADEOUT 1 0 0 1 0 0 0
       MUTE 0 0
-      SEL 1
+      SEL 0
       IGUID {733CD5E4-8067-4A7D-8611-B252F65B283D}
       IID 6
       NAME 03-drums-MIDI
@@ -180,10 +180,10 @@
         E 480 80 1e 00
         E 0 90 23 7f
         E 960 80 23 00
-        e 0 90 25 7f
-        e 960 80 25 00
-        E 0 90 26 7f
-        E 960 80 26 00
+        E 0 90 25 7f
+        E 960 80 25 00
+        e 0 90 26 7f
+        e 960 80 26 00
         E 0 90 25 7f
         E 480 80 25 00
         E 0 90 23 7f
@@ -198,10 +198,10 @@
         SRCCOLOR 5
         EVTFILTER 0 -1 -1 -1 -1 0 0 0 0 -1 -1 -1 -1 0 -1 0 -1 -1
         VELLANE -1 100 0 0 1
-        CFGEDITVIEW -7680 0.052999 62 12 0 -1 0 0 0 0.5
+        CFGEDITVIEW -3772.375364 0.059883 58 12 0 -1 0 0 0 0.5
         KEYSNAP 1
         TRACKSEL 0
-        CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.25 409 236 1668 981 0 0 0 0 0 0 0 1 0 0.5 0 0 1 64
+        CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.25 463 234 1429 875 0 0 0 0 0 0 0 0 0 0.5 0 0 1 64
       >
     >
   >
@@ -238,12 +238,13 @@
       DOCKED 0
       BYPASS 0 0 0
       <VST "VST3i: sforzando (Plogue Art et Technologie, Inc)" sforzando.vst3 0 "" 395535903{5C5CA79682FC437AB6539BA204BAB349} ""
-        H2aTF+5e7f4AAAAAAgAAAAEAAAAAAAAAAgAAAAAAAADeAQAAAQAAAP//EAA=
-        zgEAAAEAAAAAAAAAxgEAAENFR1DPBAAAeJyNVE1vm0AQvVfKf1jtKT0ksIQ6tgSNnMSqONBWwj1bw7J2V9mPBBYr/fcdFoN9SAScdt68nZl94k3y8K4VOYq6kdaklN2G
-        lDx8v/qSrGsJBRzFRW61ZJS81rZqucueEQhZTJFL8EsK4Zw0h4a8taCk+4dpShpXC9AIp/QuokTDe+GRtVKW548pjcJ4SUmePWe/WpfbSvhr0DqrwWHXQlmXUpxJyaPo
-        8xg0HG925TkoQISRGyK6vrcNVyf4SRgn6pQukH9QtgS1bY2fBIFgnBrrE1l50IDG8s0+Cop8W/zcFNdR/Jhtv+46iEXLIAzDXVW3+kU6SkowLxlejBGlZ5HwzP+CMUKl
-        9KaTyyqUYhFT4s7tX8tdDeYgThSHQeMT+uJouUP5x/feI9Q6H5+G9w/IQZrhAUdQbS9g8CGFjZTwM0o0TbmbpsTTlG/TlMU05X6aspymrKYpLJzBmaEvmyEwm6EwmyEx
-        +1zj31CDPjVjH/04SdA5Ywg2+73g7tIrgwN7z6x1KYXh4uwKvxouV0e88quDjx4eO/34kw1VgTu0eTaavo83Y9wIhXOIagtlb52uSBIMqwqD/w9fQI4AAAAAAAAAAA==
+        H2aTF+5e7f4AAAAAAgAAAAEAAAAAAAAAAgAAAAAAAADsAQAAAQAAAP//EAA=
+        3AEAAAEAAAAAAAAA1AEAAENFR1DgBAAAeJyNVMGOmzAQvVfqP1g+tYcN2GFTkEJX2W5UcWBbifQcDcZJ0dpmCyba/n0HEwiHroALnjfPM+Mnvdk+vGlFLrJuysrElK18
+        Sh6+fvyw3dUlZHCRk1wUMkpe66pohU2eEPBZQJFL8Ntm0trSnBvypwVV2r+YpqSxtQSNcEzXnBINb5lDdkpVIn2MKfeDkJI0eUp+tDatCumuQWsrDRa7ZqqyMcWZVHmR
+        fR6DRuBN3v1BASKM3BHZ9V01Ql3hb9JYWcd0g/yzqnJQh9a4SRDwxqmxPikLBxrQWL45cS9LD9nzPvvEg8fk8PnYQYyHnu/7x6Ju9UtpKcnBvCR4MUCU3kTCs/gNxkgV
+        07tOrkqhFJuAEntr/5ofazBneaVYDBqX0JNjJSzKP74XZdKtdfF1ePeAFEozPOACqu0F9P5LYSPFf4/C5ynreUowT7mfp2zmKV/mKeE8JZqnMH8BZ4G+bIHAbIHCbIHE
+        7H2Nf0IN+tpsMvUqZMzn6/uIR0EYsfVm4hSvs8oQ7E8nKezUPIMlexPtdF5KI+TNJm5XTHdJELldIkZTj52+/0qGqiAs+j4Zt0Af78e4kQrnkMUB8t5LXZGtN+wuDP4B
+        kIJEBQAAAAAAAAAA
         AAAQAAAA
       >
       FLOATPOS 0 0 0 0
@@ -297,7 +298,7 @@
         CFGEDITVIEW 0 0.127655 62 12 0 -1 0 0 0 0.5
         KEYSNAP 1
         TRACKSEL 0
-        CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.25 409 236 1668 981 0 0 0 0 0 0 0 1 0 0.5 0 0 1 64
+        CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.25 463 234 1429 875 0 0 0 0 0 0 0 0 0 0.5 0 0 1 64
       >
     >
     <ITEM
@@ -309,7 +310,7 @@
       FADEIN 1 0 0 1 0 0 0
       FADEOUT 1 0 0 1 0 0 0
       MUTE 0 0
-      SEL 0
+      SEL 1
       IGUID {7AC88DC5-2BDD-4E04-BBA3-9488D8BC0ABF}
       IID 6
       NAME 03-drums-MIDI
@@ -327,7 +328,11 @@
         E 240 90 2e 67
         E 240 80 2e 00
         E 240 90 24 7f
+        E 0 90 2c 7d
+        E 0 90 2a 7f
         E 240 80 24 00
+        E 0 80 2c 00
+        E 0 80 2a 00
         E 240 90 2e 63
         E 240 80 2e 00
         E 240 90 24 7f
@@ -336,7 +341,15 @@
         E 240 80 2e 00
         E 240 90 24 7f
         E 240 80 24 00
-        E 720 b0 7b 00
+        E 0 90 2c 7f
+        E 0 90 2a 7f
+        E 240 80 2c 00
+        E 0 80 2a 00
+        E 0 90 2c 7f
+        E 0 90 2a 7f
+        E 240 80 2c 00
+        E 0 80 2a 00
+        E 240 b0 7b 00
         CCINTERP 32
         CHASE_CC_TAKEOFFS 1
         GUID {8BA8EBAD-F7A3-4DF4-80C6-51D82F0B4CCC}
@@ -344,10 +357,10 @@
         SRCCOLOR 5
         EVTFILTER 0 -1 -1 -1 -1 0 0 0 0 -1 -1 -1 -1 0 -1 0 -1 -1
         VELLANE -1 100 0 0 1
-        CFGEDITVIEW 0 0.127655 62 12 0 -1 0 0 0 0.5
+        CFGEDITVIEW -2611.335326 0.071044 67 12 0 -1 0 0 0 0.5
         KEYSNAP 0
         TRACKSEL 0
-        CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.25 409 236 1668 981 0 0 0 0 0 0 0 1 0 0.5 0 0 1 64
+        CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.25 463 234 1429 875 0 0 0 0 0 0 0 0 0 0.5 0 0 1 64
       >
     >
   >
