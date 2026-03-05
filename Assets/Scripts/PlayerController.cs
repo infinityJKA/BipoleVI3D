@@ -136,11 +136,14 @@ public class PlayerController : MonoBehaviour
         inputState = DungeonInputControlState.Dialogue;
         dialogueIndex = -1; // -1 bc +1s at the start of dialogue
 
+        gm.performedUltTrigger = false;
+
         List<DungeonDialogue> nd = new List<DungeonDialogue>();
         for (int i = 0; i < d.Count; i++) // create a new list that can be modified as combat goes on
         {
             nd.Add(d[i]);
         }
+        
 
         currentDialogue = nd;
         ui.combat.HideMenusForDialogue();
@@ -235,8 +238,32 @@ public class PlayerController : MonoBehaviour
             {
                 if (gm.inCombat)
                 {
-                    Debug.Log("End of dialogue in combat, going to ProgressCombatTurn()");
-                    ProgressCombatTurn();
+                    if (gm.performedUltTrigger == false && gm.usingUlt && gm.currentAction.isUlt == false)
+                    {
+                        currentDialogue.Add(new DungeonDialogue(
+                            "ULT trigger!",
+                            "japanese translation here",
+                            null
+                        ));
+                        for (int i = 0; i < gm.currentAction.attackDialogue.Count; i++) // create a new list that can be modified as combat goes on
+                        {
+                            currentDialogue.Add(gm.currentAction.attackDialogue[i]);
+                        }
+                        gm.performedUltTrigger = true;
+                        //StartCoroutine(TypeLine(currentDialogue[dialogueIndex].textEn));
+                        //finishedDialogueEarly = false;
+                        Debug.Log("doing ULT trigger...");
+
+                        dialogueIndex -= 1;
+                        finishedDialogueEarly = true;
+
+                        ProgressDialogue();
+                    }
+                    else
+                    {
+                        Debug.Log("End of dialogue in combat, going to ProgressCombatTurn()");
+                        ProgressCombatTurn();
+                    }
                 }
             }
             else
@@ -1167,6 +1194,8 @@ public class PlayerController : MonoBehaviour
     public void EnemyTurn()
     {
         Debug.Log("EnemyTurn()"); // Skipping enemy turn, not implemented yet");
+
+        gm.usingUlt = false;
 
         List<EquipmentAction> possibleActions = new List<EquipmentAction>();
         foreach (EnemyAction e in gm.currentBattler.enemyActions)

@@ -22,7 +22,7 @@ public class ActionSelectButton : MonoBehaviour, ISelectHandler
     {
         if (combatUI.gm.CanAffordAction(action, combatUI.gm.currentBattler))
         {
-            combatUI.gm.PayAction(action, combatUI.gm.currentBattler);
+            
 
             combatUI.gm.currentAction = action;
             combatUI.usingConsumable = false;

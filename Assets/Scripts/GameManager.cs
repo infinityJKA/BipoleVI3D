@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
 	[Header("Combat")]
 	public List<DungeonDialogue> battleStartDialogue;
 	public List<DungeonDialogue> partyMemberDiedDialogue, battleCompleteDialogue, gameOverDialogue;
-	public int BP;
+	public int BP, enemyBP;
+	public bool usingUlt, performedUltTrigger;
 
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
@@ -169,6 +170,46 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
+		if (usingUlt)
+		{
+			if (action.isUlt)
+			{
+				if (user.isEnemy == false)
+				{
+					if (BP < action.costBP)
+					{
+						Debug.Log("BP ("+BP+") < action cost ("+action.costBP+")");
+						return false;
+					}
+				}
+				else
+				{
+                    if (enemyBP < action.costBP)
+                    {
+                        return false;
+                    }
+                }
+			}
+			else
+			{
+                if (user.isEnemy == false)
+                {
+                    if (BP < 15)
+                    {
+                        Debug.Log("BP (" + BP + ") < action cost (15)");
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (enemyBP < 15)
+                    {
+                        return false;
+                    }
+                }
+            }
+		}
+
 		return true;
 	}
 
@@ -199,7 +240,33 @@ public class GameManager : MonoBehaviour
 			Debug.Log("Paid MP");
 		}
 
-	}
+        if (usingUlt)
+        {
+            if (action.isUlt)
+            {
+                if (user.isEnemy == false)
+                {
+					BP -= action.costBP;
+                }
+                else
+                {
+                    enemyBP -= action.costBP;
+                }
+            }
+            else
+            {
+                if (user.isEnemy == false)
+                {
+                    BP -= 15;
+                }
+                else
+                {
+                    enemyBP -= 15;
+                }
+            }
+        }
+
+    }
 }
 
 public enum MoonPhase {

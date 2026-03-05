@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TargetSelectButton : MonoBehaviour, ISelectHandler
 {
@@ -52,6 +53,9 @@ public class TargetSelectButton : MonoBehaviour, ISelectHandler
                 combatUI.gm.currentBodyPartIndex = -1;
                 combatUI.HideMenusForDialogue();
                 combatUI.gm.currentHitrates = combatUI.gm.CalculateHitRate();
+
+                combatUI.gm.PayAction(combatUI.gm.currentAction, combatUI.gm.currentBattler);
+
                 combatUI.gm.dungeonPlayer.StartDialogueCombat(combatUI.gm.currentAction.attackDialogue);
             }
         }
