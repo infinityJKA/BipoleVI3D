@@ -1066,6 +1066,7 @@ public class PlayerController : MonoBehaviour
         gm.inCombat = true;
 
         gm.BP = 0; // reset BP
+        gm.enemyBP = 0;
 
         //disable environemnt stuff here
 
@@ -1205,13 +1206,18 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("HP requirments met");
 
-                float mpPercent = (float)gm.currentBattler.currentMP / gm.currentBattler.maxMP;
-                if (e.MpMin <= mpPercent && e.MpMax >= mpPercent)
+                if (e.MpMin <= gm.currentBattler.currentMP && e.MpMax >= gm.currentBattler.currentMP)
                 {
                     Debug.Log("MP requirements met");
-                    for (int i = 0; i < e.priority; i++)
+
+                    if (e.BpMin <= gm.enemyBP && e.BpMax >= gm.enemyBP)
                     {
-                        possibleActions.Add(e.action);
+                        Debug.Log("BP requirements met");
+
+                        for (int i = 0; i < e.priority; i++)
+                        {
+                            possibleActions.Add(e.action);
+                        }
                     }
                 }
             }
@@ -1276,6 +1282,22 @@ public class PlayerController : MonoBehaviour
 
 
             }
+
+            if(gm.currentAction.setCost == true)
+            {
+                gm.currentBattler.currentMP -= gm.currentAction.costMP;
+                gm.currentBattler.currentHP -= gm.currentAction.costHP;
+            }
+            else if (gm.currentAction.setCost == false)
+            {
+                gm.currentBattler.currentMP -= (int)(((float)gm.currentBattler.maxMP) * (gm.currentAction.costMP / 100f));
+                gm.currentBattler.currentHP -= (int)(((float)gm.currentBattler.maxHP) * (gm.currentAction.costHP / 100f));
+            }
+
+            gm.enemyBP -= gm.currentAction.costBP;
+            gm.enemyBP += gm.currentAction.gainBP;
+
+
 
             StartDialogueCombat(gm.currentAction.attackDialogue);
        

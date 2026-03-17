@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				if (user.currentHP - ((float)user.currentHP) * (action.costHP / 100f) <= 0)
+				if (user.currentHP - ((float)user.maxHP) * (action.costHP / 100f) <= 0)
 				{
 					return false;
 				}
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				if (user.currentMP - ((float)user.currentMP) * (action.costMP / 100f) < 0)
+				if (user.currentMP - ((float)user.maxMP) * (action.costMP / 100f) < 0)
 				{
 					return false;
 				}
@@ -223,7 +223,7 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				user.currentHP -= (int)(((float)user.currentHP) * (action.costHP / 100f));
+				user.currentHP -= (int)(((float)user.maxHP) * (action.costHP / 100f));
 			}
             Debug.Log("Paid HP");
         }
@@ -235,7 +235,7 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				user.currentMP -= (int)(((float)user.currentMP) * (action.costMP / 100f));
+				user.currentMP -= (int)(((float)user.maxMP) * (action.costMP / 100f));
 			}
 			Debug.Log("Paid MP");
 		}

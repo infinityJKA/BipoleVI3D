@@ -212,6 +212,7 @@ public class EnemyAction
 {
     public int HpMin, HpMax; // HP requirements for using this
     public int MpMin, MpMax; // MP requirements for using this
+    public int BpMin, BpMax; // BP requirements for using this
     public int priority; // higher number = more likely
     public EquipmentAction action; // action
 }
