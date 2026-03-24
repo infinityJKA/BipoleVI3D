@@ -12,7 +12,7 @@ public class DungeonManager : MonoBehaviour
     public Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
 
     public int lowestX,highestX,lowestY,highestY = 0;
-    [SerializeField] GameObject minimapParent, minimapCamera;
+    public GameObject minimapParent, minimapCamera;
     [SerializeField] MinimapTile minimapTilePrefab;
 
 
@@ -37,6 +37,7 @@ public class DungeonManager : MonoBehaviour
 
             // creates minimap tile
             MinimapTile mmT = Instantiate(minimapTilePrefab, new Vector3(minimapParent.transform.position.x+t.x,minimapParent.transform.position.y+t.y), minimapParent.transform.rotation, minimapParent.transform);
+            mmT.worldPosition = mmT.transform.position;
             t.minimapTile = mmT;
             t.UpdateMiniMapSprite();
         }

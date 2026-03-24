@@ -37,6 +37,9 @@ public class DungeonInputCheck : MonoBehaviour
             else if (InputManager.instance.interact) controller.Interact();
             else if (InputManager.instance.options) controller.OpenOptions();
             else if (InputManager.instance.menu) controller.OpenMenu();
+
+            else if(InputManager.instance.debug1) GameManager.gm.Save(1);
+            else if(InputManager.instance.debug2) GameManager.gm.Load(1);
         }
 
         else if (controller.inputState == DungeonInputControlState.Dialogue)

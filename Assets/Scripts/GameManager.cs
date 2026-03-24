@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -65,7 +66,55 @@ public class GameManager : MonoBehaviour
 
 	}
 
-	public void PartySwap(int a, int b)
+	public void Save(int num)
+	{
+		SaveData data = new SaveData();
+
+		data.party = partyMembers;
+		data.inventory = inventory;
+
+		DungeonSaveData dungeonSaveData = new DungeonSaveData();
+		dungeonSaveData.dungeonSceneName = SceneManager.GetActiveScene().name;
+		dungeonSaveData.playerPosition = dungeonPlayer.transform.position;
+		dungeonSaveData.playerRotation = dungeonPlayer.transform.eulerAngles;
+		dungeonSaveData.playerFacing = dungeonPlayer.playerFacing;
+		foreach(Transform tr in dungeonPlayer.dm.minimapParent.transform)
+		{
+			//dungeonSaveData.mapObjects.Add(tr.GetComponent<MinimapTile>());
+		}
+		foreach(Transform tr in dungeonPlayer.dm.transform)
+		{
+			//dungeonSaveData.dungeonTiles.Add(tr.GetComponent<Tile>());   
+        }
+
+		if (data.ContainsDungeon(dungeonSaveData.dungeonSceneName))
+		{
+			int ind = data.dungeons.IndexOf(data.GetDungeon(dungeonSaveData.dungeonSceneName));
+			data.dungeons[ind] = dungeonSaveData;
+		}
+		else
+		{
+			if(data.dungeons == null)
+			{
+				data.dungeons = new List<DungeonSaveData>();
+			}
+			data.dungeons.Add(dungeonSaveData);
+		}
+
+		string json = JsonUtility.ToJson(data);
+		string path = Application.persistentDataPath + "/save" + num + ".json";
+		System.IO.File.WriteAllText(path, json);
+
+		Debug.Log("Game saved to " + path);
+
+	}
+
+    public void Load(int num)
+    {
+        
+    }
+
+    public void PartySwap(int a, int b)
 	{
 
 		PartyMember temp = partyMembers[a];

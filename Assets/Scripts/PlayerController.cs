@@ -14,7 +14,7 @@ using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] DungeonManager dm;
+    public DungeonManager dm;
     private GameManager gm;
     public DungeonUI ui;
     public bool animateMovement = false;
@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayerObject();
     }
+
+
 
     private Sprite PlayerMapSprite(){
         if(playerFacing == PlayerFacing.North){
@@ -117,7 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         if (DoneMoving)
         {
-            if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk)
+            if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk || dm.GetTile(playerX, playerY).interactType == InteractType.Exit)
             {
                 inputState = DungeonInputControlState.Dialogue;
                 dialogueIndex = -1; // -1 bc +1s at the start of dialogue

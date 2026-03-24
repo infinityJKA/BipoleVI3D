@@ -19,7 +19,10 @@ public class InputManager : MonoBehaviour
     public bool decline { get; private set; }
     public bool options { get; private set; }
     public bool menu { get; private set; }
-    private InputAction moveForwardAction, moveBackwardsAction, turnRightAction, turnLeftAction, strafeRightAction, strafeLeftAction, interactAction, declineAction, optionsAction, menuAction;
+    public bool debug1 { get; private set; }
+    public bool debug2 { get; private set; }
+
+    private InputAction moveForwardAction, moveBackwardsAction, turnRightAction, turnLeftAction, strafeRightAction, strafeLeftAction, interactAction, declineAction, optionsAction, menuAction,debug1Action, debug2Action;
     public EventSystem eventSystem;
     private void Awake()
     {
@@ -47,6 +50,8 @@ public class InputManager : MonoBehaviour
         decline = declineAction.WasPressedThisFrame();
         options = optionsAction.WasPressedThisFrame();
         menu = menuAction.WasPerformedThisFrame();
+        debug1 = debug1Action.WasPressedThisFrame();
+        debug2 = debug2Action.WasPressedThisFrame();
     }
 
 
@@ -62,6 +67,8 @@ public class InputManager : MonoBehaviour
         declineAction = playerInput.actions["Decline"];
         optionsAction = playerInput.actions["Options"];
         menuAction = playerInput.actions["Menu"];
+        debug1Action = playerInput.actions["Debug1"];
+        debug2Action = playerInput.actions["Debug2"];
     }
 
 }

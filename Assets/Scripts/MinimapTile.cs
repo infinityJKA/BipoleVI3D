@@ -6,5 +6,7 @@ public class MinimapTile : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer,spriteRendererBg;
     public GameObject wallUp,wallRight,wallDown,wallLeft;
+
+    public Vector3 worldPosition;
     
 }
