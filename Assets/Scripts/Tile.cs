@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Tile : MonoBehaviour
 {
     [Header("System Stuff")]
-    public int x, y; // used for getting position
+    [SerializeField] public int x, y; // used for getting position
     public DungeonManager dm;
     public bool playerHasDiscovered; // if the player has previously walked on this tile before, used for minimap discovery
     public String objectID; // generated when object is initialized, used to save/load data when the scene is loaded.

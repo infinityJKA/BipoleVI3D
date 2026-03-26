@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
 	public bool inCombat;
 	public InventorySlot itemToUse;
 
+
+	NewSaveData data;
 	void Awake()
 	{
 		if (gm != null)
@@ -68,6 +70,9 @@ public class GameManager : MonoBehaviour
 
 	public void Save(int num)
 	{
+		//data = new NewSaveData();
+		//data.LoadSceneSaveData(num, SceneManager.GetActiveScene().name);
+
 		SaveData data = new SaveData();
 
 		data.party = partyMembers;
@@ -78,14 +83,20 @@ public class GameManager : MonoBehaviour
 		dungeonSaveData.playerPosition = dungeonPlayer.transform.position;
 		dungeonSaveData.playerRotation = dungeonPlayer.transform.eulerAngles;
 		dungeonSaveData.playerFacing = dungeonPlayer.playerFacing;
-		foreach(Transform tr in dungeonPlayer.dm.minimapParent.transform)
+
+		dungeonSaveData.mapObjects = new List<MinimapTile>();
+
+		foreach (Transform tr in dungeonPlayer.dm.minimapParent.transform)
 		{
-			//dungeonSaveData.mapObjects.Add(tr.GetComponent<MinimapTile>());
+			dungeonSaveData.mapObjects.Add(tr.GetComponent<MinimapTile>());
 		}
-		foreach(Transform tr in dungeonPlayer.dm.transform)
+
+        dungeonSaveData.dungeonTiles = new List<Tile>();
+
+        foreach (Transform tr in dungeonPlayer.dm.transform)
 		{
-			//dungeonSaveData.dungeonTiles.Add(tr.GetComponent<Tile>());   
-        }
+			dungeonSaveData.dungeonTiles.Add(tr.GetComponent<Tile>());   
+		}
 
 		if (data.ContainsDungeon(dungeonSaveData.dungeonSceneName))
 		{
@@ -94,7 +105,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			if(data.dungeons == null)
+			if (data.dungeons == null)
 			{
 				data.dungeons = new List<DungeonSaveData>();
 			}
@@ -111,7 +122,7 @@ public class GameManager : MonoBehaviour
 
     public void Load(int num)
     {
-        
+        //data.LoadSceneSaveData(num,SceneManager.GetActiveScene().name);
     }
 
     public void PartySwap(int a, int b)
