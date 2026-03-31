@@ -38,8 +38,6 @@ public class GameManager : MonoBehaviour
 	public bool inCombat;
 	public InventorySlot itemToUse;
 
-
-	NewSaveData data;
 	void Awake()
 	{
 		if (gm != null)
@@ -70,13 +68,17 @@ public class GameManager : MonoBehaviour
 
 	public void Save(int num)
 	{
-		//data = new NewSaveData();
-		//data.LoadSceneSaveData(num, SceneManager.GetActiveScene().name);
 
 		SaveData data = new SaveData();
 
-		data.party = partyMembers;
-		data.inventory = inventory;
+		data.currentSceneName = SceneManager.GetActiveScene().name;
+
+		foreach(PartyMember pm in partyMembers)
+		{
+			data.SavePartyMemberData(pm);
+		}
+
+		data.SaveInventory(inventory);
 
 		DungeonSaveData dungeonSaveData = new DungeonSaveData();
 		dungeonSaveData.dungeonSceneName = SceneManager.GetActiveScene().name;
@@ -122,7 +124,11 @@ public class GameManager : MonoBehaviour
 
     public void Load(int num)
     {
-        //data.LoadSceneSaveData(num,SceneManager.GetActiveScene().name);
+        string jsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json");
+        SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
+        
+		
+		//SceneManager.LoadSceneAsync(data.savedScene);
     }
 
     public void PartySwap(int a, int b)

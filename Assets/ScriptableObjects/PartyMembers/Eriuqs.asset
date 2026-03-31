@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterNameEn: Eriuqs
   characterNameJp: "\u30A8\u30EA\u30A6\u30AF\u30B9"
+  partyMemberInternalID: Eriqus
   ATK: 120
   INT: 80
   DEF: 110

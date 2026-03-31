@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterNameEn: Shufflin Shrub
   characterNameJp: error
+  partyMemberInternalID: Shufflin Shrub
   ATK: 80
   INT: 80
   DEF: 100
@@ -60,6 +61,8 @@ MonoBehaviour:
     HpMax: 100
     MpMin: 0
     MpMax: 100
+    BpMin: 0
+    BpMax: 0
     priority: 1
     action:
       actionDescription: 

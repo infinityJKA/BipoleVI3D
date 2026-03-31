@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterNameEn: "Wi\xFEfon"
   characterNameJp: "\u30A6\u30A3\u30D5\u30A9\u30F3"
+  partyMemberInternalID: "Wi\xFEfon"
   ATK: 80
   INT: 50
   DEF: 90
@@ -30,6 +31,7 @@ MonoBehaviour:
   EXP: 0
   LV: 1
   VIZ: 100
+  expDrop: 0
   weaknesses: 02000000040000000b000000
   equippable: 000000000300000007000000
   sprite: {fileID: 21300000, guid: e3474ba2aebec61419583617c9f79e15, type: 3}
@@ -40,15 +42,21 @@ MonoBehaviour:
   bodyParts:
   - bodyPartName: Head
     conditionsOnBreak: []
+    timesDamaged: 0
   - bodyPartName: Arms
     conditionsOnBreak: []
+    timesDamaged: 0
   - bodyPartName: Legs
     conditionsOnBreak: []
+    timesDamaged: 0
   currentlyEquipped:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   statusConditions: []
+  combatAnimation: {fileID: 0}
+  enemyActions: []
+  combatDialogues: []
   display: {fileID: 0}
   isEnemy: 0

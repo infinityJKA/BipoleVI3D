@@ -84,6 +84,7 @@ public enum MapIcon{
     Interactable
 }
 
+[System.Serializable]
 public enum InteractType
 {
     None,

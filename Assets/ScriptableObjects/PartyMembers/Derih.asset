@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterNameEn: Derih
   characterNameJp: "\u30C7\u30EA\u30A8"
+  partyMemberInternalID: Derih
   ATK: 80
   INT: 50
   DEF: 90
@@ -54,5 +55,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   statusConditions: []
+  combatAnimation: {fileID: 0}
+  enemyActions: []
+  combatDialogues: []
   display: {fileID: 0}
   isEnemy: 0

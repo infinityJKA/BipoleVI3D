@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Bipole VI/Item")]
+[System.Serializable]
 public class ItemObject : ScriptableObject
 {
+    public string saveId;
     [Header("Universal")]
     public string itemName;
     public string itemName_jp;
@@ -100,6 +102,7 @@ public enum DamageType
     Physical, Magical
 }
 
+[System.Serializable]
 public enum EquipmentType
 {
     // primarily physical

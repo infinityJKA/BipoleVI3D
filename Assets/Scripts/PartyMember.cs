@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class PartyMember : ScriptableObject
 {
     public string characterNameEn = "John Partymember", characterNameJp;
+    public string partyMemberInternalID;
     public int
     ATK, // physical strength
     INT, // magical strength

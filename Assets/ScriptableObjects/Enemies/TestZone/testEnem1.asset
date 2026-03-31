@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterNameEn: Red Slime
   characterNameJp: error
+  partyMemberInternalID: Red Slime
   ATK: 80
   INT: 80
   DEF: 100

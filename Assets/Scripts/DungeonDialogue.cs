@@ -13,6 +13,7 @@ public class DungeonDialogue //: MonoBehaviour
     public ItemObject item;
     public GameObject obj;
     public PartyMember battler;
+    [HideInInspector] public String partyMemberID, itemID;
 
     public DungeonDialogue()
     {
