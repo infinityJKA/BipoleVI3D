@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
   m_Name: TEST_damageANDboost
   m_EditorClassIdentifier: 
+  saveId: Atk&Effect
   itemName: Atk&Effect
   itemName_jp: 
   itemDescription: this is a test action description
@@ -26,6 +27,7 @@ MonoBehaviour:
   canUseInBattle: 0
   canUseInInventory: 0
   isAttack: 0
+  destoryOnUse: 0
   equipmentType: 0
   pDEF: 0
   nDEF: 0
@@ -69,19 +71,17 @@ MonoBehaviour:
     gainVIZ: -10
     setVIZ: 0
     targetType: 1
+    dontTargetBodyPart: 0
     statusConditions:
     - stat: ATK
       amount: 0.8
-      isPercentage: 0
       turns: 2
     - stat: SPD
       amount: 0.5
-      isPercentage: 0
       turns: 4
     addtionalStatusOnUser:
     - stat: LCK
       amount: 1.1
-      isPercentage: 0
       turns: 3
     attackDialogue:
     - command: ATTACK_SINGLE_ENEMY
@@ -90,7 +90,11 @@ MonoBehaviour:
       portrait: {fileID: 0}
       item: {fileID: 0}
       obj: {fileID: 4179405031530732623, guid: 07e5d364ebf3a2e448cae7f943f2cfc8, type: 3}
+      battler: {fileID: 0}
+      partyMemberID: 
+      itemID: 
   pages: []
+  pages_jp: []
   coinValue: 0
   currencyType: 0
   condition: 0

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
   m_Name: SmallDagger
   m_EditorClassIdentifier: 
+  saveId: Small Dagger
   itemName: Small Dagger
   itemName_jp: 
   itemDescription: 'Equip Type: SWORD
@@ -28,6 +29,7 @@ MonoBehaviour:
   canUseInBattle: 0
   canUseInInventory: 0
   isAttack: 0
+  destoryOnUse: 0
   equipmentType: 0
   pDEF: 0
   nDEF: 0
@@ -72,6 +74,7 @@ MonoBehaviour:
     gainVIZ: -10
     setVIZ: 0
     targetType: 1
+    dontTargetBodyPart: 0
     statusConditions: []
     addtionalStatusOnUser: []
     attackDialogue:
@@ -81,7 +84,11 @@ MonoBehaviour:
       portrait: {fileID: 0}
       item: {fileID: 0}
       obj: {fileID: -2253911629886400664, guid: fe1a7ed906c86784cb44813150592f46, type: 3}
+      battler: {fileID: 0}
+      partyMemberID: 
+      itemID: 
   pages: []
+  pages_jp: []
   coinValue: 0
   currencyType: 0
   condition: 0

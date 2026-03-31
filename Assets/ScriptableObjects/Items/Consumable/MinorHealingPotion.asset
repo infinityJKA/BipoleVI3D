@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
   m_Name: MinorHealingPotion
   m_EditorClassIdentifier: 
+  saveId: Minor Healing Potion
   itemName: Minor Healing Potion
   itemName_jp: 
   itemDescription: Restores 80 HP.

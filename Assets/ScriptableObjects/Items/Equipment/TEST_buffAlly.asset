@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
   m_Name: TEST_buffAlly
   m_EditorClassIdentifier: 
+  saveId: BuffAlly
   itemName: BuffAlly
   itemName_jp: 
   itemDescription: this is a test action description
@@ -87,6 +88,8 @@ MonoBehaviour:
       item: {fileID: 0}
       obj: {fileID: 4179405031530732623, guid: 07e5d364ebf3a2e448cae7f943f2cfc8, type: 3}
       battler: {fileID: 0}
+      partyMemberID: 
+      itemID: 
   pages: []
   pages_jp: []
   coinValue: 0

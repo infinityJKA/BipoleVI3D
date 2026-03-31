@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a4904b6278f6140a1d491de3867821, type: 3}
   m_Name: WoodenHelmet
   m_EditorClassIdentifier: 
+  saveId: Wooden Helmet
   itemName: Wooden Helmet
   itemName_jp: 
   itemDescription: 'Equip Type: ANY
@@ -28,6 +29,7 @@ MonoBehaviour:
   canUseInBattle: 0
   canUseInInventory: 0
   isAttack: 0
+  destoryOnUse: 0
   equipmentType: 12
   pDEF: 20
   nDEF: 0
@@ -71,10 +73,12 @@ MonoBehaviour:
     gainVIZ: 0
     setVIZ: 0
     targetType: 1
+    dontTargetBodyPart: 0
     statusConditions: []
     addtionalStatusOnUser: []
     attackDialogue: []
   pages: []
+  pages_jp: []
   coinValue: 0
   currencyType: 0
   condition: 0
