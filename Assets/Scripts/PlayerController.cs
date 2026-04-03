@@ -335,7 +335,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "ADDITEM")
         {
-            GameManager.gm.inventory.AddItem(currentDialogue[dialogueIndex].item, 1);
+            GameManager.gm.inventory.AddItem(GameManager.gm.GetItemByID(currentDialogue[dialogueIndex].textEn), 1);
             finishedDialogueEarly = true;
             ProgressDialogue();
         }

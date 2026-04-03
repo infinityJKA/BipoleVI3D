@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
 	public int BP, enemyBP;
 	public bool usingUlt, performedUltTrigger;
 
+	[Header("Databases")]
+	public List<ItemObject> allItems;
+
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
 	public PartyMember currentBattler; // whoever's turn it is
@@ -82,22 +85,43 @@ public class GameManager : MonoBehaviour
 
 		DungeonSaveData dungeonSaveData = new DungeonSaveData();
 		dungeonSaveData.dungeonSceneName = SceneManager.GetActiveScene().name;
-		dungeonSaveData.playerPosition = dungeonPlayer.transform.position;
-		dungeonSaveData.playerRotation = dungeonPlayer.transform.eulerAngles;
-		dungeonSaveData.playerFacing = dungeonPlayer.playerFacing;
 
-		dungeonSaveData.mapObjects = new List<MinimapTile>();
+		//dungeonSaveData.mapObjects = new List<MinimapTile>();
 
-		foreach (Transform tr in dungeonPlayer.dm.minimapParent.transform)
-		{
-			dungeonSaveData.mapObjects.Add(tr.GetComponent<MinimapTile>());
-		}
+		data.currentDungeon = new CurrentDungeon();
+		data.currentDungeon.playerPosition = dungeonPlayer.transform.position;
+		data.currentDungeon.playerRotation = dungeonPlayer.transform.eulerAngles;
+		data.currentDungeon.playerFacing = dungeonPlayer.playerFacing;
 
-        dungeonSaveData.dungeonTiles = new List<Tile>();
+		// foreach (Transform tr in dungeonPlayer.dm.minimapParent.transform)
+		// {
+		// 	dungeonSaveData.mapObjects.Add(tr.GetComponent<MinimapTile>());
+		// }
+
+        dungeonSaveData.tileData = new List<TileSaveData>();
 
         foreach (Transform tr in dungeonPlayer.dm.transform)
 		{
-			dungeonSaveData.dungeonTiles.Add(tr.GetComponent<Tile>());   
+			Tile original = tr.GetComponent<Tile>();
+			TileSaveData t = new TileSaveData();
+			t.x = original.x;
+			t.y = original.y;
+			t.playerHasDiscovered = original.playerHasDiscovered;
+			t.objectID = original.objectID;
+
+			t.mapIcon = original.mapIcon;
+			t.objectDisableOnWalk = original.objectDisableOnWalk;
+			t.minimapTile = original.minimapTile;
+			t.minimapSprite = original.minimapSprite;
+			t.minimapBg = original.minimapBg;
+
+			t.walkable = original.walkable;
+			t.eventOnWalk = original.eventOnWalk;
+			t.interactType = original.interactType;
+			t.dialogue = original.dialogue;
+			t.noEncounter = original.noEncounter;
+
+			dungeonSaveData.tileData.Add(t);   
 		}
 
 		if (data.ContainsDungeon(dungeonSaveData.dungeonSceneName))
@@ -114,7 +138,7 @@ public class GameManager : MonoBehaviour
 			data.dungeons.Add(dungeonSaveData);
 		}
 
-		string json = JsonUtility.ToJson(data);
+		string json = JsonUtility.ToJson(data, true);
 		string path = Application.persistentDataPath + "/save" + num + ".json";
 		System.IO.File.WriteAllText(path, json);
 
@@ -130,6 +154,20 @@ public class GameManager : MonoBehaviour
 		
 		//SceneManager.LoadSceneAsync(data.savedScene);
     }
+
+	public ItemObject GetItemByID(string id)
+	{
+		foreach (ItemObject item in allItems)
+		{
+			if (item.saveId.Equals(id))
+			{
+				return item;
+			}
+		}
+
+		Debug.Log("Error: Item with ID " + id + " not found in database (GameManager).");
+		return null;
+	}
 
     public void PartySwap(int a, int b)
 	{

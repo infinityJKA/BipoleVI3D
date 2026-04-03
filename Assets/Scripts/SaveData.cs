@@ -146,7 +146,7 @@ public class InventorySlotSaveData
 [System.Serializable]
 public class TileSaveData
 {
-    int x, y; // used for getting position
+    public int x, y; // used for getting position
     public bool playerHasDiscovered; // if the player has previously walked on this tile before, used for minimap discovery
     public String objectID; // generated when object is initialized, used to save/load data when the scene is loaded.
 

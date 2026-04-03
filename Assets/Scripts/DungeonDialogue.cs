@@ -10,10 +10,12 @@ public class DungeonDialogue //: MonoBehaviour
     public String command = "",
     textEn, textJp;
     public Sprite portrait;
-    public ItemObject item;
-    public GameObject obj;
-    public PartyMember battler;
-    [HideInInspector] public String partyMemberID, itemID;
+    
+
+    [Header("Only used in combat")]
+    public PartyMember battler; // used for combat targeting
+    public GameObject obj; // used for attack effects
+
 
     public DungeonDialogue()
     {

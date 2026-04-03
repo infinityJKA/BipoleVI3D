@@ -10604,58 +10604,65 @@ MonoBehaviour:
     textEn: Battle start!
     textJp: 
     portrait: {fileID: 0}
-    item: {fileID: 0}
-    obj: {fileID: 0}
     battler: {fileID: 0}
+    obj: {fileID: 0}
   - command: START_TURN
     textEn: 
     textJp: 
     portrait: {fileID: 0}
-    item: {fileID: 0}
-    obj: {fileID: 0}
     battler: {fileID: 0}
+    obj: {fileID: 0}
   partyMemberDiedDialogue: []
   battleCompleteDialogue:
   - command: 
     textEn: Battle complete!
     textJp: 
     portrait: {fileID: 0}
-    item: {fileID: 0}
-    obj: {fileID: 0}
     battler: {fileID: 0}
+    obj: {fileID: 0}
   - command: END_COMBAT
     textEn: 
     textJp: 
     portrait: {fileID: 0}
-    item: {fileID: 0}
-    obj: {fileID: 0}
     battler: {fileID: 0}
+    obj: {fileID: 0}
   gameOverDialogue:
   - command: 
     textEn: Your party was defeated!
     textJp: jp
     portrait: {fileID: 0}
-    item: {fileID: 0}
-    obj: {fileID: 0}
     battler: {fileID: 0}
+    obj: {fileID: 0}
   - command: 
     textEn: Game Over!
     textJp: jp
     portrait: {fileID: 0}
-    item: {fileID: 0}
-    obj: {fileID: 0}
     battler: {fileID: 0}
+    obj: {fileID: 0}
   - command: RESTART_SCENE
     textEn: 
     textJp: 
     portrait: {fileID: 0}
-    item: {fileID: 0}
-    obj: {fileID: 0}
     battler: {fileID: 0}
+    obj: {fileID: 0}
   BP: 0
   enemyBP: 0
   usingUlt: 0
   performedUltTrigger: 0
+  allItems:
+  - {fileID: 11400000, guid: 713a3a0841c02034f9673522c7813946, type: 2}
+  - {fileID: 11400000, guid: a993a3070297abc48aa7bd38f3ac677e, type: 2}
+  - {fileID: 11400000, guid: a993a3070297abc48aa7bd38f3ac677e, type: 2}
+  - {fileID: 11400000, guid: 01a0c62df0e36494abe224f7bdfb7787, type: 2}
+  - {fileID: 11400000, guid: 90b74b5aef0e4e441b46d726b9340d62, type: 2}
+  - {fileID: 11400000, guid: 6687753af6b64af49a05cdb364e06b7c, type: 2}
+  - {fileID: 11400000, guid: a8ce46cceadf9bc43b28a9ed74818eca, type: 2}
+  - {fileID: 11400000, guid: 4dc127a94b9ed9a4b9fa66b8ccac4598, type: 2}
+  - {fileID: 11400000, guid: 0d940868462462446811ecec097ee775, type: 2}
+  - {fileID: 11400000, guid: 33e219d0bcd0a6242be7ecf97586167e, type: 2}
+  - {fileID: 11400000, guid: 5865b6f9a7db3f14fa57c166a2e530e3, type: 2}
+  - {fileID: 11400000, guid: 8bc63249a0ecc6c4280569ad050ee32a, type: 2}
+  - {fileID: 11400000, guid: 7d9889a493a174a4fa06b151b83563bc, type: 2}
   enemies: []
   currentBattler: {fileID: 0}
   currentAction:
@@ -17686,7 +17693,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: fb1b86ef9d6707d45b4b54c441ecdeab, type: 3}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[3].item
@@ -17709,6 +17716,14 @@ PrefabInstance:
       value: yap yap yap yap yappity yap yap yapenheimer
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[3].textEn
+      value: Lesser Healing Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[4].textEn
+      value: (You got a Lesser Healing Potion!)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[2].command
       value: 
       objectReference: {fileID: 0}
@@ -17718,6 +17733,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[4].command
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[5].command
       value: END
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
