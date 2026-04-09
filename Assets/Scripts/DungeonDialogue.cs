@@ -10,7 +10,9 @@ public class DungeonDialogue //: MonoBehaviour
     public String command = "",
     textEn, textJp;
     public Sprite portrait;
-    
+
+    [Header("Only used in save data, automatic")]
+    [HideInInspector] public string spriteName;
 
     [Header("Only used in combat")]
     public PartyMember battler; // used for combat targeting

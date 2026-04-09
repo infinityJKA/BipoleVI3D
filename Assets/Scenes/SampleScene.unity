@@ -10604,12 +10604,14 @@ MonoBehaviour:
     textEn: Battle start!
     textJp: 
     portrait: {fileID: 0}
+    spritePath: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   - command: START_TURN
     textEn: 
     textJp: 
     portrait: {fileID: 0}
+    spritePath: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   partyMemberDiedDialogue: []
@@ -10618,12 +10620,14 @@ MonoBehaviour:
     textEn: Battle complete!
     textJp: 
     portrait: {fileID: 0}
+    spritePath: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   - command: END_COMBAT
     textEn: 
     textJp: 
     portrait: {fileID: 0}
+    spritePath: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   gameOverDialogue:
@@ -10631,18 +10635,21 @@ MonoBehaviour:
     textEn: Your party was defeated!
     textJp: jp
     portrait: {fileID: 0}
+    spritePath: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   - command: 
     textEn: Game Over!
     textJp: jp
     portrait: {fileID: 0}
+    spritePath: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   - command: RESTART_SCENE
     textEn: 
     textJp: 
     portrait: {fileID: 0}
+    spritePath: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   BP: 0
@@ -10663,6 +10670,27 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5865b6f9a7db3f14fa57c166a2e530e3, type: 2}
   - {fileID: 11400000, guid: 8bc63249a0ecc6c4280569ad050ee32a, type: 2}
   - {fileID: 11400000, guid: 7d9889a493a174a4fa06b151b83563bc, type: 2}
+  allDialoguePortraits:
+  - {fileID: 21300000, guid: 3d0b6fd916470114d83fc5af9f4c496e, type: 3}
+  - {fileID: 21300000, guid: f74f099a85bdc4c47a5de6c90a3b08fe, type: 3}
+  - {fileID: 21300000, guid: 965c3f70f6749bf42a849c90bbc00ffc, type: 3}
+  - {fileID: 21300000, guid: 4590e629dba3a824082f3e1f1caec90d, type: 3}
+  - {fileID: 21300000, guid: 5d2fc51ddead310478f534fa79b87656, type: 3}
+  - {fileID: 21300000, guid: 30f5a57da6687fb4d9641b19e62f2ed8, type: 3}
+  - {fileID: 21300000, guid: 0cff2d4307c552740bb428c88828a933, type: 3}
+  - {fileID: 21300000, guid: ac70765a9c37d774189ccf7faceaa8fe, type: 3}
+  - {fileID: 21300000, guid: 4685d90894d3ba4439b53a144567e252, type: 3}
+  - {fileID: 21300000, guid: 6d48b47a53b8b9a4280353caf5ab16db, type: 3}
+  - {fileID: 21300000, guid: e8308d12c549d4348bc7984816a454fa, type: 3}
+  - {fileID: 21300000, guid: b261019764b659b4abc5ddb4ff29aa81, type: 3}
+  - {fileID: 21300000, guid: f6976d91796ffe647900fd71413494c0, type: 3}
+  - {fileID: 21300000, guid: 3c428320c71204f42a8504d8e693846f, type: 3}
+  - {fileID: 21300000, guid: bc76041f0230e1044b9fb84cc4560355, type: 3}
+  - {fileID: 21300000, guid: c1a1f7344b7d69d499c76752c1e6144d, type: 3}
+  - {fileID: 21300000, guid: febd3c6ed332a234a8d86678ebe7f396, type: 3}
+  - {fileID: 21300000, guid: c10bf545eab91f74485cc520a3aadcb4, type: 3}
+  - {fileID: 21300000, guid: ba1eb1a9152a3d14988d9a1e6ec6188d, type: 3}
+  - {fileID: 21300000, guid: a9305b85adc82e845b531673073f710f, type: 3}
   enemies: []
   currentBattler: {fileID: 0}
   currentAction:

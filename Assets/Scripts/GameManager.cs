@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,6 +28,11 @@ public class GameManager : MonoBehaviour
 
 	[Header("Databases")]
 	public List<ItemObject> allItems;
+	public List<Sprite> allDialoguePortraits;
+	public List<PartyMember> allPartyMembers;
+
+	[Header("Automatic, don't edit")]
+	public bool isLoadingSave;
 
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
@@ -73,30 +79,30 @@ public class GameManager : MonoBehaviour
 	{
 
 		SaveData data = new SaveData();
-
 		data.currentSceneName = SceneManager.GetActiveScene().name;
+
+		// SAVE PARTY MEMBERS
 
 		foreach(PartyMember pm in partyMembers)
 		{
 			data.SavePartyMemberData(pm);
 		}
 
+		// SAVE INVENTORY
+
 		data.SaveInventory(inventory);
+
+		// SAVE DUNGEON
 
 		DungeonSaveData dungeonSaveData = new DungeonSaveData();
 		dungeonSaveData.dungeonSceneName = SceneManager.GetActiveScene().name;
-
-		//dungeonSaveData.mapObjects = new List<MinimapTile>();
 
 		data.currentDungeon = new CurrentDungeon();
 		data.currentDungeon.playerPosition = dungeonPlayer.transform.position;
 		data.currentDungeon.playerRotation = dungeonPlayer.transform.eulerAngles;
 		data.currentDungeon.playerFacing = dungeonPlayer.playerFacing;
 
-		// foreach (Transform tr in dungeonPlayer.dm.minimapParent.transform)
-		// {
-		// 	dungeonSaveData.mapObjects.Add(tr.GetComponent<MinimapTile>());
-		// }
+		// SAVE TILE IN DUNGEON
 
         dungeonSaveData.tileData = new List<TileSaveData>();
 
@@ -119,6 +125,20 @@ public class GameManager : MonoBehaviour
 			t.eventOnWalk = original.eventOnWalk;
 			t.interactType = original.interactType;
 			t.dialogue = original.dialogue;
+			if(t.dialogue.Count > 0)
+			{
+				foreach(DungeonDialogue d in t.dialogue)
+				{
+					if (d.portrait != null)
+					{
+						d.spriteName = d.portrait.name;
+
+                        d.portrait = null;
+					}
+				}
+			}
+
+
 			t.noEncounter = original.noEncounter;
 
 			dungeonSaveData.tileData.Add(t);   
@@ -146,10 +166,117 @@ public class GameManager : MonoBehaviour
 
 	}
 
-    public void Load(int num)
-    {
+	public void LoadSaveData(int num)
+	{
         string jsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json");
         SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
+		
+		// LOAD PARTY MEMBERS
+
+		gm.partyMembers = new List<PartyMember>();
+
+		foreach (PartyMemberSaveData sd in data.party)
+		{
+			PartyMember pm;
+			foreach (PartyMember m in allPartyMembers)
+			{
+				if (m.partyMemberInternalID == sd.partyMemberInternalID)
+				{
+					pm = Instantiate(m);
+
+                    pm.ATK = sd.ATK;
+					pm.INT = sd.INT;
+					pm.DEF = sd.DEF;
+					pm.RES = sd.RES;
+					pm.AGL = sd.AGL;
+					pm.ACR = sd.ACR;
+					pm.SPD = sd.SPD;	
+					pm.LCK = sd.LCK;
+					pm.EDR = sd.EDR;
+					pm.maxHP = sd.maxHP;
+					pm.currentHP = sd.currentHP;
+					pm.maxMP = sd.maxMP;
+					pm.currentMP = sd.currentMP;
+					pm.EXP = sd.EXP;
+					pm.LV = sd.LV;
+
+					pm.currentlyEquipped = new ItemObject[4];
+					for (int i = 0; i < 4; i++)
+					{
+						pm.currentlyEquipped[i] = GetItemByID(sd.currentlyEquipped[i]);
+					}
+                }
+			}
+		}
+
+		// LOAD INVENTORY
+		inventory.Container.Clear();
+		foreach (InventorySlotSaveData sd in data.inventory)
+		{
+			InventorySlot s = new InventorySlot(GetItemByID(sd.itemID), sd.amount);
+			inventory.Container.Add(s);
+		}
+
+    }
+
+	public void LoadDungeon(int num)
+	{
+        string jsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json");
+        SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
+
+		DungeonSaveData sd;
+		foreach(DungeonSaveData d in data.dungeons)
+		{
+			if(d.dungeonSceneName == SceneManager.GetActiveScene().name)
+			{
+				sd = d;
+				dungeonPlayer.transform.position = data.currentDungeon.playerPosition;
+				dungeonPlayer.transform.eulerAngles = data.currentDungeon.playerRotation;
+				dungeonPlayer.playerFacing = data.currentDungeon.playerFacing;
+				foreach (TileSaveData t in sd.tileData)
+				{
+					foreach (Transform tr in dungeonPlayer.dm.transform)
+					{
+						Tile original = tr.GetComponent<Tile>();
+						if (original.objectID == t.objectID)
+						{
+							original.playerHasDiscovered = t.playerHasDiscovered;
+							original.mapIcon = t.mapIcon;
+							original.objectDisableOnWalk = t.objectDisableOnWalk;
+							original.minimapTile = t.minimapTile;
+							original.minimapSprite = t.minimapSprite;
+							original.minimapBg = t.minimapBg;
+							original.walkable = t.walkable;
+							original.eventOnWalk = t.eventOnWalk;
+							original.interactType = t.interactType;
+							original.dialogue = t.dialogue;
+							if (original.dialogue.Count > 0)
+							{
+								foreach (DungeonDialogue di in original.dialogue)
+								{
+									if (di.spriteName != "")
+									{
+										foreach (Sprite s in allDialoguePortraits)
+										{
+											if (s.name == di.spriteName)
+											{
+												di.portrait = s;
+											}
+										}
+									}
+								}
+							}
+							original.noEncounter = t.noEncounter;
+						}
+					}
+				}
+            }	
+        }
+    }
+
+    public void Load(int num)
+    {
+        
         
 		
 		//SceneManager.LoadSceneAsync(data.savedScene);
