@@ -10604,14 +10604,14 @@ MonoBehaviour:
     textEn: Battle start!
     textJp: 
     portrait: {fileID: 0}
-    spritePath: 
+    spriteName: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   - command: START_TURN
     textEn: 
     textJp: 
     portrait: {fileID: 0}
-    spritePath: 
+    spriteName: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   partyMemberDiedDialogue: []
@@ -10620,14 +10620,14 @@ MonoBehaviour:
     textEn: Battle complete!
     textJp: 
     portrait: {fileID: 0}
-    spritePath: 
+    spriteName: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   - command: END_COMBAT
     textEn: 
     textJp: 
     portrait: {fileID: 0}
-    spritePath: 
+    spriteName: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   gameOverDialogue:
@@ -10635,21 +10635,21 @@ MonoBehaviour:
     textEn: Your party was defeated!
     textJp: jp
     portrait: {fileID: 0}
-    spritePath: 
+    spriteName: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   - command: 
     textEn: Game Over!
     textJp: jp
     portrait: {fileID: 0}
-    spritePath: 
+    spriteName: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   - command: RESTART_SCENE
     textEn: 
     textJp: 
     portrait: {fileID: 0}
-    spritePath: 
+    spriteName: 
     battler: {fileID: 0}
     obj: {fileID: 0}
   BP: 0
@@ -10691,6 +10691,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c10bf545eab91f74485cc520a3aadcb4, type: 3}
   - {fileID: 21300000, guid: ba1eb1a9152a3d14988d9a1e6ec6188d, type: 3}
   - {fileID: 21300000, guid: a9305b85adc82e845b531673073f710f, type: 3}
+  allPartyMembers:
+  - {fileID: 11400000, guid: 5f1f258a205a8524ab27d54dc6afb4d1, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 5f38e23324db25e438572b923e5551fa, type: 2}
+  - {fileID: 11400000, guid: 13942bb4138f3114495a31d83ccb6045, type: 2}
+  - {fileID: 11400000, guid: 260566ab09815c749a8549a498095fe9, type: 2}
+  - {fileID: 11400000, guid: 3f56ffe77ff729d4bbb6cd6bc150c784, type: 2}
+  isLoadingSave: 0
+  loadSaveNum: 0
   enemies: []
   currentBattler: {fileID: 0}
   currentAction:

@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
 	[Header("Automatic, don't edit")]
 	public bool isLoadingSave;
+	public int loadSaveNum;
 
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
@@ -50,11 +51,13 @@ public class GameManager : MonoBehaviour
 	void Awake()
 	{
 		if (gm != null)
-			Destroy(gm);
-		else
+			Destroy(this);
+		else{
 			gm = this;
+			DontDestroyOnLoad(this);
+		}
 
-		DontDestroyOnLoad(this);
+		
 
 		day = 1;
 		month = 1;
@@ -168,6 +171,8 @@ public class GameManager : MonoBehaviour
 
 	public void LoadSaveData(int num)
 	{
+		Debug.Log("Loading save data from "+Application.persistentDataPath + "/save" + num + ".json");
+		
         string jsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json");
         SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
 		
@@ -178,10 +183,14 @@ public class GameManager : MonoBehaviour
 		foreach (PartyMemberSaveData sd in data.party)
 		{
 			PartyMember pm;
+			bool foundID = false;
 			foreach (PartyMember m in allPartyMembers)
 			{
 				if (m.partyMemberInternalID == sd.partyMemberInternalID)
 				{
+					foundID = true;
+					Debug.Log("Found matching party member with ID " + sd.partyMemberInternalID);
+
 					pm = Instantiate(m);
 
                     pm.ATK = sd.ATK;
@@ -205,7 +214,13 @@ public class GameManager : MonoBehaviour
 					{
 						pm.currentlyEquipped[i] = GetItemByID(sd.currentlyEquipped[i]);
 					}
+					
+					partyMembers.Add(pm);
                 }
+			}
+			if(foundID == false)
+			{
+				Debug.Log("No matching party member found for ID " + sd.partyMemberInternalID);
 			}
 		}
 
@@ -276,7 +291,12 @@ public class GameManager : MonoBehaviour
 
     public void Load(int num)
     {
-        
+
+		LoadSaveData(num); // loads inventory and party data
+
+		isLoadingSave = true; // dungeon save data will be loaded on load
+		loadSaveNum = num;
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
         
 		
 		//SceneManager.LoadSceneAsync(data.savedScene);
@@ -292,7 +312,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		Debug.Log("Error: Item with ID " + id + " not found in database (GameManager).");
+		Debug.Log("Error: Item with ID \"" + id + "\" not found in database (GameManager).");
 		return null;
 	}
 

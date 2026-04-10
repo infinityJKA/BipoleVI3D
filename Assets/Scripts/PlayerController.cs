@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         // currentTile.playerHasDiscovered = true;
         currentTile.EnterTile(PlayerMapSprite());
         gm = GameManager.gm;
+        gm.dungeonPlayer = this;
         eventSystem = GameObject.FindObjectOfType<EventSystem>();
     }
 
