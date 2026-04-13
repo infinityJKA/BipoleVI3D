@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DungeonManager : MonoBehaviour
 {
+    GameManager gm;
     public String dungeonName; // name of the dungeon that is displayed to the player
     public String dungeonID; // used for load/saving data, including the ids of tiles
     public int minimumStepsUntilEyeChange; // minimum of how many steps it will take for the eye to change phases (used for random encounters)
@@ -18,6 +20,8 @@ public class DungeonManager : MonoBehaviour
 
     void Start()
     {
+        gm = GameManager.gm;
+
         foreach(Transform child in transform)
         {
             // adds tile to tile dictonary
@@ -40,6 +44,12 @@ public class DungeonManager : MonoBehaviour
             mmT.worldPosition = mmT.transform.position;
             t.minimapTile = mmT;
             t.UpdateMiniMapSprite();
+        }
+
+        if (gm.isLoadingSave)
+        {
+            gm.LoadDungeon(gm.loadSaveNum);
+            gm.isLoadingSave = false;
         }
     }
 

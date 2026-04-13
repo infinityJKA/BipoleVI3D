@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public int playerX,playerY = 0;
     public PlayerFacing playerFacing = PlayerFacing.North;
 
-    [SerializeField] Tile currentTile;
+    [SerializeField] public Tile currentTile;
 
     Vector3 targetGridPos;
     Vector3 prevTargetGridPos;
@@ -46,11 +46,18 @@ public class PlayerController : MonoBehaviour
     {
         currentDialogueText = ui.dialogueText;
         targetGridPos = Vector3Int.RoundToInt(transform.position);
-        currentTile = dm.GetTile(playerX, playerY);
+        
         // currentTile.playerHasDiscovered = true;
-        currentTile.EnterTile(PlayerMapSprite());
+        
         gm = GameManager.gm;
         gm.dungeonPlayer = this;
+
+        if (gm.isLoadingSave == false)
+        {
+            currentTile = dm.GetTile(playerX, playerY);
+            currentTile.EnterTile(PlayerMapSprite());
+        }
+
         eventSystem = GameObject.FindObjectOfType<EventSystem>();
 
         UpdateTimeUI();

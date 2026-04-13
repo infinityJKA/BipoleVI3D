@@ -116,6 +116,8 @@ public class GameManager : MonoBehaviour
 		data.currentDungeon.playerPosition = dungeonPlayer.transform.position;
 		data.currentDungeon.playerRotation = dungeonPlayer.transform.eulerAngles;
 		data.currentDungeon.playerFacing = dungeonPlayer.playerFacing;
+		data.currentDungeon.playerX = dungeonPlayer.playerX;
+		data.currentDungeon.playerY = dungeonPlayer.playerY;
 
 		// SAVE TILE IN DUNGEON
 
@@ -268,9 +270,15 @@ public class GameManager : MonoBehaviour
 			if(d.dungeonSceneName == SceneManager.GetActiveScene().name)
 			{
 				sd = d;
+
+				dungeonPlayer = FindObjectOfType<PlayerController>();
+
 				dungeonPlayer.transform.position = data.currentDungeon.playerPosition;
 				dungeonPlayer.transform.eulerAngles = data.currentDungeon.playerRotation;
 				dungeonPlayer.playerFacing = data.currentDungeon.playerFacing;
+				dungeonPlayer.playerX = data.currentDungeon.playerX;
+				dungeonPlayer.playerY = data.currentDungeon.playerY;
+				dungeonPlayer.currentTile = dungeonPlayer.dm.GetTile(dungeonPlayer.playerX, dungeonPlayer.playerY);
 				foreach (TileSaveData t in sd.tileData)
 				{
 					foreach (Transform tr in dungeonPlayer.dm.transform)
@@ -281,7 +289,7 @@ public class GameManager : MonoBehaviour
 							original.playerHasDiscovered = t.playerHasDiscovered;
 							original.mapIcon = t.mapIcon;
 							original.objectDisableOnWalk = t.objectDisableOnWalk;
-							original.minimapTile = t.minimapTile;
+							//original.minimapTile = t.minimapTile;
 							original.minimapSprite = t.minimapSprite;
 							original.minimapBg = t.minimapBg;
 							original.walkable = t.walkable;

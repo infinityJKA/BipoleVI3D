@@ -107,6 +107,7 @@ public class CurrentDungeon
     public Vector3 playerPosition;
     public Vector3 playerRotation;
     public PlayerFacing playerFacing;
+    public int playerX, playerY;
     
 }
 
