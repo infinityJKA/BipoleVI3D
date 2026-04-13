@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
         gm = GameManager.gm;
         gm.dungeonPlayer = this;
         eventSystem = GameObject.FindObjectOfType<EventSystem>();
+
+        UpdateTimeUI();
+        UpdatePartyUI();
+
     }
 
     private void FixedUpdate()
@@ -1521,6 +1525,9 @@ public class PlayerController : MonoBehaviour
             case MoonPhase.WaningCrescent:
                 ui.moonSprite.sprite = ui.waningCrescent; break;
         }
+
+        int num = gm.eyePhase - 1;
+        ui.eyeSprite.sprite = ui.eyeSprites[num];
 
     }
 

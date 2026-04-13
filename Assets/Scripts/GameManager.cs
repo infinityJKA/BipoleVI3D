@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -91,6 +92,17 @@ public class GameManager : MonoBehaviour
 			data.SavePartyMemberData(pm);
 		}
 
+		// SAVE CALENDAR
+		data.day = day;
+		data.month = month;
+		data.year = year;
+		data.dayofWeek = dayofWeek;
+		data.moonPhase = moonPhase;
+		data.eyePhase = eyePhase;
+		data.stepsSinceEyeChange = stepsSinceEyeChange;
+		data.stepsSinceDayChange = stepsSinceDayChange;
+		data.daysSinceMoonChange = daysSinceMoonChange;
+
 		// SAVE INVENTORY
 
 		data.SaveInventory(inventory);
@@ -176,6 +188,17 @@ public class GameManager : MonoBehaviour
         string jsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json");
         SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
 		
+		// LOAD CALENDAR
+		day = data.day;
+		month = data.month;
+		year = data.year;
+		dayofWeek = data.dayofWeek;
+		moonPhase = data.moonPhase;
+		eyePhase = data.eyePhase;
+		stepsSinceEyeChange = data.stepsSinceEyeChange;
+		stepsSinceDayChange = data.stepsSinceDayChange;
+		daysSinceMoonChange = data.daysSinceMoonChange;
+
 		// LOAD PARTY MEMBERS
 
 		gm.partyMembers = new List<PartyMember>();
@@ -520,6 +543,7 @@ public class GameManager : MonoBehaviour
     }
 }
 
+[Serializable]
 public enum MoonPhase {
 	NewMoon,WaxingCrescent,FirstQuarter,WaxingGibbous,
 	FullMoon,WaningGibbous,ThirdQuarter,WaningCrescent

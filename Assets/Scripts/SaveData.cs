@@ -7,6 +7,8 @@ using System;
 [System.Serializable]
 public class SaveData
 {
+    public int day, month, year, dayofWeek, eyePhase, stepsSinceEyeChange, stepsSinceDayChange,daysSinceMoonChange;
+    public MoonPhase moonPhase;
     public List<PartyMemberSaveData> party = new List<PartyMemberSaveData>();
     public List<InventorySlotSaveData> inventory = new List<InventorySlotSaveData>();
 
@@ -14,6 +16,8 @@ public class SaveData
     public List<DungeonSaveData> dungeons = new List<DungeonSaveData>();
 
     public String currentSceneName;
+
+    
 
     public bool ContainsDungeon(string n)
     {

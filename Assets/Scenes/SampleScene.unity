@@ -10597,7 +10597,7 @@ MonoBehaviour:
   stepsSinceDayChange: 0
   moonPhase: 0
   daysSinceMoonChange: 0
-  eyePhase: 0
+  eyePhase: 1
   stepsSinceEyeChange: 0
   battleStartDialogue:
   - command: 
