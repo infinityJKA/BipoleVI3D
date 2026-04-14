@@ -274,7 +274,7 @@ public class GameManager : MonoBehaviour
 				dungeonPlayer = FindObjectOfType<PlayerController>();
 
 				dungeonPlayer.transform.position = data.currentDungeon.playerPosition;
-				dungeonPlayer.transform.eulerAngles = data.currentDungeon.playerRotation;
+				dungeonPlayer.targetRotation = data.currentDungeon.playerRotation;
 				dungeonPlayer.playerFacing = data.currentDungeon.playerFacing;
 				dungeonPlayer.playerX = data.currentDungeon.playerX;
 				dungeonPlayer.playerY = data.currentDungeon.playerY;

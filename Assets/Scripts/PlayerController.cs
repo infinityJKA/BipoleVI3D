@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 targetGridPos;
     Vector3 prevTargetGridPos;
-    Vector3 targetRotation;
+    public Vector3 targetRotation;
 
     [SerializeField] Sprite up,down,left,right;
     public DungeonInputControlState inputState = DungeonInputControlState.FreeMove;
