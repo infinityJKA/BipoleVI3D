@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 	[Header("Databases")]
 	public List<ItemObject> allItems;
 	public List<Sprite> allDialoguePortraits;
-	public List<Sprite> allMinimapSprites;
+	public List<Sprite> allCommandSprites;
 	public List<PartyMember> allPartyMembers;
 
 	[Header("Automatic, don't edit")]
@@ -153,7 +153,13 @@ public class GameManager : MonoBehaviour
 
                         d.portrait = null;
 					}
-				}
+                    if (d.commandSprite != null)
+                    {
+                        d.commandSpriteName = d.commandSprite.name;
+
+                        d.commandSprite = null;
+                    }
+                }
 			}
 
 
@@ -311,7 +317,17 @@ public class GameManager : MonoBehaviour
 											}
 										}
 									}
-								}
+                                    if (di.commandSpriteName != "")
+                                    {
+                                        foreach (Sprite s in overworldSprites)
+                                        {
+                                            if (s.name == di.commandSpriteName)
+                                            {
+                                                di.commandSprite = s;
+                                            }
+                                        }
+                                    }
+                                }
 							}
 							original.noEncounter = t.noEncounter;
 							if (original.playerHasDiscovered)

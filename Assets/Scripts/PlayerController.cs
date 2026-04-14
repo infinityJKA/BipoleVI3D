@@ -351,6 +351,34 @@ public class PlayerController : MonoBehaviour
             finishedDialogueEarly = true;
             ProgressDialogue();
         }
+        else if (command == "CHANGE_SPRITE")
+        {
+            foreach(GameObject obj in currentTile.transform)
+            {
+                if (obj.GetComponent<Rotate2dSprite>())
+                {
+                    obj.GetComponent<SpriteRenderer>().sprite = currentDialogue[dialogueIndex].commandSprite;
+                }
+            }
+            finishedDialogueEarly = true;
+            ProgressDialogue();
+        }
+        else if (command == "DESTROY_NPC")
+        {
+            foreach (GameObject obj in currentTile.transform)
+            {
+                if (obj.GetComponent<Rotate2dSprite>())
+                {
+                    Destroy(obj.gameObject);
+                }
+            }
+            finishedDialogueEarly = true;
+            ProgressDialogue();
+        }
+        else if (command == "CHANGE_MINIMAP_SPRITE")
+        {
+            currentTile.minimapSprite = currentDialogue[dialogueIndex].commandSprite;
+        }
         else if (command == "START_TURN") // for starting a turn of combat
         {
             ui.dialogueBox.SetActive(false);
@@ -406,7 +434,7 @@ public class PlayerController : MonoBehaviour
             ui.combat.HideMenusForDialogue();
 
             ui.combat.gameObject.SetActive(false);
-            
+
             ui.dialogueBox.SetActive(false);
             //ui.popupTextParent.SetActive(true);
             gm.stepsSinceEyeChange = 0;
