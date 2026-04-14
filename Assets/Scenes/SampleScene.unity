@@ -10691,6 +10691,23 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c10bf545eab91f74485cc520a3aadcb4, type: 3}
   - {fileID: 21300000, guid: ba1eb1a9152a3d14988d9a1e6ec6188d, type: 3}
   - {fileID: 21300000, guid: a9305b85adc82e845b531673073f710f, type: 3}
+  allMinimapSprites:
+  - {fileID: 21300000, guid: a9a0da6df4858ac4caf32ea474f1d217, type: 3}
+  - {fileID: 21300000, guid: d2b060efe135b814cb81e495db09fb85, type: 3}
+  - {fileID: 21300000, guid: 826468551f3ce0d43ad616722b5714b5, type: 3}
+  - {fileID: 21300000, guid: 1ffe725044f608b488947e6973958d42, type: 3}
+  - {fileID: 21300000, guid: 42c80a8a416300648b774a600639e474, type: 3}
+  - {fileID: 21300000, guid: fb1b86ef9d6707d45b4b54c441ecdeab, type: 3}
+  - {fileID: 21300000, guid: a041515395629e34b9d629cbcfc02028, type: 3}
+  - {fileID: 21300000, guid: 1adb41c59261c1b4aa44dc2f55c33220, type: 3}
+  - {fileID: 21300000, guid: b83f37401373efa4d98e5f43014b0e9e, type: 3}
+  - {fileID: 21300000, guid: 302aebc954906a348b0916b7919d4599, type: 3}
+  - {fileID: 21300000, guid: 89eeea92b1f7e124da3e1e7454a53f09, type: 3}
+  - {fileID: 21300000, guid: 9b312a2c86485244eb6b53c699b33989, type: 3}
+  - {fileID: 21300000, guid: b51967f4d22b62d4982fda1d4effbca8, type: 3}
+  - {fileID: 21300000, guid: 284af67cf0a27ea40815dbc1c7a972fd, type: 3}
+  - {fileID: 21300000, guid: 9c815b6633dba6043ae276605b3a0b58, type: 3}
+  - {fileID: 21300000, guid: eb20a8d8ec4ae0a4aad57b4afc790f8d, type: 3}
   allPartyMembers:
   - {fileID: 11400000, guid: 5f1f258a205a8524ab27d54dc6afb4d1, type: 2}
   - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
@@ -12575,6 +12592,7 @@ MonoBehaviour:
   playerY: 0
   playerFacing: 0
   currentTile: {fileID: 0}
+  targetRotation: {x: 0, y: 0, z: 0}
   up: {fileID: 21300000, guid: 302aebc954906a348b0916b7919d4599, type: 3}
   down: {fileID: 21300000, guid: a041515395629e34b9d629cbcfc02028, type: 3}
   left: {fileID: 21300000, guid: 1adb41c59261c1b4aa44dc2f55c33220, type: 3}

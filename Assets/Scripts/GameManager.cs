@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 	[Header("Databases")]
 	public List<ItemObject> allItems;
 	public List<Sprite> allDialoguePortraits;
+	public List<Sprite> allMinimapSprites;
 	public List<PartyMember> allPartyMembers;
 
 	[Header("Automatic, don't edit")]
@@ -313,6 +314,10 @@ public class GameManager : MonoBehaviour
 								}
 							}
 							original.noEncounter = t.noEncounter;
+							if (original.playerHasDiscovered)
+							{
+								original.minimapTile.gameObject.SetActive(true);
+							}
 						}
 					}
 				}
