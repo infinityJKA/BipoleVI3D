@@ -10766,7 +10766,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c10bf545eab91f74485cc520a3aadcb4, type: 3}
   - {fileID: 21300000, guid: ba1eb1a9152a3d14988d9a1e6ec6188d, type: 3}
   - {fileID: 21300000, guid: a9305b85adc82e845b531673073f710f, type: 3}
-  overworldSprites: []
+  allCommandSprites: []
   allPartyMembers:
   - {fileID: 11400000, guid: 5f1f258a205a8524ab27d54dc6afb4d1, type: 2}
   - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
@@ -10774,6 +10774,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 13942bb4138f3114495a31d83ccb6045, type: 2}
   - {fileID: 11400000, guid: 260566ab09815c749a8549a498095fe9, type: 2}
   - {fileID: 11400000, guid: 3f56ffe77ff729d4bbb6cd6bc150c784, type: 2}
+  allMinimapSprites:
+  - {fileID: 21300000, guid: 42c80a8a416300648b774a600639e474, type: 3}
+  - {fileID: 21300000, guid: a9a0da6df4858ac4caf32ea474f1d217, type: 3}
+  - {fileID: 21300000, guid: fb1b86ef9d6707d45b4b54c441ecdeab, type: 3}
+  - {fileID: 21300000, guid: 826468551f3ce0d43ad616722b5714b5, type: 3}
+  - {fileID: 21300000, guid: d2b060efe135b814cb81e495db09fb85, type: 3}
+  - {fileID: 21300000, guid: eb20a8d8ec4ae0a4aad57b4afc790f8d, type: 3}
+  - {fileID: 21300000, guid: 9b312a2c86485244eb6b53c699b33989, type: 3}
+  - {fileID: 21300000, guid: b51967f4d22b62d4982fda1d4effbca8, type: 3}
+  - {fileID: 21300000, guid: 284af67cf0a27ea40815dbc1c7a972fd, type: 3}
+  - {fileID: 21300000, guid: 9c815b6633dba6043ae276605b3a0b58, type: 3}
+  - {fileID: 21300000, guid: 89eeea92b1f7e124da3e1e7454a53f09, type: 3}
+  - {fileID: 21300000, guid: a041515395629e34b9d629cbcfc02028, type: 3}
+  - {fileID: 21300000, guid: 1adb41c59261c1b4aa44dc2f55c33220, type: 3}
+  - {fileID: 21300000, guid: b83f37401373efa4d98e5f43014b0e9e, type: 3}
+  - {fileID: 21300000, guid: 302aebc954906a348b0916b7919d4599, type: 3}
+  tileChildPrefab: {fileID: 8300767496596685602, guid: f911a2573f065a84e924d621b0d837c3, type: 3}
   isLoadingSave: 0
   loadSaveNum: 0
   enemies: []
@@ -11150,11 +11167,23 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: a9a0da6df4858ac4caf32ea474f1d217, type: 3}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.size
-      value: 2
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[1].textEn
-      value: (You opened the chest!)
+      value: '[You opened the chest!]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[2].textEn
+      value: Lesser Healing Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[3].textEn
+      value: '[You got a Lesser Healing Potion!]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[4].textEn
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[0].command
@@ -11165,13 +11194,41 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[2].command
+      value: ADDITEM
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[3].command
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[4].command
+      value: DESTROY_NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[5].command
+      value: DESTORY_DIALOGUE
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[6].command
+      value: END
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[0].commandSprite
       value: 
       objectReference: {fileID: 21300000, guid: 992882ee2710bfc49a98c26ca95c4e74, type: 3}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[1].commandSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 992882ee2710bfc49a98c26ca95c4e74, type: 3}
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[2].commandSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[3].commandSprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6575038441906758128, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: m_Name
       value: Tile (8)

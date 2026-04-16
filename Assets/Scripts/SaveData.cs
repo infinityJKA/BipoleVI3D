@@ -154,12 +154,14 @@ public class TileSaveData
     public int x, y; // used for getting position
     public bool playerHasDiscovered; // if the player has previously walked on this tile before, used for minimap discovery
     public String objectID; // generated when object is initialized, used to save/load data when the scene is loaded.
+    public bool hasChild;
+    public String childSpriteName;
 
     [Header("Graphics")]
     public MapIcon mapIcon;  // icon to show on the minimap
     public GameObject objectDisableOnWalk; // this object will be disabled when you are on this tile (for visibility reasons)
-    public MinimapTile minimapTile; // the minimap tile tied to this tile
-    public Sprite minimapSprite, minimapBg;
+    public String minimapSpriteName; // the minimap tile tied to this tile
+    public Sprite minimapBg;
 
     [Header("Interaction Logic")]
     public bool walkable = true, // the player can walk onto this tile

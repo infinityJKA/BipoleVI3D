@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
 	public List<Sprite> allDialoguePortraits;
 	public List<Sprite> allCommandSprites;
 	public List<PartyMember> allPartyMembers;
+	public List<Sprite> allMinimapSprites;
+	public Rotate2dSprite tileChildPrefab;
 
 	[Header("Automatic, don't edit")]
 	public bool isLoadingSave;
@@ -135,8 +137,10 @@ public class GameManager : MonoBehaviour
 
 			t.mapIcon = original.mapIcon;
 			t.objectDisableOnWalk = original.objectDisableOnWalk;
-			t.minimapTile = original.minimapTile;
-			t.minimapSprite = original.minimapSprite;
+			if(original.minimapSprite != null)
+			{
+				t.minimapSpriteName = original.minimapSprite.name;
+			}
 			t.minimapBg = original.minimapBg;
 
 			t.walkable = original.walkable;
@@ -159,8 +163,18 @@ public class GameManager : MonoBehaviour
 
                         d.commandSprite = null;
                     }
-                }
+                }  
 			}
+
+			t.hasChild = false;
+            foreach(Transform child in tr.transform)
+            {
+                if (child.GetComponent<Rotate2dSprite>())
+                {
+                    t.childSpriteName = child.GetComponent<SpriteRenderer>().sprite.name;
+					t.hasChild = true;
+                }
+            }
 
 
 			t.noEncounter = original.noEncounter;
@@ -297,7 +311,15 @@ public class GameManager : MonoBehaviour
 							original.mapIcon = t.mapIcon;
 							original.objectDisableOnWalk = t.objectDisableOnWalk;
 							//original.minimapTile = t.minimapTile;
-							original.minimapSprite = t.minimapSprite;
+							if(t.minimapSpriteName != null){
+								foreach (Sprite s in allMinimapSprites)
+								{
+									if (s.name == t.minimapSpriteName)
+									{
+										original.minimapSprite = s;
+									}
+								}
+							}
 							original.minimapBg = t.minimapBg;
 							original.walkable = t.walkable;
 							original.eventOnWalk = t.eventOnWalk;
@@ -319,7 +341,7 @@ public class GameManager : MonoBehaviour
 									}
                                     if (di.commandSpriteName != "")
                                     {
-                                        foreach (Sprite s in overworldSprites)
+                                        foreach (Sprite s in allCommandSprites)
                                         {
                                             if (s.name == di.commandSpriteName)
                                             {
@@ -334,6 +356,48 @@ public class GameManager : MonoBehaviour
 							{
 								original.minimapTile.gameObject.SetActive(true);
 							}
+
+							
+							bool foundChild = false;
+							foreach(Transform child in original.transform)
+							{
+								if (child.GetComponent<Rotate2dSprite>())
+								{
+									Debug.Log("Found child object "+child.name+" for tile "+original.name);
+									foundChild = true;
+									if (t.hasChild)
+									{
+										foreach (Sprite s in allCommandSprites)
+                                        {
+                                            if (s.name == t.childSpriteName) 
+                                            {
+                                                child.GetComponent<SpriteRenderer>().sprite = s;
+                                            }
+                                        }
+										
+									}
+									else
+									{
+										Debug.Log("destroying child object "+child.name);
+										Destroy(child.gameObject);
+									}
+									
+								}
+							}
+						
+							if(t.hasChild == true && foundChild == false)
+							{
+								Debug.Log("Instantiating child object for tile "+original.name);
+								Rotate2dSprite obj = Instantiate(tileChildPrefab, original.transform);
+								foreach (Sprite s in allCommandSprites)
+								{
+									if (s.name == t.childSpriteName)
+									{
+										obj.GetComponent<SpriteRenderer>().sprite = s;
+									}
+								}
+							}
+
 						}
 					}
 				}

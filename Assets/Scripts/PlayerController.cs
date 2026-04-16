@@ -353,11 +353,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "CHANGE_SPRITE")
         {
-            foreach(GameObject obj in currentTile.transform)
+            foreach(Transform tr in currentTile.transform)
             {
-                if (obj.GetComponent<Rotate2dSprite>())
+                if (tr.GetComponent<Rotate2dSprite>())
                 {
-                    obj.GetComponent<SpriteRenderer>().sprite = currentDialogue[dialogueIndex].commandSprite;
+                    tr.GetComponent<SpriteRenderer>().sprite = currentDialogue[dialogueIndex].commandSprite;
                 }
             }
             finishedDialogueEarly = true;
@@ -365,20 +365,30 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "DESTROY_NPC")
         {
-            foreach (GameObject obj in currentTile.transform)
+            foreach (Transform tr in currentTile.transform)
             {
-                if (obj.GetComponent<Rotate2dSprite>())
+                if (tr.GetComponent<Rotate2dSprite>())
                 {
-                    Destroy(obj.gameObject);
+                    Destroy(tr.gameObject);
                 }
             }
             finishedDialogueEarly = true;
             ProgressDialogue();
         }
-        else if (command == "CHANGE_MINIMAP_SPRITE")
+        else if (command == "DESTORY_DIALOGUE")
         {
-            currentTile.minimapSprite = currentDialogue[dialogueIndex].commandSprite;
+            Debug.Log("Destorying dialogue for tile "+currentTile.name);
+            currentTile.dialogue = new List<DungeonDialogue>();
+            currentTile.interactType = InteractType.None;
+            currentTile.minimapSprite = gm.allMinimapSprites[0];
+
+            finishedDialogueEarly = true;
+            ProgressDialogue();
         }
+        // else if (command == "CHANGE_MINIMAP_SPRITE")
+        // {
+        //     currentTile.minimapSprite = currentDialogue[dialogueIndex].commandSprite;
+        // }
         else if (command == "START_TURN") // for starting a turn of combat
         {
             ui.dialogueBox.SetActive(false);
