@@ -38,8 +38,8 @@ public class DungeonInputCheck : MonoBehaviour
             else if (InputManager.instance.options) controller.OpenOptions();
             else if (InputManager.instance.menu) controller.OpenMenu();
 
-            else if(InputManager.instance.debug1) GameManager.gm.Save(1);
-            else if(InputManager.instance.debug2) GameManager.gm.Load(1);
+            else if (InputManager.instance.debug1) GameManager.gm.Save(1);
+            else if (InputManager.instance.debug2) GameManager.gm.Load(1);
         }
 
         else if (controller.inputState == DungeonInputControlState.Dialogue)
@@ -49,12 +49,14 @@ public class DungeonInputCheck : MonoBehaviour
 
         else if (controller.inputState == DungeonInputControlState.Menu)
         {
-            if (InputManager.instance.decline) controller.DeclineInMenu();
+            if (InputManager.instance.decline) { controller.DeclineInMenu(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f); }
+            if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep",1.3f);
         }
 
         else if (controller.inputState == DungeonInputControlState.Combat)
         {
-            if (InputManager.instance.decline) controller.DeclineInCombat();
+            if (InputManager.instance.decline){ controller.DeclineInCombat(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f);}
+            if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
         }
 
     }

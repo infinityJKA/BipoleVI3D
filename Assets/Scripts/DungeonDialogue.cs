@@ -10,6 +10,7 @@ public class DungeonDialogue //: MonoBehaviour
     public String command = "",
     textEn, textJp;
     public Sprite portrait, commandSprite;
+    public String voice = "";
 
     [Header("Only used in save data, automatic")]
     [HideInInspector] public string spriteName;

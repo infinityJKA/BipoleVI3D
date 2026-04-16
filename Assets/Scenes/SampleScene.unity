@@ -1119,6 +1119,8 @@ MonoBehaviour:
   dungeonID: TestDungeon
   dungeonTheme: dungeon1
   dungeonBattleTheme: tempBattle
+  dungeonThemeVolume: 1
+  dungeonBattleThemeVolume: 0.17
   minimumStepsUntilEyeChange: 2
   encounters:
   - {fileID: 11400000, guid: 2ece47d1a26a73f4e94b420050cf2e5c, type: 2}
@@ -4657,7 +4659,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.59
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -10925,6 +10927,7 @@ MonoBehaviour:
     textJp: 
     portrait: {fileID: 0}
     commandSprite: {fileID: 0}
+    voice: 
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -10934,6 +10937,7 @@ MonoBehaviour:
     textJp: 
     portrait: {fileID: 0}
     commandSprite: {fileID: 0}
+    voice: 
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -10945,6 +10949,17 @@ MonoBehaviour:
     textJp: 
     portrait: {fileID: 0}
     commandSprite: {fileID: 0}
+    voice: 
+    spriteName: 
+    commandSpriteName: 
+    battler: {fileID: 0}
+    obj: {fileID: 0}
+  - command: STOP_MUSIC
+    textEn: 
+    textJp: 
+    portrait: {fileID: 0}
+    commandSprite: {fileID: 0}
+    voice: 
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -10954,6 +10969,7 @@ MonoBehaviour:
     textJp: 
     portrait: {fileID: 0}
     commandSprite: {fileID: 0}
+    voice: 
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -10964,6 +10980,7 @@ MonoBehaviour:
     textJp: jp
     portrait: {fileID: 0}
     commandSprite: {fileID: 0}
+    voice: 
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -10973,6 +10990,7 @@ MonoBehaviour:
     textJp: jp
     portrait: {fileID: 0}
     commandSprite: {fileID: 0}
+    voice: 
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -10982,6 +11000,7 @@ MonoBehaviour:
     textJp: 
     portrait: {fileID: 0}
     commandSprite: {fileID: 0}
+    voice: 
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -11025,7 +11044,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c10bf545eab91f74485cc520a3aadcb4, type: 3}
   - {fileID: 21300000, guid: ba1eb1a9152a3d14988d9a1e6ec6188d, type: 3}
   - {fileID: 21300000, guid: a9305b85adc82e845b531673073f710f, type: 3}
-  allCommandSprites: []
+  allCommandSprites:
+  - {fileID: 21300000, guid: 973c5c9ddf19062449b1228508e4bffc, type: 3}
+  - {fileID: 21300000, guid: 992882ee2710bfc49a98c26ca95c4e74, type: 3}
   allPartyMembers:
   - {fileID: 11400000, guid: 5f1f258a205a8524ab27d54dc6afb4d1, type: 2}
   - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
@@ -13015,7 +13036,7 @@ MonoBehaviour:
   inputState: 0
   dialogueIndex: 0
   currentDialogue: []
-  textSpeed: 0.01
+  textSpeed: 0.025
   optionsUI: {fileID: 1281133399}
   menuUI: {fileID: 974613791}
   optionsButtonSelected: {fileID: 237042931}
@@ -13023,6 +13044,7 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   buttonSelectOnDecline: {fileID: 0}
   combatReturnTo: 0
+  selectedMenuObjectForSound: {fileID: 0}
 --- !u!1001 &638963453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17751,13 +17773,20 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[0].voice
+      value: voice1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[1].voice
+      value: voice1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[0].textEn
-      value: 'Stellein: Yo whats up guys its me Stellein protagonist of triple-cancelled
-        game Bipole VI: Epistle of Fate.'
+      value: 'Stellein: Yo whats up guys its me the protagonist.'
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[1].textEn
-      value: 'Stellein: Bipole VI try to exist challenge.'
+      value: 'Stellein: dialogue.'
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[2].textEn
@@ -18179,8 +18208,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[0].voice
+      value: voice1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[1].voice
+      value: voice1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[2].voice
+      value: voice1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[0].textEn
-      value: Eriuqs Bipole VI.
+      value: Bipole VI.
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[1].textEn
@@ -26261,7 +26302,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8fa63bd5388ca4faa7fb0729b1b3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfx: []
+  sfx:
+  - id: defaultTextVoice
+    audio: {fileID: 8300000, guid: 6f25012a9f332084a81f8e6e33417f0f, type: 3}
+  - id: voice1
+    audio: {fileID: 8300000, guid: 48d9c9b7ad7b28b4ab0c7bc8c2b0d466, type: 3}
+  - id: walk
+    audio: {fileID: 8300000, guid: 53afe67c5dab70e4c8d9528091859d4e, type: 3}
+  - id: chest
+    audio: {fileID: 8300000, guid: 3ea8b2d245df27b418cb193f19d92996, type: 3}
+  - id: swing
+    audio: {fileID: 8300000, guid: 9e75c915ab4daae4898beed490b23abf, type: 3}
+  - id: beep
+    audio: {fileID: 8300000, guid: 984ad2be8b867484f8093242a7d5f7b2, type: 3}
   music:
   - id: dungeon1
     audio: {fileID: 8300000, guid: d33fa0b7a8ba1764abe1b9b5bd7da6c1, type: 3}

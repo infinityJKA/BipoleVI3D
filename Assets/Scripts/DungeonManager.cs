@@ -10,6 +10,7 @@ public class DungeonManager : MonoBehaviour
     public String dungeonName; // name of the dungeon that is displayed to the player
     public String dungeonID; // used for load/saving data, including the ids of tiles
     public String dungeonTheme, dungeonBattleTheme;
+    public float dungeonThemeVolume, dungeonBattleThemeVolume;
     public int minimumStepsUntilEyeChange; // minimum of how many steps it will take for the eye to change phases (used for random encounters)
     public List<EncounterObject> encounters;
     public Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
@@ -53,7 +54,7 @@ public class DungeonManager : MonoBehaviour
             gm.isLoadingSave = false;
         }
 
-        gm.audioManager.PlayMusic(dungeonTheme);
+        gm.audioManager.PlayMusic(dungeonTheme, dungeonThemeVolume);
     }
 
     public Tile GetTile(int x, int y){

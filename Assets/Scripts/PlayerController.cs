@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour
     private TMP_Text currentDialogueText;
     public CombatReturnTo combatReturnTo;
 
+    [Header("Automatic, don't touch")]
+    public GameObject selectedMenuObjectForSound;
+
     private void Start()
     {
         currentDialogueText = ui.dialogueText;
@@ -68,6 +71,21 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayerObject();
+    }
+
+    private void Update()
+    {
+        if(selectedMenuObjectForSound != eventSystem.currentSelectedGameObject){
+            if (gm.audioManager.sfxSource.isPlaying && gm.audioManager.sfxSource.pitch != 1)
+            {
+                // decline and action select sounds takes priority, so do nothing
+            }
+            else
+            {
+                gm.audioManager.PlaySfx("beep");
+            }
+            selectedMenuObjectForSound = eventSystem.currentSelectedGameObject;
+        }
     }
 
 
@@ -140,6 +158,9 @@ public class PlayerController : MonoBehaviour
                 ui.dialogueBox.SetActive(true);
                 finishedDialogueEarly = false;
                 ui.dialogueTriangle.SetActive(false);
+
+                gm.audioManager.PlaySfx("beep");
+
                 ProgressDialogue();
             }
         }
@@ -292,6 +313,7 @@ public class PlayerController : MonoBehaviour
                 {
                     currentDialogueText.text = "";
                     Debug.Log("Going to say line \"" + d.textEn + "\"");
+                    gm.audioManager.PlaySfx("beep");
                     if (d.portrait == null)
                     {
                         currentDialogueText = ui.dialogueText;
@@ -332,7 +354,21 @@ public class PlayerController : MonoBehaviour
         {
             if (finishedDialogueEarly) { break; }
             currentDialogueText.text += c;
-            yield return new WaitForSeconds(textSpeed);
+            if (c != ' ')
+            {
+                String voice = currentDialogue[dialogueIndex].voice;
+                if (voice == "")
+                {
+                    Debug.Log("playing default voice");
+                    gm.audioManager.PlaySfxRandomPitch("defaultTextVoice",2,0.7f);
+                }
+                else
+                {
+                    Debug.Log("playing custom voice " + voice);
+                    gm.audioManager.PlaySfxRandomPitch(voice,2,0.7f);
+                }
+                yield return new WaitForSeconds(textSpeed);
+            }
         }
         ui.dialogueTriangle.SetActive(true);
     }
@@ -452,12 +488,18 @@ public class PlayerController : MonoBehaviour
 
             UpdatePartyUI();
 
+            gm.audioManager.PlayMusic(dm.dungeonTheme, dm.dungeonBattleThemeVolume);
+
             inputState = DungeonInputControlState.FreeMove;
         }
         else if (command == "RESTART_SCENE")
         {
             Destroy(gm.gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else if(command == "STOP_MUSIC")
+        {
+            gm.audioManager.musicSource.Stop();
         }
     }
 
@@ -1043,6 +1085,8 @@ public class PlayerController : MonoBehaviour
             if(t != null){
                 if (t.walkable)              // STUFF HERE IS CALLED IF YOU ACTUALLY WALKED
                 {
+                    gm.audioManager.PlaySfx("walk");
+
                     playerX += x;
                     playerY += y;
                     targetGridPos = t.transform.position;
@@ -1114,6 +1158,8 @@ public class PlayerController : MonoBehaviour
     {
         inputState = DungeonInputControlState.Combat;
         combatReturnTo = CombatReturnTo.None;
+
+        gm.audioManager.PlayMusic(dm.dungeonBattleTheme, dm.dungeonBattleThemeVolume);
 
         gm.inCombat = true;
 
