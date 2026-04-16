@@ -5,7 +5,7 @@ using System;
 public class AudioManager : MonoBehaviour
 {
     public SoundObj[] sfx, music;
-    [SerializeField] public AudioSource musicSource, sfxSource, sfxSource2;
+    [SerializeField] public AudioSource musicSource, sfxSource, sfxSource2, sfxSource3;
     public void PlayMusic(string name)
     {
         Debug.Log("Trying to play music " + name);
@@ -61,6 +61,36 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySfx(string name, float pitch, int track)
+    {
+        SoundObj s = Array.Find(sfx, x => x.id == name);
+
+        if (s == null) Debug.Log("Sfx not found");
+        else
+        {
+            if (track == 1) { 
+                sfxSource.clip = s.audio;
+                sfxSource.pitch = pitch;
+                sfxSource.volume = 1;
+                sfxSource.Play();
+            }
+            else if (track == 2)
+            {
+                sfxSource2.clip = s.audio;
+                sfxSource2.pitch = pitch;
+                sfxSource2.volume = 1;
+                sfxSource2.Play();
+            }
+            else if (track == 3)
+            {
+                sfxSource3.clip = s.audio;
+                sfxSource3.pitch = pitch;
+                sfxSource3.volume = 1;
+                sfxSource3.Play();
+            }
+        }
+    }
+
     public void PlaySfx(string name, float pitch, float volume)
     {
         SoundObj s = Array.Find(sfx, x => x.id == name);
@@ -87,6 +117,7 @@ public class AudioManager : MonoBehaviour
             sfxSource2.Play();
         }
     }
+
 
     public void PlaySfxRandomPitch(string name, int track)
     {

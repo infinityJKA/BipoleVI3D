@@ -82,11 +82,14 @@ MonoBehaviour:
       textEn: 
       textJp: 
       portrait: {fileID: 0}
-      item: {fileID: 0}
-      obj: {fileID: 4179405031530732623, guid: 07e5d364ebf3a2e448cae7f943f2cfc8, type: 3}
+      commandSprite: {fileID: 0}
+      voice: 
+      spriteName: 
+      commandSpriteName: 
       battler: {fileID: 0}
-      partyMemberID: 
-      itemID: 
+      obj: {fileID: 4179405031530732623, guid: 07e5d364ebf3a2e448cae7f943f2cfc8, type: 3}
+    sfxName: swing
+    sfxVolume: 1
   pages: []
   pages_jp: []
   coinValue: 0

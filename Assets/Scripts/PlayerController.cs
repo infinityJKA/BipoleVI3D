@@ -551,7 +551,15 @@ public class PlayerController : MonoBehaviour
         // spawn animation
         if (target.isEnemy)
         {
-            GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity, ui.combat.transform);
+            if (gm.currentTarget.display.gameObject != null)
+            {
+                GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity, ui.combat.transform);
+            }
+        }
+
+        if(gm.currentAction.sfxName != "")
+        {
+            gm.audioManager.PlaySfx(gm.currentAction.sfxName, gm.currentAction.sfxVolume,3);
         }
 
         PerformAttackOnTarget(target, dealDamage, unmissable);

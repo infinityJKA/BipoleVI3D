@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Localization.PropertyVariants.TrackedProperties;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Bipole VI/Item")]
 [System.Serializable]
@@ -68,6 +69,8 @@ public class EquipmentAction
     public StatusCondition[] statusConditions; // status condition(s) afficted onto the target
     public StatusCondition[] addtionalStatusOnUser; // additional condition(s) the user gets affected by, no matter the target
     public List<DungeonDialogue> attackDialogue;
+    public String sfxName;
+    public float sfxVolume;
 }
 
 [Serializable]
