@@ -488,7 +488,7 @@ public class PlayerController : MonoBehaviour
 
             UpdatePartyUI();
 
-            gm.audioManager.PlayMusic(dm.dungeonTheme, dm.dungeonBattleThemeVolume);
+            gm.audioManager.PlayMusic(dm.dungeonTheme, dm.dungeonThemeVolume);
 
             inputState = DungeonInputControlState.FreeMove;
         }
@@ -551,7 +551,7 @@ public class PlayerController : MonoBehaviour
         // spawn animation
         if (target.isEnemy)
         {
-            if (gm.currentTarget.display.gameObject != null)
+            if (gm.currentTarget.display.gameObject != null && currentDialogue[dialogueIndex].obj != null && ui.combat.transform != null)
             {
                 GameObject anim = Instantiate(currentDialogue[dialogueIndex].obj, gm.currentTarget.display.gameObject.transform.position, Quaternion.identity, ui.combat.transform);
             }
@@ -1626,7 +1626,13 @@ public class PlayerController : MonoBehaviour
         }
 
         int num = gm.eyePhase - 1;
-        ui.eyeSprite.sprite = ui.eyeSprites[num];
+        if (num < 0) num = 0;
+         
+        if(num < ui.eyeSprites.Count()-1)
+        {
+            ui.eyeSprite.sprite = ui.eyeSprites[num];
+        }
+        
 
     }
 
