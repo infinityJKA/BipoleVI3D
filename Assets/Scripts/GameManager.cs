@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager gm;
+	public AudioManager audioManager;
 	public PlayerController dungeonPlayer;
 	public List<PartyMember> partyMembers;
 	public List<PartyMember> partyMembersInit;
