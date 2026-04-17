@@ -315,6 +315,7 @@ public class GameManager : MonoBehaviour
 									if (s.name == t.minimapSpriteName)
 									{
 										original.minimapSprite = s;
+										original.minimapTile.spriteRenderer.sprite = s;
 									}
 								}
 							}

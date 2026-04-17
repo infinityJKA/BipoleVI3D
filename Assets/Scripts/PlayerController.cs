@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
 
         UpdateTimeUI();
         UpdatePartyUI();
+        UpdatePopupText();
 
     }
 
@@ -378,7 +379,11 @@ public class PlayerController : MonoBehaviour
         if (command == "END")
         {
             ui.dialogueBox.SetActive(false);
-            ui.popupTextParent.SetActive(true);
+            // ui.popupTextParent.SetActive(true);
+            UpdatePopupText();
+            UpdatePartyUI();
+            UpdateTimeUI();
+            
             inputState = DungeonInputControlState.FreeMove;
         }
         else if (command == "ADDITEM")
@@ -487,6 +492,9 @@ public class PlayerController : MonoBehaviour
             gm.eyePhase = 0;
 
             UpdatePartyUI();
+            UpdateTimeUI();
+            UpdatePopupText();
+            
 
             gm.audioManager.PlayMusic(dm.dungeonTheme, dm.dungeonThemeVolume);
 
@@ -998,6 +1006,28 @@ public class PlayerController : MonoBehaviour
         gm.BP += gm.currentAction.gainBP;
     }
 
+    void UpdatePopupText(){
+        if (currentTile.interactType != InteractType.None)  // sets popup text
+        {
+            if (currentTile.interactType == InteractType.Talk)
+            {
+                ui.PopupText("TALK");
+            }
+            else if (currentTile.interactType == InteractType.Shop)
+            {
+                ui.PopupText("SHOP");
+            }
+            else if (currentTile.interactType == InteractType.Exit)
+            {
+                ui.PopupText("EXIT");
+            }
+        }
+        else
+        {
+            ui.popupTextParent.SetActive(false);
+        }
+    }
+
     private void UpdatePartyUI()
     {
         ui.bpText.text = ""+gm.BP;
@@ -1107,25 +1137,7 @@ public class PlayerController : MonoBehaviour
 
                     ProgressTimeOnce();
 
-                    if (t.interactType != InteractType.None)  // sets popup text
-                    {
-                        if (t.interactType == InteractType.Talk)
-                        {
-                            ui.PopupText("TALK");
-                        }
-                        else if (t.interactType == InteractType.Shop)
-                        {
-                            ui.PopupText("SHOP");
-                        }
-                        else if (t.interactType == InteractType.Exit)
-                        {
-                            ui.PopupText("EXIT");
-                        }
-                    }
-                    else
-                    {
-                        ui.popupTextParent.SetActive(false);
-                    }
+                    UpdatePopupText();
 
                     // update eye or perfrom encounter
                     if (t.eventOnWalk == false && t.noEncounter == false)
