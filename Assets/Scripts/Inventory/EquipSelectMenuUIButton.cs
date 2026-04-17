@@ -73,5 +73,20 @@ public class EquipSelectMenuUIButton : MonoBehaviour, ISelectHandler
         }
     }
 
+    public void UpdateDescriptionButtonOnly()
+    {
+        if (equipment != null)
+        {
+            nameText.text = equipment.itemName;
+            numberText.text = "x"+itemQuantity;
+        }
+        else
+        {
+            nameText.text = "<UNEQUIP>";
+            numberText.text = "";
+
+        }
+    }
+
 
 }

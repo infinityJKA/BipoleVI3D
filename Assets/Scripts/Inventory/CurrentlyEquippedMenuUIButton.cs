@@ -37,17 +37,31 @@ public class CurrentlyEquippedMenuUIButton : MonoBehaviour, ISelectHandler
 
     public void UpdateDescription()
     {
-        ItemObject item = equipUI.selectedCharacter.currentlyEquipped[itemNumber];
-        if (item != null)
+        // ItemObject item = equipUI.selectedCharacter.currentlyEquipped[itemNumber];
+        // if (item != null)
+        // {
+        //     equipUI.equipStats.text = item.itemName + "\n"
+        //     + item.itemDescription + "\n\n"
+        //     + item.equipmentAction.actionDescription;
+        // }
+        // else
+        // {
+        //     equipUI.equipStats.text = "[No item equipped in this slot]";
+        // }
+        ItemObject equipment = equipUI.selectedCharacter.currentlyEquipped[itemNumber];
+        if (equipment != null)
         {
-            equipUI.equipStats.text = item.itemName + "\n"
-            + item.itemDescription + "\n\n"
-            + item.equipmentAction.actionDescription;
+            equipUI.equipStats.text = equipment.itemName + "\n"
+            + equipment.itemDescription + "\n\n"
+            + equipment.equipmentAction.actionDescription;
+            Debug.Log("UpdateDescription() on "+equipment.itemName);
         }
         else
         {
-            equipUI.equipStats.text = "[No item equipped in this slot]";
+
+            equipUI.equipStats.text = "[Empty slot]";
         }
+        
     }
 
 }

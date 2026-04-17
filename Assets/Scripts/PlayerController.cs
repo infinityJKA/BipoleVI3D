@@ -1158,6 +1158,7 @@ public class PlayerController : MonoBehaviour
                             gm.eyePhase++;
                             ui.eyeSprite.sprite = ui.eyeSprites[gm.eyePhase - 1];
                             // start encounter
+                            gm.audioManager.PlaySfx("encounter", 1, 3);
                             StartEncounter();
                         }
                     }

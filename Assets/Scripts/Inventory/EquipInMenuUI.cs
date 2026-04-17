@@ -213,7 +213,7 @@ public class EquipInMenuUI : MonoBehaviour
         rectTransformsEquip.Add(firstButtonEquip.rectTransform);
         firstButtonEquip.itemNumber = itemCountEquip;
         itemCountEquip++;
-        firstButtonEquip.UpdateDescription();
+        firstButtonEquip.UpdateDescriptionButtonOnly();
         previousButtonEquip = firstButtonEquip;
 
 
@@ -241,7 +241,7 @@ public class EquipInMenuUI : MonoBehaviour
 
                         rectTransformsEquip.Add(eimui.rectTransform);
                         eimui.itemNumber = itemCountEquip;
-                        eimui.UpdateDescription();
+                        eimui.UpdateDescriptionButtonOnly();
                         itemCountEquip++;
 
 

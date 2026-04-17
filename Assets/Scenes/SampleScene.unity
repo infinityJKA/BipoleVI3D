@@ -5313,7 +5313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &269976232
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26446,6 +26446,8 @@ MonoBehaviour:
     audio: {fileID: 8300000, guid: 6ff9c0f353913f64caf1165bffe57f1d, type: 3}
   - id: beep
     audio: {fileID: 8300000, guid: 984ad2be8b867484f8093242a7d5f7b2, type: 3}
+  - id: encounter
+    audio: {fileID: 8300000, guid: 9e789d5cfc969b94c926083014cf4591, type: 3}
   music:
   - id: dungeon1
     audio: {fileID: 8300000, guid: d33fa0b7a8ba1764abe1b9b5bd7da6c1, type: 3}
