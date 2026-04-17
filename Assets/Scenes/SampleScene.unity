@@ -26442,8 +26442,8 @@ MonoBehaviour:
     audio: {fileID: 8300000, guid: 53afe67c5dab70e4c8d9528091859d4e, type: 3}
   - id: chest
     audio: {fileID: 8300000, guid: 3ea8b2d245df27b418cb193f19d92996, type: 3}
-  - id: swing
-    audio: {fileID: 8300000, guid: 9e75c915ab4daae4898beed490b23abf, type: 3}
+  - id: slice1
+    audio: {fileID: 8300000, guid: 6ff9c0f353913f64caf1165bffe57f1d, type: 3}
   - id: beep
     audio: {fileID: 8300000, guid: 984ad2be8b867484f8093242a7d5f7b2, type: 3}
   music:
