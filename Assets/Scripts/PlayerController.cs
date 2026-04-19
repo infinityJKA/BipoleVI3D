@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Automatic, don't touch")]
     public GameObject selectedMenuObjectForSound;
+    public bool isDialogueChoice, choicesSpawned;
 
     private void Start()
     {
@@ -266,72 +267,94 @@ public class PlayerController : MonoBehaviour
 
         if (dialogueIndex == -1 || currentDialogue[dialogueIndex].textEn == currentDialogueText.text || finishedDialogueEarly) // makes sure dialogue is finished or skipped first
         {
-            finishedDialogueEarly = false;
-            ui.dialogueTriangle.SetActive(false);
-            dialogueIndex++;
-
-            if (dialogueIndex >= currentDialogue.Count)
+            if (isDialogueChoice)
             {
-                if (gm.inCombat)
-                {
-                    if (gm.performedUltTrigger == false && gm.usingUlt && gm.currentAction.isUlt == false)
-                    {
-                        currentDialogue.Add(new DungeonDialogue(
-                            "ULT trigger!",
-                            "japanese translation here",
-                            null
-                        ));
-                        for (int i = 0; i < gm.currentAction.attackDialogue.Count; i++) // create a new list that can be modified as combat goes on
-                        {
-                            currentDialogue.Add(gm.currentAction.attackDialogue[i]);
-                        }
-                        gm.performedUltTrigger = true;
-                        //StartCoroutine(TypeLine(currentDialogue[dialogueIndex].textEn));
-                        //finishedDialogueEarly = false;
-                        Debug.Log("doing ULT trigger...");
-
-                        dialogueIndex -= 1;
-                        finishedDialogueEarly = true;
-
-                        ProgressDialogue();
-                    }
-                    else
-                    {
-                        Debug.Log("End of dialogue in combat, going to ProgressCombatTurn()");
-                        ProgressCombatTurn();
-                    }
-                }
+                Debug.Log("Eventsystem currently selected is " + EventSystem.current.currentSelectedGameObject.name);
             }
-            else
-            {
-                DungeonDialogue d = currentDialogue[dialogueIndex];
-                if (d.command != "")
+            else{
+                finishedDialogueEarly = false;
+                ui.dialogueTriangle.SetActive(false);
+                dialogueIndex++;
+
+                if (dialogueIndex >= currentDialogue.Count)
                 {
-                    Debug.Log("Going to do command \"" + d.command + "\"");
-                    PerformDialogueCommand(d.command);
+                    if (gm.inCombat)
+                    {
+                        if (gm.performedUltTrigger == false && gm.usingUlt && gm.currentAction.isUlt == false)
+                        {
+                            currentDialogue.Add(new DungeonDialogue(
+                                "ULT trigger!",
+                                "japanese translation here",
+                                null
+                            ));
+                            for (int i = 0; i < gm.currentAction.attackDialogue.Count; i++) // create a new list that can be modified as combat goes on
+                            {
+                                currentDialogue.Add(gm.currentAction.attackDialogue[i]);
+                            }
+                            gm.performedUltTrigger = true;
+                            //StartCoroutine(TypeLine(currentDialogue[dialogueIndex].textEn));
+                            //finishedDialogueEarly = false;
+                            Debug.Log("doing ULT trigger...");
+
+                            dialogueIndex -= 1;
+                            finishedDialogueEarly = true;
+
+                            ProgressDialogue();
+                        }
+                        else
+                        {
+                            Debug.Log("End of dialogue in combat, going to ProgressCombatTurn()");
+                            ProgressCombatTurn();
+                        }
+                    }
                 }
                 else
                 {
-                    currentDialogueText.text = "";
-                    Debug.Log("Going to say line \"" + d.textEn + "\"");
-                    gm.audioManager.PlaySfx("beep");
-                    if (d.portrait == null)
+                    DungeonDialogue d = currentDialogue[dialogueIndex];
+                    if (d.command != "")
                     {
-                        currentDialogueText = ui.dialogueText;
-                        ui.dialogueText2.gameObject.SetActive(false);
-                        ui.dialogueText.gameObject.SetActive(true);
-                        ui.dialoguePortrait.gameObject.SetActive(false);
+                        Debug.Log("Going to do command \"" + d.command + "\"");
+                        PerformDialogueCommand(d.command);
                     }
                     else
                     {
-                        currentDialogueText = ui.dialogueText2;
-                        ui.dialogueText.gameObject.SetActive(false);
-                        ui.dialogueText2.gameObject.SetActive(true);
-                        ui.dialoguePortrait.sprite = d.portrait;
-                        ui.dialoguePortrait.gameObject.SetActive(true);
+                        currentDialogueText.text = "";
+                        Debug.Log("Going to say line \"" + d.textEn + "\"");
+                        gm.audioManager.PlaySfx("beep");
+                        if (d.portrait == null)
+                        {
+                            currentDialogueText = ui.dialogueText;
+                            ui.dialogueText2.gameObject.SetActive(false);
+                            ui.dialogueText.gameObject.SetActive(true);
+                            ui.dialoguePortrait.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            currentDialogueText = ui.dialogueText2;
+                            ui.dialogueText.gameObject.SetActive(false);
+                            ui.dialogueText2.gameObject.SetActive(true);
+                            ui.dialoguePortrait.sprite = d.portrait;
+                            ui.dialoguePortrait.gameObject.SetActive(true);
+                        }
+
+                        if (d.choices.Count() > 0)
+                        {
+                            foreach (Transform child in ui.dialogueChoicesParent.transform)
+                            {
+                                Destroy(child.gameObject);
+                            }
+                            isDialogueChoice = true;
+                            ui.dialogueChoicesParent.SetActive(true);
+                        }
+                        else
+                        {
+                            isDialogueChoice = false;
+                            ui.dialogueChoicesParent.SetActive(false);
+                        }
+                        choicesSpawned = false;
+                        StartCoroutine(TypeLine(d.textEn));
                     }
-                    StartCoroutine(TypeLine(d.textEn));
-                }
+                }   
             }
         }
         else
@@ -339,12 +362,37 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Finished dialogue early (" + currentDialogue[dialogueIndex].textEn +")");
             finishedDialogueEarly = true;
             currentDialogueText.text = currentDialogue[dialogueIndex].textEn;
-            ui.dialogueTriangle.SetActive(true);
 
-            if(currentDialogueText.text == "")
+            if (isDialogueChoice && !choicesSpawned)
             {
-                Debug.Log("Textbox is empty for some reason, progressing dialogue");
-                ProgressDialogue();
+                DungeonDialogue line = currentDialogue[dialogueIndex];
+
+                foreach (Transform child in ui.dialogueChoicesParent.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+                foreach (DialogueChoice choice in line.choices)
+                {
+                    DialogueChoiceButton button = Instantiate(ui.dialogueChoiceButtonPrefab, ui.dialogueChoicesParent.transform);
+                    button.buttonText.text = choice.choiceText;
+                    button.flag = choice.choiceFlag;
+                    button.playerController = this;
+                }
+                choicesSpawned = true;
+                GameObject firstChild = ui.dialogueChoicesParent.transform.GetChild(0).gameObject;
+                Debug.Log("first child is " + firstChild.name);
+                EventSystem.current.SetSelectedGameObject(firstChild);
+                Debug.Log("Eventsystem currently selected is "+ EventSystem.current.currentSelectedGameObject.name);
+                inputState = DungeonInputControlState.DialogueButtonSelect;
+            }
+            else{
+                ui.dialogueTriangle.SetActive(true);
+
+                if(currentDialogueText.text == "")
+                {
+                    Debug.Log("Textbox is empty for some reason, progressing dialogue");
+                    ProgressDialogue();
+                }
             }
         }
     }
@@ -371,7 +419,32 @@ public class PlayerController : MonoBehaviour
                 yield return new WaitForSeconds(textSpeed);
             }
         }
-        ui.dialogueTriangle.SetActive(true);
+        if (isDialogueChoice && !choicesSpawned)
+        {
+            DungeonDialogue line = currentDialogue[dialogueIndex];
+
+            foreach (Transform child in ui.dialogueChoicesParent.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            foreach (DialogueChoice choice in line.choices)
+            {
+                DialogueChoiceButton button = Instantiate(ui.dialogueChoiceButtonPrefab, ui.dialogueChoicesParent.transform);
+                button.buttonText.text = choice.choiceText;
+                button.flag = choice.choiceFlag;
+                button.playerController = this;
+            }
+            choicesSpawned = true;
+            GameObject firstChild = ui.dialogueChoicesParent.transform.GetChild(0).gameObject;
+            Debug.Log("first child is " + firstChild.name);
+            EventSystem.current.SetSelectedGameObject(firstChild);
+            Debug.Log("Eventsystem currently selected is "+ EventSystem.current.currentSelectedGameObject.name);
+            inputState = DungeonInputControlState.DialogueButtonSelect;
+        }
+        else
+        {
+            ui.dialogueTriangle.SetActive(true);
+        }
     }
 
     private void PerformDialogueCommand(String command)
@@ -385,6 +458,16 @@ public class PlayerController : MonoBehaviour
             UpdateTimeUI();
             
             inputState = DungeonInputControlState.FreeMove;
+        }
+        else if (command == "FLAG")
+        {
+            Debug.Log("Flag passed: "+currentDialogue[dialogueIndex].textEn);
+            finishedDialogueEarly = true;
+            ProgressDialogue();
+        }
+        else if (command == "GOTO")
+        {
+            GoToFlag(currentDialogue[dialogueIndex].textEn);
         }
         else if (command == "ADDITEM")
         {
@@ -511,6 +594,41 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void GoToFlag(String flag)
+    {
+        Debug.Log("GoToFlag("+flag+")");
+        ui.dialogueBox.SetActive(false);
+
+        bool found = false;
+        int ind = 0;
+        while (!found)
+        {
+            if(ind >= currentDialogue.Count)
+            {
+                Debug.Log("FLAG NOT FOUND");
+                break;
+            }
+
+            if (currentDialogue[ind].command == "FLAG" && currentDialogue[ind].textEn == flag)
+            {
+                found = true;
+            }
+            else
+            {
+                if (currentDialogue[ind].command == "FLAG")
+                {
+                    Debug.Log("FLAG "+currentDialogue[ind].textEn+" NOT MATCH "+flag);   
+                }
+            }
+            ind++;
+        }
+
+        dialogueIndex = ind - 1;
+        inputState = DungeonInputControlState.Dialogue;
+        isDialogueChoice = false;
+        finishedDialogueEarly = true;
+        ProgressDialogue();
+    }
 
     public void CombatEXP(int xp, int expld) {
         foreach (PartyMember pm in ui.combat.battlers)

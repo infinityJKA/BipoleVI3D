@@ -59,10 +59,16 @@ public class DungeonInputCheck : MonoBehaviour
             if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
         }
 
+        else if (controller.inputState == DungeonInputControlState.DialogueButtonSelect)
+        {
+            if (InputManager.instance.decline){ controller.DeclineInCombat(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f);}
+            if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
+        }
+
     }
 }
 
 public enum DungeonInputControlState
 {
-    FreeMove,Dialogue,Combat,Menu
+    FreeMove,Dialogue,Combat,Menu,DialogueButtonSelect
 }

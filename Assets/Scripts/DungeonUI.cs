@@ -9,7 +9,8 @@ public class DungeonUI : MonoBehaviour
 {
     public TMP_Text popupText, dialogueText, dialogueText2, facingText,bpText;
     public Image dialoguePortrait;
-    public GameObject popupTextParent, dialogueBox, dialogueTriangle;
+    public GameObject popupTextParent, dialogueBox, dialogueTriangle, dialogueChoicesParent;
+    public DialogueChoiceButton dialogueChoiceButtonPrefab;
     public DungeonPartyMemberUI[] partyMemberUIs;
     public TMP_Text dateText, dayText;
     public Image moonSprite, eyeSprite;
