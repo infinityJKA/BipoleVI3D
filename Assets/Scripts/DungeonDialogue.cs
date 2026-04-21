@@ -12,6 +12,7 @@ public class DungeonDialogue //: MonoBehaviour
     public Sprite portrait, commandSprite;
     public String voice = "";
     public DialogueChoice[] choices;
+    public int x, y;
 
     [Header("Only used in save data, automatic")]
     [HideInInspector] public string spriteName;

@@ -70,5 +70,5 @@ public class DungeonInputCheck : MonoBehaviour
 
 public enum DungeonInputControlState
 {
-    FreeMove,Dialogue,Combat,Menu,DialogueButtonSelect
+    None,FreeMove,Dialogue,Combat,Menu,DialogueButtonSelect
 }

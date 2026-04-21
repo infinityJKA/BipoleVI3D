@@ -459,12 +459,27 @@ public class PlayerController : MonoBehaviour
             UpdatePartyUI();
             UpdateTimeUI();
 
+            inputState = DungeonInputControlState.None;
+
             StartCoroutine(WaitBeforeInputState(DungeonInputControlState.FreeMove));
             //inputState = DungeonInputControlState.FreeMove;
         }
+        else if (command == "SCENE")
+        {
+            gm.isSentFromOtherScene = true;
+            gm.isLoadingSave = true;
+
+            gm.startCordX = currentDialogue[dialogueIndex].x;
+            gm.startCordY = currentDialogue[dialogueIndex].y;
+
+            gm.loadSaveNum = -1;
+            gm.Save(-1);
+
+            SceneManager.LoadScene(currentDialogue[dialogueIndex].textEn);
+        }
         else if (command == "FLAG")
         {
-            Debug.Log("Flag passed: "+currentDialogue[dialogueIndex].textEn);
+            Debug.Log("Flag passed: " + currentDialogue[dialogueIndex].textEn);
             finishedDialogueEarly = true;
             ProgressDialogue();
         }
@@ -480,7 +495,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "CHANGE_SPRITE")
         {
-            foreach(Transform tr in currentTile.transform)
+            foreach (Transform tr in currentTile.transform)
             {
                 if (tr.GetComponent<Rotate2dSprite>())
                 {
@@ -504,7 +519,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (command == "DESTORY_DIALOGUE")
         {
-            Debug.Log("Destorying dialogue for tile "+currentTile.name);
+            Debug.Log("Destorying dialogue for tile " + currentTile.name);
             currentTile.dialogue = new List<DungeonDialogue>();
             currentTile.interactType = InteractType.None;
             currentTile.minimapSprite = gm.allMinimapSprites[0];
@@ -580,7 +595,7 @@ public class PlayerController : MonoBehaviour
             UpdatePartyUI();
             UpdateTimeUI();
             UpdatePopupText();
-            
+
 
             gm.audioManager.PlayMusic(dm.dungeonTheme, dm.dungeonThemeVolume);
 
@@ -591,7 +606,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gm.gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        else if(command == "STOP_MUSIC")
+        else if (command == "STOP_MUSIC")
         {
             gm.audioManager.musicSource.Stop();
         }

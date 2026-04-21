@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
 	[Header("Automatic, don't edit")]
 	public bool isLoadingSave;
 	public int loadSaveNum;
+	public bool isSentFromOtherScene;
+	public int startCordX, startCordY;
 
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
@@ -280,7 +282,30 @@ public class GameManager : MonoBehaviour
 
 	public void LoadDungeon(int num)
 	{
-        string jsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json");
+		dungeonPlayer = FindObjectOfType<PlayerController>();
+
+		string jsonData;
+
+        try
+		{
+			jsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json");
+		}        catch (Exception e)
+		{
+			Debug.Log("SAVE DATA DOES NOT HAVE DATA FOR DUNGEON...");
+            if (isSentFromOtherScene == true)
+            {
+				Debug.Log("isSentFromOtherScene == true");
+				eyePhase = 1;
+				stepsSinceEyeChange = 0;
+
+                dungeonPlayer.playerX = startCordX;
+                dungeonPlayer.playerY = startCordY;
+                dungeonPlayer.transform.position = new Vector3(startCordX * 10, 0, startCordY * 10);
+                isSentFromOtherScene = false;
+            }
+            return;
+		}
+
         SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
 
 		DungeonSaveData sd;
@@ -292,12 +317,30 @@ public class GameManager : MonoBehaviour
 
 				dungeonPlayer = FindObjectOfType<PlayerController>();
 
-				dungeonPlayer.transform.position = data.currentDungeon.playerPosition;
-				dungeonPlayer.targetRotation = data.currentDungeon.playerRotation;
-				dungeonPlayer.playerFacing = data.currentDungeon.playerFacing;
-				dungeonPlayer.playerX = data.currentDungeon.playerX;
-				dungeonPlayer.playerY = data.currentDungeon.playerY;
+				if (isSentFromOtherScene == false)
+				{
+					Debug.Log("isSentFromOtherScene == false, loading player position from save data");
+					dungeonPlayer.transform.position = data.currentDungeon.playerPosition;
+					dungeonPlayer.targetRotation = data.currentDungeon.playerRotation;
+					dungeonPlayer.playerFacing = data.currentDungeon.playerFacing;
+					dungeonPlayer.playerX = data.currentDungeon.playerX;
+					dungeonPlayer.playerY = data.currentDungeon.playerY;
+				}
+				else
+				{
+                    Debug.Log("isSentFromOtherScene == true");
+
+                    eyePhase = 1;
+                    stepsSinceEyeChange = 0;
+
+                    dungeonPlayer.playerX = startCordX;
+                    dungeonPlayer.playerY = startCordY;
+                    dungeonPlayer.transform.position = new Vector3(startCordX*10,0,startCordY*10);
+					isSentFromOtherScene = false;
+                }
+				
 				dungeonPlayer.currentTile = dungeonPlayer.dm.GetTile(dungeonPlayer.playerX, dungeonPlayer.playerY);
+				
 				foreach (TileSaveData t in sd.tileData)
 				{
 					foreach (Transform tr in dungeonPlayer.dm.transform)
@@ -406,6 +449,7 @@ public class GameManager : MonoBehaviour
 
     public void Load(int num)
     {
+		Debug.Log("Loading from save slot " + num);
 
 		LoadSaveData(num); // loads inventory and party data
 
