@@ -144,7 +144,8 @@ public class PlayerController : MonoBehaviour
 
     public void SetInputStateFreeMove()
     {
-        inputState = DungeonInputControlState.FreeMove;
+        StartCoroutine(WaitBeforeInputState(DungeonInputControlState.FreeMove));
+        //inputState = DungeonInputControlState.FreeMove;
     }
 
     public void Interact()
@@ -318,6 +319,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else
                     {
+                        ui.dialogueBox.SetActive(true);
                         currentDialogueText.text = "";
                         Debug.Log("Going to say line \"" + d.textEn + "\"");
                         gm.audioManager.PlaySfx("beep");
@@ -456,8 +458,9 @@ public class PlayerController : MonoBehaviour
             UpdatePopupText();
             UpdatePartyUI();
             UpdateTimeUI();
-            
-            inputState = DungeonInputControlState.FreeMove;
+
+            StartCoroutine(WaitBeforeInputState(DungeonInputControlState.FreeMove));
+            //inputState = DungeonInputControlState.FreeMove;
         }
         else if (command == "FLAG")
         {
@@ -1781,7 +1784,13 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    IEnumerator WaitBeforeInputState(DungeonInputControlState s) // makes it so a action ui button isn't selected the same frame it's enabled
+    {
+        yield return null; // <-- causes it to wait one frame
 
+        inputState = s;
+
+    }
 
 
 }

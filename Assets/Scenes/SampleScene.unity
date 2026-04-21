@@ -18283,7 +18283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[3].choices.Array.data[0].choiceFlag
-      value: loop
+      value: f1
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[3].choices.Array.data[0].choiceText
