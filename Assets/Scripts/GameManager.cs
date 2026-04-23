@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -116,6 +117,7 @@ public class GameManager : MonoBehaviour
 		dungeonSaveData.dungeonSceneName = SceneManager.GetActiveScene().name;
 
 		data.currentDungeon = new CurrentDungeon();
+		data.currentDungeon.dungeonSceneName = SceneManager.GetActiveScene().name;
 		data.currentDungeon.playerPosition = dungeonPlayer.transform.position;
 		data.currentDungeon.playerRotation = dungeonPlayer.transform.eulerAngles;
 		data.currentDungeon.playerFacing = dungeonPlayer.playerFacing;
@@ -182,17 +184,48 @@ public class GameManager : MonoBehaviour
 			dungeonSaveData.tileData.Add(t);   
 		}
 
-		if (data.ContainsDungeon(dungeonSaveData.dungeonSceneName))
+		bool contains = false;
+		String n = dungeonSaveData.dungeonSceneName;
+		int dungeonIndex = -99;
+
+		// CHECK IF DUNGEON IS IN SAVE DATA
+
+		Debug.Log("data.dungeon.Count "+data.dungeons.Count);
+
+        if (data.dungeons == null || data.dungeons.Count == 0)
+        {
+            Debug.Log("Save data DOES NOT contain dungeon " + n + " BECAUSE it has not saved any dungeons");
+			contains = false;
+        }
+
+        foreach (DungeonSaveData d in data.dungeons)
+        {
+            Debug.Log("checking if " + d.dungeonSceneName + " is " + n);
+            if (d.dungeonSceneName == n)
+            {
+                Debug.Log("Save data contains dungeon " + n);
+
+				dungeonIndex = data.dungeons.IndexOf(d);
+
+                contains = true;
+            }
+        }
+
+        if (contains == true)
 		{
-			int ind = data.dungeons.IndexOf(data.GetDungeon(dungeonSaveData.dungeonSceneName));
-			data.dungeons[ind] = dungeonSaveData;
+			Debug.Log("Dungeon is at save data dungeon index " + dungeonIndex+", saving...");
+			data.dungeons[dungeonIndex] = dungeonSaveData;
 		}
 		else
 		{
-			if (data.dungeons == null)
+            Debug.Log("Save data DOES NOT contain dungeon " + n);
+
+            if (data.dungeons == null)
 			{
+				Debug.Log("Creating new dungeon list in save data");
 				data.dungeons = new List<DungeonSaveData>();
 			}
+			Debug.Log("Appending new dungeon data to list");
 			data.dungeons.Add(dungeonSaveData);
 		}
 

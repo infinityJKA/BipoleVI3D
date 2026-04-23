@@ -17,24 +17,43 @@ public class SaveData
 
     public String currentSceneName;
 
-    
 
-    public bool ContainsDungeon(string n)
-    {
-        if(dungeons == null)
-        {
-            return false;
-        }
-        foreach (DungeonSaveData d in dungeons)
-        {
-            if (d.dungeonSceneName == n)
-            {
-                return true;
-            }
-        }
+    //public bool ContainsDungeon(string n)
+    //{
+    //    if(dungeons == null)
+    //    {
+    //        Debug.Log("Save data DOES NOT contain dungeon " + n + " BECAUSE it has not saved any dungeons");
+    //        return false;
+    //    }
+         
+    //    foreach (DungeonSaveData d in dungeons)
+    //    {
+    //        Debug.Log("checking if " + d.dungeonSceneName + " is " + n);
+    //        if (d.dungeonSceneName == n)
+    //        {
+    //            Debug.Log("Save data contains dungeon " + n);
+    //            return true;
+    //        }
+    //    }
 
-        return false;
-    }
+    //    Debug.Log("Save data DOES NOT contain dungeon " + n);
+    //    return false;
+    //}
+
+    //public int GetIndexOfDungeon(string n)
+    //{
+    //    int ind = -1;
+    //    foreach (DungeonSaveData d in dungeons)
+    //    {
+    //        ind++;
+    //        if (d.dungeonSceneName == n)
+    //        {
+    //            Debug.Log("Dungeon is located in index " + ind + " of the save file");
+    //            return ind; 
+    //        }
+    //    }
+    //    return -1;
+    //}
 
     public DungeonSaveData GetDungeon(string n)
     {
