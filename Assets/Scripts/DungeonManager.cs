@@ -29,7 +29,7 @@ public class DungeonManager : MonoBehaviour
             // adds tile to tile dictonary
             Tile t = child.GetComponent<Tile>();
             tiles.Add(new Vector2(t.x,t.y), t);
-            Debug.Log("Added tile "+t.x+","+t.y+" to tiles dictionary");
+            //Debug.Log("Added tile "+t.x+","+t.y+" to tiles dictionary");
             t.dm = this;
 
             // sets tileID
@@ -50,15 +50,15 @@ public class DungeonManager : MonoBehaviour
 
         if (gm.isLoadingSave)
         {
+            Debug.Log("gm.isLoadingSave == true, loading dungeon data from slot "+gm.loadSaveNum);
             gm.LoadDungeon(gm.loadSaveNum);
-            gm.isLoadingSave = false;
         }
 
         gm.audioManager.PlayMusic(dungeonTheme, dungeonThemeVolume);
     }
 
     public Tile GetTile(int x, int y){
-        Debug.Log("Trying to get tile "+x+","+y);
+        //Debug.Log("Trying to get tile "+x+","+y);
         try{
             Tile t = tiles[new Vector2(x,y)];
             return t;

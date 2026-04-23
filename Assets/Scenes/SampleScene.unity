@@ -2230,6 +2230,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1081850633294496653, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: dungeonName
+      value: Test F1
+      objectReference: {fileID: 0}
     - target: {fileID: 4644063561096452329, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: m_Name
       value: Dungeon

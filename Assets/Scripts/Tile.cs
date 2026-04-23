@@ -44,13 +44,13 @@ public class Tile : MonoBehaviour
     }
 
     public void SetMiniMapSprite(Sprite s){
-        Debug.Log("Setting minimap sprite to "+s.name);
+        //Debug.Log("Setting minimap sprite to "+s.name);
         // minimapTile.gameObject.SetActive(playerHasDiscovered);
         minimapTile.spriteRenderer.sprite = s;
     }
 
     public void UpdateMiniMapSprite(){
-        Debug.Log("Setting minimap sprite to default");
+        //Debug.Log("Setting minimap sprite to default");
         minimapTile.spriteRenderer.sprite = minimapSprite;
         minimapTile.spriteRendererBg.sprite = minimapBg;
         minimapTile.gameObject.SetActive(playerHasDiscovered); // hide if the tile hasn't been discovered yet

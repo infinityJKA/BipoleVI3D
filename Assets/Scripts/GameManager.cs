@@ -282,14 +282,26 @@ public class GameManager : MonoBehaviour
 
 	public void LoadDungeon(int num)
 	{
-		dungeonPlayer = FindObjectOfType<PlayerController>();
+
+        gm.isLoadingSave = false;
+
+        if (gm.isSentFromOtherScene == true)
+		{
+            eyePhase = 1;
+            stepsSinceEyeChange = 0;
+        }
+
+        bool foundDungeonData = false;
+
+        dungeonPlayer = FindObjectOfType<PlayerController>();
 
 		string jsonData;
 
         try
 		{
 			jsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json");
-		}        catch (Exception e)
+		}        
+		catch (Exception e)
 		{
 			Debug.Log("SAVE DATA DOES NOT HAVE DATA FOR DUNGEON...");
             if (isSentFromOtherScene == true)
@@ -306,14 +318,19 @@ public class GameManager : MonoBehaviour
             return;
 		}
 
+		Debug.Log("Sava data slot " + num + " exists)");
+
         SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
+		
 
 		DungeonSaveData sd;
 		foreach(DungeonSaveData d in data.dungeons)
 		{
 			if(d.dungeonSceneName == SceneManager.GetActiveScene().name)
 			{
+				foundDungeonData = true;
 				sd = d;
+				Debug.Log("Found data for dungeon, "+d.dungeonSceneName + " == " + SceneManager.GetActiveScene().name);
 
 				dungeonPlayer = FindObjectOfType<PlayerController>();
 
@@ -328,10 +345,9 @@ public class GameManager : MonoBehaviour
 				}
 				else
 				{
-                    Debug.Log("isSentFromOtherScene == true");
+                    Debug.Log("isSentFromOtherScene == true, setting player to "+startCordX+","+startCordY);
 
-                    eyePhase = 1;
-                    stepsSinceEyeChange = 0;
+                    
 
                     dungeonPlayer.playerX = startCordX;
                     dungeonPlayer.playerY = startCordY;
@@ -443,8 +459,26 @@ public class GameManager : MonoBehaviour
 						}
 					}
 				}
-            }	
+            }
+			else
+			{
+                Debug.Log("Dungeon data name doesn't match, " + d.dungeonSceneName + " != " + SceneManager.GetActiveScene().name);
+            }
+		}
+
+		if(foundDungeonData == false)
+		{
+			Debug.Log("No data found for this dungeon in save");
+			if (isSentFromOtherScene == true)
+			{
+				dungeonPlayer.playerX = startCordX;
+				dungeonPlayer.playerY = startCordY;
+				dungeonPlayer.transform.position = new Vector3(startCordX * 10, 0, startCordY * 10);
+				isSentFromOtherScene = false;
+			}
+
         }
+
     }
 
     public void Load(int num)
@@ -455,10 +489,20 @@ public class GameManager : MonoBehaviour
 
 		isLoadingSave = true; // dungeon save data will be loaded on load
 		loadSaveNum = num;
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
-        
-		
-		//SceneManager.LoadSceneAsync(data.savedScene);
+		//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+		SaveData data = JsonUtility.FromJson<SaveData>(System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json"));
+		SceneManager.LoadScene(data.currentSceneName);
+
+        if (num != -1)
+        {
+            SaveData loaded = JsonUtility.FromJson<SaveData>(System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + num + ".json"));
+            SaveData temp = JsonUtility.FromJson<SaveData>(System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + -1 + ".json"));
+            temp = loaded;
+        }
+
+
+        //SceneManager.LoadSceneAsync(data.savedScene);
     }
 
 	public ItemObject GetItemByID(string id)

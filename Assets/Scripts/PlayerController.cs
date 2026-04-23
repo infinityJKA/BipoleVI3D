@@ -339,7 +339,7 @@ public class PlayerController : MonoBehaviour
                             ui.dialoguePortrait.gameObject.SetActive(true);
                         }
 
-                        if (d.choices.Count() > 0)
+                        if (d.choices != null && d.choices.Count() > 0)
                         {
                             foreach (Transform child in ui.dialogueChoicesParent.transform)
                             {

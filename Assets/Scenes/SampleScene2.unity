@@ -2635,6 +2635,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1081850633294496653, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: dungeonName
+      value: Test F2
+      objectReference: {fileID: 0}
     - target: {fileID: 1680613504139417923, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: m_LocalPosition.z
       value: 39.6

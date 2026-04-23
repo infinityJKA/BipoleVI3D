@@ -91,7 +91,7 @@ public class SaveData
         {
             foreach(InventorySlot s in inv.Container)
             {
-                Debug.Log("Saving inventory slot with item "+s.item.name+" and amount "+s.amount);
+                //Debug.Log("Saving inventory slot with item "+s.item.name+" and amount "+s.amount);
                 InventorySlotSaveData sd = new InventorySlotSaveData();
                 sd.itemID = s.item.saveId;
                 sd.amount = s.amount;
