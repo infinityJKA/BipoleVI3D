@@ -89,8 +89,21 @@ public class GameManager : MonoBehaviour
 		SaveData data = new SaveData();
 		data.currentSceneName = SceneManager.GetActiveScene().name;
 
-		// SAVE PARTY MEMBERS
+		// CARRY OVER PREVIOUS DUNGEON DATA
+		try
+		{
+			string tempJsonData = System.IO.File.ReadAllText(Application.persistentDataPath + "/save" + "-1" + ".json");
+			SaveData tempData = JsonUtility.FromJson<SaveData>(tempJsonData);
 
+			data.dungeons = tempData.dungeons;
+		}        
+		catch (Exception e)
+		{
+			Debug.Log("No temp save data to load previous dungeon data from");
+		}
+
+
+		// SAVE PARTY MEMBERS
 		foreach(PartyMember pm in partyMembers)
 		{
 			data.SavePartyMemberData(pm);
