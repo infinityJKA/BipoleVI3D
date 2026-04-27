@@ -60,6 +60,13 @@ public class Tile : MonoBehaviour
         playerHasDiscovered = true;
         minimapTile.gameObject.SetActive(true);
         // set wall sprites if there is a wall
+        MinimapWalls();
+
+        SetMiniMapSprite(s);
+    }
+
+    public void MinimapWalls()
+    {
         if(dm.GetTile(x,y+1) == null || dm.GetTile(x,y+1).walkable != true){
             minimapTile.wallUp.SetActive(true);
         }
@@ -72,8 +79,6 @@ public class Tile : MonoBehaviour
         if(dm.GetTile(x-1,y) == null || dm.GetTile(x-1,y).walkable != true){
             minimapTile.wallLeft.SetActive(true);
         }
-
-        SetMiniMapSprite(s);
     }
 
 }

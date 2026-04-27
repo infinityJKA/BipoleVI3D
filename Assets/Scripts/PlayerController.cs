@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public Tile currentTile;
 
-    Vector3 targetGridPos;
+    public Vector3 targetGridPos;
     Vector3 prevTargetGridPos;
     public Vector3 targetRotation;
 
@@ -66,7 +66,10 @@ public class PlayerController : MonoBehaviour
 
         UpdateTimeUI();
         UpdatePartyUI();
-        UpdatePopupText();
+
+        if(gm.isLoadingSave == false){
+            UpdatePopupText();
+        }
 
     }
 
@@ -92,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private Sprite PlayerMapSprite(){
+    public Sprite PlayerMapSprite(){
         if(playerFacing == PlayerFacing.North){
             return up;
         }
@@ -1142,7 +1145,7 @@ public class PlayerController : MonoBehaviour
         gm.BP += gm.currentAction.gainBP;
     }
 
-    void UpdatePopupText(){
+    public void UpdatePopupText(){
         if (currentTile.interactType != InteractType.None)  // sets popup text
         {
             if (currentTile.interactType == InteractType.Talk)

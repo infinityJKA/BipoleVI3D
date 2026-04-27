@@ -55,8 +55,10 @@ public class GameManager : MonoBehaviour
 
 	void Awake()
 	{
-		if (gm != null)
+		if (gm != null){
 			Destroy(this);
+			return;
+		}
 		else{
 			gm = this;
 			DontDestroyOnLoad(this);
@@ -80,6 +82,20 @@ public class GameManager : MonoBehaviour
 		var invenotryClone = Instantiate(inventoryPrefab);
 		inventory = invenotryClone;
 
+		try
+		{
+			Debug.Log("Resetting temp data");
+
+			SaveData empty = new SaveData();			
+			string json = JsonUtility.ToJson(empty, true);
+			string path = Application.persistentDataPath + "/save" + "-1" + ".json";
+			System.IO.File.WriteAllText(path, json);
+
+		}        
+		catch (Exception e)
+		{
+			Debug.Log("No temp data to reset");
+		}
 
 	}
 
@@ -403,6 +419,8 @@ public class GameManager : MonoBehaviour
 				
 				dungeonPlayer.currentTile = dungeonPlayer.dm.GetTile(dungeonPlayer.playerX, dungeonPlayer.playerY);
 				
+				dungeonPlayer.targetGridPos = Vector3Int.RoundToInt(dungeonPlayer.transform.position);
+
 				foreach (TileSaveData t in sd.tileData)
 				{
 					foreach (Transform tr in dungeonPlayer.dm.transform)
@@ -505,6 +523,19 @@ public class GameManager : MonoBehaviour
 						}
 					}
 				}
+
+				// generate minimap walls are loading all the tiles
+				foreach(Transform tr in dungeonPlayer.dm.transform)
+				{
+					Tile t = tr.GetComponent<Tile>();
+					if (t.playerHasDiscovered)
+					{
+						t.MinimapWalls();
+					}
+				}
+
+				dungeonPlayer.currentTile.EnterTile(dungeonPlayer.PlayerMapSprite());
+				dungeonPlayer.UpdatePopupText();
             }
 			else
 			{
