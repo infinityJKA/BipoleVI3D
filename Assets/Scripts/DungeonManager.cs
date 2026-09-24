@@ -53,8 +53,17 @@ public class DungeonManager : MonoBehaviour
             Debug.Log("gm.isLoadingSave == true, loading dungeon data from slot "+gm.loadSaveNum);
             gm.LoadDungeon(gm.loadSaveNum);
         }
+        //else if(gm.isSentFromOtherScene)
+        //{
+        //    Debug.Log("not loading save but sent from another scene...");
+        //    gm.LoadDungeon(-1);
+        //}
+        else
+        {
+            Debug.Log("Scene is being loaded and is NOT loading from a save and is NOT sent from another scene");
+        }
 
-        gm.audioManager.PlayMusic(dungeonTheme, dungeonThemeVolume);
+            gm.audioManager.PlayMusic(dungeonTheme, dungeonThemeVolume);
     }
 
     public Tile GetTile(int x, int y){

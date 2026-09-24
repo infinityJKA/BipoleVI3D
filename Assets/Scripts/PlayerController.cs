@@ -471,6 +471,7 @@ public class PlayerController : MonoBehaviour
         {
             gm.isSentFromOtherScene = true;
             gm.isLoadingSave = true;
+            gm.facingOnLoad = currentDialogue[dialogueIndex].textJp;
 
             gm.startCordX = currentDialogue[dialogueIndex].x;
             gm.startCordY = currentDialogue[dialogueIndex].y;
@@ -1627,7 +1628,8 @@ public class PlayerController : MonoBehaviour
                 playerFacing = PlayerFacing.North;
                 ui.facingText.text = "Facing\nNORTH";
             }
-            targetRotation -= Vector3.up * 90f;
+            //targetRotation -= Vector3.up * 90f;
+            gm.FixFacing();
 
             dm.GetTile(playerX, playerY).EnterTile(PlayerMapSprite());
         }
@@ -1655,10 +1657,31 @@ public class PlayerController : MonoBehaviour
                 playerFacing = PlayerFacing.South;
                 ui.facingText.text = "Facing\nSOUTH";
             }
-            targetRotation += Vector3.up*90f;
+            //targetRotation += Vector3.up*90f;
+            gm.FixFacing();
 
             dm.GetTile(playerX,playerY).EnterTile(PlayerMapSprite());
             // MinimapSprite(dm.GetTile(playerX,playerY));
+        }
+    }
+
+    public void UpdateFacingText()
+    {
+        if (playerFacing == PlayerFacing.North)
+        {
+            ui.facingText.text = "Facing\nNorth";
+        }
+        else if (playerFacing == PlayerFacing.West)
+        {
+            ui.facingText.text = "Facing\nWEST";
+        }
+        else if (playerFacing == PlayerFacing.South)
+        {
+            ui.facingText.text = "Facing\nSOUTH";
+        }
+        else
+        {
+            ui.facingText.text = "Facing\nEAST";
         }
     }
 

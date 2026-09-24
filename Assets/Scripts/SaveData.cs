@@ -125,7 +125,7 @@ public class CurrentDungeon
 {
     public string dungeonSceneName;
     public Vector3 playerPosition;
-    public Vector3 playerRotation;
+    //public Vector3 playerRotation;
     public PlayerFacing playerFacing;
     public int playerX, playerY;
     

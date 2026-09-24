@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 	public int loadSaveNum;
 	public bool isSentFromOtherScene;
 	public int startCordX, startCordY;
+	public String facingOnLoad;
 
 	[Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
@@ -148,7 +149,7 @@ public class GameManager : MonoBehaviour
 		data.currentDungeon = new CurrentDungeon();
 		data.currentDungeon.dungeonSceneName = SceneManager.GetActiveScene().name;
 		data.currentDungeon.playerPosition = dungeonPlayer.transform.position;
-		data.currentDungeon.playerRotation = dungeonPlayer.transform.eulerAngles;
+		//data.currentDungeon.playerRotation = dungeonPlayer.transform.eulerAngles;
 		data.currentDungeon.playerFacing = dungeonPlayer.playerFacing;
 		data.currentDungeon.playerX = dungeonPlayer.playerX;
 		data.currentDungeon.playerY = dungeonPlayer.playerY;
@@ -344,6 +345,7 @@ public class GameManager : MonoBehaviour
 
 	public void LoadDungeon(int num)
 	{
+		Debug.Log("LoadDungeon()");
 
         gm.isLoadingSave = false;
 
@@ -400,21 +402,18 @@ public class GameManager : MonoBehaviour
 				{
 					Debug.Log("isSentFromOtherScene == false, loading player position from save data");
 					dungeonPlayer.transform.position = data.currentDungeon.playerPosition;
-					dungeonPlayer.targetRotation = data.currentDungeon.playerRotation;
+					//dungeonPlayer.targetRotation = data.currentDungeon.playerRotatio
 					dungeonPlayer.playerFacing = data.currentDungeon.playerFacing;
-					dungeonPlayer.playerX = data.currentDungeon.playerX;
+					dungeonPlayer.targetRotation = GetRotationFromFacing(data.currentDungeon.playerFacing);
+						
+
+
+                    dungeonPlayer.playerX = data.currentDungeon.playerX;
 					dungeonPlayer.playerY = data.currentDungeon.playerY;
 				}
 				else
 				{
-                    Debug.Log("isSentFromOtherScene == true, setting player to "+startCordX+","+startCordY);
-
-                    
-
-                    dungeonPlayer.playerX = startCordX;
-                    dungeonPlayer.playerY = startCordY;
-                    dungeonPlayer.transform.position = new Vector3(startCordX*10,0,startCordY*10);
-					isSentFromOtherScene = false;
+					SentFromOtherSceneFunctions();
                 }
 				
 				dungeonPlayer.currentTile = dungeonPlayer.dm.GetTile(dungeonPlayer.playerX, dungeonPlayer.playerY);
@@ -539,7 +538,7 @@ public class GameManager : MonoBehaviour
             }
 			else
 			{
-                Debug.Log("Dungeon data name doesn't match, " + d.dungeonSceneName + " != " + SceneManager.GetActiveScene().name);
+                //Debug.Log("Dungeon data name doesn't match, " + d.dungeonSceneName + " != " + SceneManager.GetActiveScene().name);
             }
 		}
 
@@ -548,14 +547,71 @@ public class GameManager : MonoBehaviour
 			Debug.Log("No data found for this dungeon in save");
 			if (isSentFromOtherScene == true)
 			{
-				dungeonPlayer.playerX = startCordX;
-				dungeonPlayer.playerY = startCordY;
-				dungeonPlayer.transform.position = new Vector3(startCordX * 10, 0, startCordY * 10);
-				isSentFromOtherScene = false;
-			}
+				Debug.Log("First time in dungeon and isSentFromOtherScene");
+
+				SentFromOtherSceneFunctions();
+
+                dungeonPlayer.currentTile = dungeonPlayer.dm.GetTile(dungeonPlayer.playerX, dungeonPlayer.playerY);
+
+                dungeonPlayer.targetGridPos = Vector3Int.RoundToInt(dungeonPlayer.transform.position);
+
+                foreach (Transform tr in dungeonPlayer.dm.transform)
+                {
+                    Tile t = tr.GetComponent<Tile>();
+                    if (t.playerHasDiscovered)
+                    {
+                        t.MinimapWalls();
+                    }
+                }
+
+                dungeonPlayer.currentTile.EnterTile(dungeonPlayer.PlayerMapSprite());
+                dungeonPlayer.UpdatePopupText();
+            }
 
         }
 
+    }
+
+	private void SentFromOtherSceneFunctions()
+	{
+        Debug.Log("isSentFromOtherScene == true, setting player to " + startCordX + "," + startCordY);
+
+
+
+        dungeonPlayer.playerX = startCordX;
+        dungeonPlayer.playerY = startCordY;
+        dungeonPlayer.transform.position = new Vector3(startCordX * 10, 0, startCordY * 10);
+
+        Debug.Log("facingOnLoad == " + facingOnLoad);
+        if (facingOnLoad == "NORTH")
+        {
+            dungeonPlayer.playerFacing = PlayerFacing.North;
+        }
+        else if (facingOnLoad == "SOUTH")
+        {
+            dungeonPlayer.playerFacing = PlayerFacing.South;
+        }
+        else if (facingOnLoad == "EAST")
+        {
+            dungeonPlayer.playerFacing = PlayerFacing.East;
+        }
+        else if (facingOnLoad == "WEST")
+        {
+            dungeonPlayer.playerFacing = PlayerFacing.West;
+        }
+        else
+        {
+            throw new System.Exception("Loading dungeon from other scene but not given a valid facing (put it in dialogueJP of the dialogue command)");
+        }
+
+        facingOnLoad = "";
+
+        Vector3 toFace = GetRotationFromFacing(dungeonPlayer.playerFacing);
+        Debug.Log("Going to set targetRotation to " + toFace.y);
+
+        dungeonPlayer.targetRotation = toFace;
+
+        isSentFromOtherScene = false;
     }
 
     public void Load(int num)
@@ -595,6 +651,32 @@ public class GameManager : MonoBehaviour
 		Debug.Log("Error: Item with ID \"" + id + "\" not found in database (GameManager).");
 		return null;
 	}
+
+	public Vector3 GetRotationFromFacing(PlayerFacing f)
+	{
+		if(f == PlayerFacing.North)
+		{
+			return new Vector3(0, 0, 0);
+		}
+		else if (f == PlayerFacing.East)
+		{
+            return new Vector3(0, 90, 0);
+        }
+        else if (f == PlayerFacing.West)
+        {
+            return new Vector3(0, 270, 0);
+        }
+        else // South
+        {
+            return new Vector3(0, 180, 0);
+        }
+    }
+
+	public void FixFacing()
+	{
+		dungeonPlayer.targetRotation = GetRotationFromFacing(dungeonPlayer.playerFacing);
+		dungeonPlayer.UpdateFacingText();
+    }
 
     public void PartySwap(int a, int b)
 	{

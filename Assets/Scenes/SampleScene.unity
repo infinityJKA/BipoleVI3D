@@ -2583,6 +2583,10 @@ PrefabInstance:
       value: SampleScene2
       objectReference: {fileID: 0}
     - target: {fileID: 8438145672167061748, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: dialogue.Array.data[5].textJp
+      value: NORTH
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438145672167061748, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: dialogue.Array.data[1].command
       value: 
       objectReference: {fileID: 0}

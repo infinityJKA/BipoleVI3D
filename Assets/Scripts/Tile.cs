@@ -40,6 +40,8 @@ public class Tile : MonoBehaviour
             SetMiniMapSprite(s);
         }
 
+        GameManager.gm.FixFacing();
+
         dm.MoveMinimapCamera(minimapTile.transform.position.x,minimapTile.transform.position.y); // move camera to this tile
     }
 
