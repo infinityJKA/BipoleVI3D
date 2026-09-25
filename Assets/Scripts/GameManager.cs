@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	public AudioManager audioManager;
 	public PlayerController dungeonPlayer;
 	public List<PartyMember> partyMembers;
+	public PartyMember[] partyBattlers;
 	public List<PartyMember> partyMembersInit;
 	public inventoryObject inventory, inventoryPrefab;
 
@@ -339,6 +340,22 @@ public class GameManager : MonoBehaviour
 		{
 			InventorySlot s = new InventorySlot(GetItemByID(sd.itemID), sd.amount);
 			inventory.Container.Add(s);
+		}
+
+		// OVERRIDE TEMP DATA
+		try
+		{
+			Debug.Log("Overriding temp data");
+		
+			string tempJson = JsonUtility.ToJson(data, true);
+			string path = Application.persistentDataPath + "/save" + "-1" + ".json";
+			System.IO.File.WriteAllText(path, tempJson);
+
+		}        
+		catch (Exception e)
+		{
+			Debug.Log("No temp data to override...");
+
 		}
 
     }

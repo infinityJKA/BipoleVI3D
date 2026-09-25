@@ -12830,6 +12830,7 @@ MonoBehaviour:
   playerY: 0
   playerFacing: 0
   currentTile: {fileID: 0}
+  targetGridPos: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0}
   up: {fileID: 21300000, guid: 302aebc954906a348b0916b7919d4599, type: 3}
   down: {fileID: 21300000, guid: a041515395629e34b9d629cbcfc02028, type: 3}
@@ -22227,7 +22228,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 3
   far clip plane: 1000
   field of view: 60
   orthographic: 0
