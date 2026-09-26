@@ -762,8 +762,22 @@ MonoBehaviour:
   audioManager: {fileID: 3977922361077992285}
   dungeonPlayer: {fileID: 0}
   partyMembers: []
+  partyBattlers: []
   partyMembersInit:
   - {fileID: 11400000, guid: 5f1f258a205a8524ab27d54dc6afb4d1, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
+  - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
   - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}
   inventory: {fileID: 0}
   inventoryPrefab: {fileID: 11400000, guid: 65dd7e072a21ce24b954c5db3fbdf8cb, type: 2}
@@ -784,6 +798,8 @@ MonoBehaviour:
     commandSprite: {fileID: 0}
     voice: 
     choices: []
+    x: 0
+    y: 0
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -795,6 +811,8 @@ MonoBehaviour:
     commandSprite: {fileID: 0}
     voice: 
     choices: []
+    x: 0
+    y: 0
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -808,6 +826,8 @@ MonoBehaviour:
     commandSprite: {fileID: 0}
     voice: 
     choices: []
+    x: 0
+    y: 0
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -819,6 +839,8 @@ MonoBehaviour:
     commandSprite: {fileID: 0}
     voice: 
     choices: []
+    x: 0
+    y: 0
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -830,6 +852,8 @@ MonoBehaviour:
     commandSprite: {fileID: 0}
     voice: 
     choices: []
+    x: 0
+    y: 0
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -842,6 +866,8 @@ MonoBehaviour:
     commandSprite: {fileID: 0}
     voice: 
     choices: []
+    x: 0
+    y: 0
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -853,6 +879,8 @@ MonoBehaviour:
     commandSprite: {fileID: 0}
     voice: 
     choices: []
+    x: 0
+    y: 0
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -864,6 +892,8 @@ MonoBehaviour:
     commandSprite: {fileID: 0}
     voice: 
     choices: []
+    x: 0
+    y: 0
     spriteName: 
     commandSpriteName: 
     battler: {fileID: 0}
@@ -936,6 +966,10 @@ MonoBehaviour:
   tileChildPrefab: {fileID: 8300767496596685602, guid: f911a2573f065a84e924d621b0d837c3, type: 3}
   isLoadingSave: 0
   loadSaveNum: 0
+  isSentFromOtherScene: 0
+  startCordX: 0
+  startCordY: 0
+  facingOnLoad: 
   enemies: []
   currentBattler: {fileID: 0}
   currentAction:

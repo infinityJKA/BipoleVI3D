@@ -11,7 +11,7 @@ public class PartyInMenuUI : MonoBehaviour
     public GameObject parentSpawnUnder, characterSwitchPopup, sidebarPartyButton;
     public PartyInMenuUIButton prefab;
     public PartyInMenuUIButton firstButton, previousButton;
-    public TMP_Text nameText, statsText1, statsText2, characterSwitchText;
+    public TMP_Text nameText, statsText1, statsText2, characterSwitchText, currentBattlersText;
     public Image charSprite;
 
 
@@ -142,6 +142,24 @@ public class PartyInMenuUI : MonoBehaviour
             firstButton.button.navigation = nav;
         }
 
+        PartyMember[] cb = GameManager.gm.partyBattlers;
+        String s = "";
+        for(int i = 0; i < 4; i++)
+        {
+            if(cb.Length < i-1 || cb[i] == null)
+            {
+                s = s+i+". "+" [EMPTY]";
+            }
+            else
+            {
+                s = s+i+". "+cb[i].characterNameEn;
+            }
+
+            if(i != 3)
+            {
+                s = s+"\n";
+            }
+        }
 
         //SendToDisplayButtons();
     }
