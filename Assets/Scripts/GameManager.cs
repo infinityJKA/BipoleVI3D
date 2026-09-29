@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
 			var memberClone = Instantiate(partyMembersInit[p]);
 			partyMembers.Add(memberClone);
 		}
+		partyBattlers[0] = partyMembers[0];
 
 		var invenotryClone = Instantiate(inventoryPrefab);
 		inventory = invenotryClone;

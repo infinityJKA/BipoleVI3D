@@ -28,34 +28,41 @@ public class PartyInMenuUIButton : MonoBehaviour, ISelectHandler
         partyUI.SnapTo(rectTransform, itemNumber);
     }
 
+    //public void CharacterSwitchPressed()
+    //{
+    //    if (partyUI.charToSwitch1 == -1)
+    //    {
+    //        partyUI.charToSwitch1 = itemNumber;
+    //        partyUI.characterSwitchPopup.SetActive(true);
+    //        partyUI.characterSwitchText.text = "Select again to add/remove " + partyMember.characterNameEn + " from battlers,\n\nreturn to cancel.";
+    //        GameManager.gm.dungeonPlayer.buttonSelectOnDecline = button.gameObject;
+    //    }
+    //    else
+    //    {
+    //        if (partyUI.charToSwitch1 == itemNumber)
+    //        {
+    //            partyUI.charToSwitch1 = -1;
+    //            partyUI.characterSwitchPopup.SetActive(false);
+    //            GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.sidebarPartyButton;
+    //        }
+    //        else
+    //        {
+    //            GameManager.gm.PartySwap(partyUI.charToSwitch1, itemNumber);
+    //            partyUI.CreateDisplay();
+    //            GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.sidebarPartyButton;
+
+    //            GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(partyUI.firstButton.gameObject);
+    //        }
+    //    }
+    //}
+
     public void CharacterSwitchPressed()
     {
-        if (partyUI.charToSwitch1 == -1)
-        {
-            partyUI.charToSwitch1 = itemNumber;
-            partyUI.characterSwitchPopup.SetActive(true);
-            partyUI.characterSwitchText.text = "Select character to switch places with " + partyMember.characterNameEn + "\n\nSelect " + partyMember.characterNameEn + " again to exit";
-            GameManager.gm.dungeonPlayer.buttonSelectOnDecline = button.gameObject;
-        }
-        else
-        {
-            if (partyUI.charToSwitch1 == itemNumber)
-            {
-                partyUI.charToSwitch1 = -1;
-                partyUI.characterSwitchPopup.SetActive(false);
-                GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.sidebarPartyButton;
-            }
-            else
-            {
-                GameManager.gm.PartySwap(partyUI.charToSwitch1, itemNumber);
-                partyUI.CreateDisplay();
-                GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.sidebarPartyButton;
-
-                GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(partyUI.firstButton.gameObject);
-            }
-        }
+        partyUI.selectedPartyMemberButton = this;
+        partyUI.characterSwitchPopup.SetActive(true);
+        GameManager.gm.dungeonPlayer.buttonSelectOnDecline = partyUI.replaceNo.gameObject;
+        EventSystem.current.SetSelectedGameObject(partyUI.replaceYes.gameObject);
     }
-
 
 
     public void UpdateGraphic()

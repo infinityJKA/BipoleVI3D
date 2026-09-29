@@ -762,7 +762,11 @@ MonoBehaviour:
   audioManager: {fileID: 3977922361077992285}
   dungeonPlayer: {fileID: 0}
   partyMembers: []
-  partyBattlers: []
+  partyBattlers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   partyMembersInit:
   - {fileID: 11400000, guid: 5f1f258a205a8524ab27d54dc6afb4d1, type: 2}
   - {fileID: 11400000, guid: 2eab297b297d736478a2e131bcd71c82, type: 2}

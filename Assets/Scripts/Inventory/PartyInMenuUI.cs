@@ -4,7 +4,8 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UI;
-using Unity.VisualScripting;
+using UnityEngine.EventSystems;
+using System.Linq;
 
 public class PartyInMenuUI : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class PartyInMenuUI : MonoBehaviour
     public PartyInMenuUIButton firstButton, previousButton;
     public TMP_Text nameText, statsText1, statsText2, characterSwitchText, currentBattlersText;
     public Image charSprite;
+    public Button replaceYes, replaceNo;
+    public PartyInMenuUIButton selectedPartyMemberButton;
+    private GameObject originalDisplayButton;
 
 
     public ScrollRect scrollRect;
@@ -28,9 +32,12 @@ public class PartyInMenuUI : MonoBehaviour
 
     Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
 
+    private GameManager gm;
+
     void OnEnable()
     {
         originalPos = content.anchoredPosition;
+        gm = GameManager.gm;
     }
 
     public void ResetButtonSnap()
@@ -142,26 +149,33 @@ public class PartyInMenuUI : MonoBehaviour
             firstButton.button.navigation = nav;
         }
 
+        UpdateBattlersText();
+
+        //SendToDisplayButtons();
+    }
+
+    public void UpdateBattlersText()
+    {
         PartyMember[] cb = GameManager.gm.partyBattlers;
         String s = "";
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            if(cb.Length < i-1 || cb[i] == null)
+            if (cb.Length == 0 || cb.Length < i - 1 || cb[i] == null)
             {
-                s = s+i+". "+" [EMPTY]";
+                s = s + i + ". " + " [EMPTY]";
             }
             else
             {
-                s = s+i+". "+cb[i].characterNameEn;
+                s = s + i + ". " + cb[i].characterNameEn;
             }
 
-            if(i != 3)
+            if (i != 3)
             {
-                s = s+"\n";
+                s = s + "\n";
             }
         }
 
-        //SendToDisplayButtons();
+        currentBattlersText.text = s;
     }
 
     public void SendToDisplayButtons()
@@ -170,6 +184,7 @@ public class PartyInMenuUI : MonoBehaviour
         if (firstButton != null)
         {
             // set decline button to the previous button
+            originalDisplayButton = GameManager.gm.dungeonPlayer.eventSystem.currentSelectedGameObject;
             GameManager.gm.dungeonPlayer.buttonSelectOnDecline = GameManager.gm.dungeonPlayer.eventSystem.currentSelectedGameObject;
 
             // move the selection to the first item
@@ -177,5 +192,60 @@ public class PartyInMenuUI : MonoBehaviour
         }
         
     }
+
+    public void ReplaceNo()
+    {
+        EventSystem.current.SetSelectedGameObject(selectedPartyMemberButton.gameObject);
+        gm.dungeonPlayer.SetButtonSelectOnDecline(originalDisplayButton);
+        characterSwitchPopup.SetActive(false);
+    }
+
+    public void ReplaceYes()
+    {
+        PartyMember pm = selectedPartyMemberButton.partyMember;
+        bool removed = false;
+        int earliestOpen = -1;
+
+        for(int i = 0; i < 4; i++)
+        {
+            if (gm.partyBattlers[i] == null)
+            {
+                if(earliestOpen == -1)
+                {
+                    earliestOpen = i;
+                }
+            }
+            else if(gm.partyBattlers[i] == pm && !removed)
+            {
+                gm.partyBattlers[i] = null;
+
+                if (earliestOpen == -1)
+                {
+                    earliestOpen = i;
+                }
+
+                removed = true;
+                Debug.Log("Removed!");
+            }
+        }
+
+        if(earliestOpen == -1)
+        {
+            Debug.Log("Battlers are full");
+        }
+        else if (!removed)
+        {
+            gm.partyBattlers[earliestOpen] = pm;
+            Debug.Log("Added!");
+        }
+
+        UpdateBattlersText();
+
+        ReplaceNo();
+
+    }
+
+
+
 
 }
