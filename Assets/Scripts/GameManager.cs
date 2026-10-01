@@ -767,9 +767,9 @@ public class GameManager : MonoBehaviour
 		bool isAlive = false;
 		for (int i = 0; i < 4; i++)
 		{
-			if (partyMembers.Count > i)
+			if (partyBattlers[i] != null)
 			{
-				if (partyMembers[i].currentHP > 0)
+				if (partyBattlers[i].currentHP > 0)
 				{
 					isAlive = true;
 				}

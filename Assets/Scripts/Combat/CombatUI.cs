@@ -72,14 +72,14 @@ public class CombatUI : MonoBehaviour
         // reset list of battlers
         battlers.Clear();
 
-        battlers.Add(gm.partyMembers[0]);
+        //battlers.Add(gm.partyMembers[0]);
 
         // add each party member
-        for (int i = 1; i < 4; i++) // first 4 are used for combat
+        for (int i = 1; i < gm.partyBattlers.Length; i++) // first 4 are used for combat
         {
-            if (gm.partyMembers.Count > i) // make sure party member exists
+            if (gm.partyBattlers[i] != null) // make sure party member exists
             {
-                PartyMember current = gm.partyMembers[i];
+                PartyMember current = gm.partyBattlers[i];
                 bool placed = false;
 
                 int currentSPD = current.CalculateStat("SPD");
@@ -168,9 +168,9 @@ public class CombatUI : MonoBehaviour
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        if (i < gm.partyMembers.Count)
+                        if (gm.partyBattlers[i] != null)
                         {
-                            chars.Add(gm.partyMembers[i]);
+                            chars.Add(gm.partyBattlers[i]);
                         }
                     }
                 }
@@ -220,9 +220,9 @@ public class CombatUI : MonoBehaviour
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        if (i < gm.partyMembers.Count)
+                        if (gm.partyBattlers[i] != null)
                         {
-                            chars.Add(gm.partyMembers[i]);
+                            chars.Add(gm.partyBattlers[i]);
                         }
                     }
                 }

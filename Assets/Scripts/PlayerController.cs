@@ -145,6 +145,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ExitMenuToFreeMove()
+    {
+        UpdatePartyUI();
+        SetInputStateFreeMove();
+    }
+
     public void SetInputStateFreeMove()
     {
         StartCoroutine(WaitBeforeInputState(DungeonInputControlState.FreeMove));
@@ -413,12 +419,12 @@ public class PlayerController : MonoBehaviour
                 String voice = currentDialogue[dialogueIndex].voice;
                 if (voice == "")
                 {
-                    Debug.Log("playing default voice");
+                    //Debug.Log("playing default voice");
                     gm.audioManager.PlaySfxRandomPitch("defaultTextVoice",2,0.7f);
                 }
                 else
                 {
-                    Debug.Log("playing custom voice " + voice);
+                    //Debug.Log("playing custom voice " + voice);
                     gm.audioManager.PlaySfxRandomPitch(voice,2,0.7f);
                 }
                 yield return new WaitForSeconds(textSpeed);
@@ -1172,9 +1178,16 @@ public class PlayerController : MonoBehaviour
     {
         ui.bpText.text = ""+gm.BP;
 
-        UpdatePartyUISingle(0);
+        if (gm.partyBattlers[0] != null)
+        {
+            UpdatePartyUISingle(0);
+        }
+        else
+        {
+            ui.partyMemberUIs[0].SetEmpty(true);
+        }
 
-        if (gm.partyMembers.Count >= 2)
+        if (gm.partyBattlers[1] != null)
         {
             UpdatePartyUISingle(1);
         }
@@ -1183,7 +1196,7 @@ public class PlayerController : MonoBehaviour
             ui.partyMemberUIs[1].SetEmpty(true);
         }
 
-        if (gm.partyMembers.Count >= 3)
+        if (gm.partyBattlers[2] != null)
         {
             UpdatePartyUISingle(2);
         }
@@ -1192,7 +1205,7 @@ public class PlayerController : MonoBehaviour
             ui.partyMemberUIs[2].SetEmpty(true);
         }
 
-        if (gm.partyMembers.Count >= 4)
+        if (gm.partyBattlers[3] != null)
         {
             UpdatePartyUISingle(3);
         }
@@ -1205,7 +1218,7 @@ public class PlayerController : MonoBehaviour
     private void UpdatePartyUISingle(int i)
     {
         ui.partyMemberUIs[i].SetEmpty(false);
-        ui.partyMemberUIs[i].UpdateValues(gm.partyMembers[i].characterNameEn, gm.partyMembers[i].currentHP, gm.partyMembers[i].maxHP, gm.partyMembers[i].currentMP, gm.partyMembers[i].maxMP, gm.partyMembers[i].VIZ);
+        ui.partyMemberUIs[i].UpdateValues(gm.partyBattlers[i].characterNameEn, gm.partyBattlers[i].currentHP, gm.partyBattlers[i].maxHP, gm.partyBattlers[i].currentMP, gm.partyBattlers[i].maxMP, gm.partyBattlers[i].VIZ);
     }
 
     void MovePlayerObject(){
@@ -1453,7 +1466,7 @@ public class PlayerController : MonoBehaviour
 
     public void EnemyTurn()
     {
-        Debug.Log("EnemyTurn()"); // Skipping enemy turn, not implemented yet");
+        Debug.Log("EnemyTurn()");
 
         gm.usingUlt = false;
 
@@ -1463,19 +1476,20 @@ public class PlayerController : MonoBehaviour
             float hpPercent = (float)gm.currentBattler.currentHP / gm.currentBattler.maxHP;
             if (e.HpMin <= hpPercent && e.HpMax >= hpPercent)
             {
-                Debug.Log("HP requirments met");
+                //Debug.Log("HP requirments met");
 
                 if (e.MpMin <= gm.currentBattler.currentMP && e.MpMax >= gm.currentBattler.currentMP)
                 {
-                    Debug.Log("MP requirements met");
+                    //Debug.Log("MP requirements met");
 
                     if (e.BpMin <= gm.enemyBP && e.BpMax >= gm.enemyBP)
                     {
-                        Debug.Log("BP requirements met");
+                        //Debug.Log("BP requirements met");
 
                         for (int i = 0; i < e.priority; i++)
                         {
                             possibleActions.Add(e.action);
+                            Debug.Log(e.action.actionName + " is a possible action");
                         }
                     }
                 }
@@ -1498,6 +1512,7 @@ public class PlayerController : MonoBehaviour
 
             if (actionToUse.targetType == TargetType.OneEnemy)
             {
+                Debug.Log("targetType is OneEnemy");
                 int index = 0;
                 List<EnemyAttackTarget> targets = new List<EnemyAttackTarget>();
 
@@ -1541,8 +1556,12 @@ public class PlayerController : MonoBehaviour
 
 
             }
+            else
+            {
+                Debug.Log("targetType is NOT singleEnemy");
+            }
 
-            if(gm.currentAction.setCost == true)
+            if (gm.currentAction.setCost == true)
             {
                 gm.currentBattler.currentMP -= gm.currentAction.costMP;
                 gm.currentBattler.currentHP -= gm.currentAction.costHP;
