@@ -217,15 +217,24 @@ public class PartyInMenuUI : MonoBehaviour
             }
             else if(gm.partyBattlers[i] == pm && !removed)
             {
-                gm.partyBattlers[i] = null;
-
-                if (earliestOpen == -1)
+                
+                if(GetBattlerCount() <= 1)
                 {
-                    earliestOpen = i;
+                    Debug.Log("Tried to remove but would make party empty");
+                }
+                else
+                {
+                    gm.partyBattlers[i] = null;
+
+                    if (earliestOpen == -1)
+                    {
+                        earliestOpen = i;
+                    }
+                    Debug.Log("Removed!");
                 }
 
                 removed = true;
-                Debug.Log("Removed!");
+               
             }
         }
 
@@ -243,6 +252,16 @@ public class PartyInMenuUI : MonoBehaviour
 
         ReplaceNo();
 
+    }
+
+    private int GetBattlerCount()
+    {
+        int count = 0;
+        foreach(PartyMember m in gm.partyBattlers)
+        {
+            if (m != null) count++;
+        }
+        return count;
     }
 
 
