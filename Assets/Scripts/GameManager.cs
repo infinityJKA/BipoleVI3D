@@ -128,6 +128,13 @@ public class GameManager : MonoBehaviour
 			data.SavePartyMemberData(pm);
 		}
 
+		data.partyBattlers = new string[partyBattlers.Length];
+		//SAVE CURRENT BATTLERS
+		for(int i =0; i < partyBattlers.Length; i++)
+		{
+			if(partyBattlers[i] != null) data.partyBattlers[i] = partyBattlers[i].partyMemberInternalID;
+		}
+
 		// SAVE CALENDAR
 		data.day = day;
 		data.month = month;
@@ -287,6 +294,12 @@ public class GameManager : MonoBehaviour
 		stepsSinceDayChange = data.stepsSinceDayChange;
 		daysSinceMoonChange = data.daysSinceMoonChange;
 
+		// MAKE CURRENT BATTLERS NULL BEFORE LOADING PARTY MEMBERS
+		for(int i = 0; i < partyBattlers.Length; i++)
+		{
+			partyBattlers[i] = null;
+		}
+
 		// LOAD PARTY MEMBERS
 
 		gm.partyMembers = new List<PartyMember>();
@@ -327,6 +340,14 @@ public class GameManager : MonoBehaviour
 					}
 					
 					partyMembers.Add(pm);
+
+					// check if pm is a current battler and add if so
+					int battlerPosition = data.FindInBattlers(pm.partyMemberInternalID);
+					if(battlerPosition != -1)
+					{
+						partyBattlers[battlerPosition] = pm;
+					}
+
                 }
 			}
 			if(foundID == false)

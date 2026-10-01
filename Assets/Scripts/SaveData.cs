@@ -10,6 +10,7 @@ public class SaveData
     public int day, month, year, dayofWeek, eyePhase, stepsSinceEyeChange, stepsSinceDayChange,daysSinceMoonChange;
     public MoonPhase moonPhase;
     public List<PartyMemberSaveData> party = new List<PartyMemberSaveData>();
+    public String[] partyBattlers;
     public List<InventorySlotSaveData> inventory = new List<InventorySlotSaveData>();
 
     public CurrentDungeon currentDungeon;
@@ -25,7 +26,7 @@ public class SaveData
     //        Debug.Log("Save data DOES NOT contain dungeon " + n + " BECAUSE it has not saved any dungeons");
     //        return false;
     //    }
-         
+
     //    foreach (DungeonSaveData d in dungeons)
     //    {
     //        Debug.Log("checking if " + d.dungeonSceneName + " is " + n);
@@ -54,6 +55,23 @@ public class SaveData
     //    }
     //    return -1;
     //}
+
+    public int FindInBattlers(string s)
+    {
+        for(int i =0; i< partyBattlers.Length; i++)
+        {
+            if (partyBattlers[i] != null)
+            {
+                if (partyBattlers[i] == s)
+                {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+
+    }
 
     public DungeonSaveData GetDungeon(string n)
     {
