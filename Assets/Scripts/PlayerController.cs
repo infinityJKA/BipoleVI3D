@@ -5,22 +5,27 @@ using System.Globalization;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine.Localization;
-using UnityEngine.SceneManagement;
-
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.Localization;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public DungeonManager dm;
     private GameManager gm;
     public DungeonUI ui;
+    public Rigidbody rb;
     public bool animateMovement = false;
     public float moveSpeed = 10f;
     public float rotateSpeed = 500f;
     public int playerX,playerY = 0;
+    public float overWorldMovementSpeed = 16f;
+    public float overWorldRotateSpeed = 130f;
+    public float xOverWorldRotation, yOverWorldRotation;
+    public GameObject cameraObject;
     public PlayerFacing playerFacing = PlayerFacing.North;
 
     [SerializeField] public Tile currentTile;
@@ -46,53 +51,82 @@ public class PlayerController : MonoBehaviour
     public GameObject selectedMenuObjectForSound;
     public bool isDialogueChoice, choicesSpawned;
 
+    private void Awake()
+    {
+        dm = GameObject.FindObjectOfType<DungeonManager>();   
+    }
+
     private void Start()
     {
-        currentDialogueText = ui.dialogueText;
-        targetGridPos = Vector3Int.RoundToInt(transform.position);
-        
-        // currentTile.playerHasDiscovered = true;
-        
         gm = GameManager.gm;
         gm.dungeonPlayer = this;
 
-        if (gm.isLoadingSave == false)
+        
+        if (dm.sceneMode == SceneMode.Town)
         {
-            currentTile = dm.GetTile(playerX, playerY);
-            currentTile.EnterTile(PlayerMapSprite());
+            Debug.Log("PlayerController Start() scene is a Town");
         }
+        else if (dm.sceneMode == SceneMode.Dungeon)
+        {
+            Debug.Log("PlayerController Start() scene is a Dungeon");
 
-        eventSystem = GameObject.FindObjectOfType<EventSystem>();
+            currentDialogueText = ui.dialogueText;
+            targetGridPos = Vector3Int.RoundToInt(transform.position);
 
-        UpdateTimeUI();
-        UpdatePartyUI();
+            // currentTile.playerHasDiscovered = true;
 
-        if(gm.isLoadingSave == false){
-            UpdatePopupText();
+            
+
+            if (gm.isLoadingSave == false)
+            {
+                currentTile = dm.GetTile(playerX, playerY);
+                currentTile.EnterTile(PlayerMapSprite());
+            }
+
+            eventSystem = GameObject.FindObjectOfType<EventSystem>();
+
+            UpdateTimeUI();
+            UpdatePartyUI();
+
+            if (gm.isLoadingSave == false)
+            {
+                UpdatePopupText();
+            }
+
         }
-
+        else
+        {
+            Debug.Log("NO DUNGEON MANAGER SCENE TYPE DETECTED!!!!!!!!");
+        }
     }
 
     private void FixedUpdate()
     {
-        MovePlayerObject();
+        if (dm.sceneMode == SceneMode.Dungeon)
+        {
+            MovePlayerObject();
+        }
     }
 
     private void Update()
     {
-        if(selectedMenuObjectForSound != eventSystem.currentSelectedGameObject){
-            if (gm.audioManager.sfxSource.isPlaying && gm.audioManager.sfxSource.pitch != 1)
+        if (dm.sceneMode == SceneMode.Dungeon)
+        {
+
+            if (selectedMenuObjectForSound != eventSystem.currentSelectedGameObject)
             {
-                // decline and action select sounds takes priority, so do nothing
+                if (gm.audioManager.sfxSource.isPlaying && gm.audioManager.sfxSource.pitch != 1)
+                {
+                    // decline and action select sounds takes priority, so do nothing
+                }
+                else
+                {
+                    gm.audioManager.PlaySfx("beep");
+                }
+                selectedMenuObjectForSound = eventSystem.currentSelectedGameObject;
             }
-            else
-            {
-                gm.audioManager.PlaySfx("beep");
-            }
-            selectedMenuObjectForSound = eventSystem.currentSelectedGameObject;
         }
     }
-
 
 
     public Sprite PlayerMapSprite(){
@@ -156,6 +190,42 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(WaitBeforeInputState(DungeonInputControlState.FreeMove));
         //inputState = DungeonInputControlState.FreeMove;
     }
+
+    public void OverWorldMove(Vector2 v2) // this is looped in the Update() of DungeonInputCheck
+    {
+        //Vector3 forward = Camera.main.transform.forward;
+        //Vector3 right = Camera.main.transform.right;
+
+        //forward.y = 0f;
+        //right.y = 0f;
+        //forward.Normalize();
+        //right.Normalize();
+
+        //Vector3 relativeMovement = (forward * v2.y) + (right * v2.x);
+
+        // Apply movement (example using Transform)
+        //transform.position += relativeMovement * overWorldMovementSpeed * Time.deltaTime;
+
+        //movementInput = new Vector2(v2.x, v2.y).normalized;
+
+        //rb.velocity = new Vector2(v2.x, 0, v2.y).normalized * overWorldMovementSpeed * Time.deltaTime;
+    }
+
+    public void OverWorldRotate(Vector2 v2) // this is looped in the Update() of DungeonInputCheck
+    {
+        float x = v2.x * overWorldRotateSpeed * Time.deltaTime;
+        float y = v2.y * overWorldRotateSpeed * Time.deltaTime;
+
+        xOverWorldRotation -= y;
+
+        yOverWorldRotation += x;
+
+        cameraObject.transform.localRotation = Quaternion.Euler(0f, yOverWorldRotation, 0f);
+
+        //cameraObject.transform.localRotation = Quaternion.Euler(xOverWorldRotation, yOverWorldRotation, 0f);
+
+    }
+
 
     public void Interact()
     {

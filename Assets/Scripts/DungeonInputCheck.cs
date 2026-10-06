@@ -8,6 +8,8 @@ public class DungeonInputCheck : MonoBehaviour
 {
 
     private PlayerController controller;
+    private DungeonManager dm;
+
 
     // public KeyCode forward = KeyCode.W,
     // backward = KeyCode.S,
@@ -19,53 +21,77 @@ public class DungeonInputCheck : MonoBehaviour
     // retract = KeyCode.LeftShift;
 
 
-    private void Awake()
+    private void Start()
     {
         controller = GetComponent<PlayerController>();
+        dm = controller.dm;
     }
 
     private void Update()
     {
-        if (controller.inputState == DungeonInputControlState.FreeMove)
+        if (dm.sceneMode == SceneMode.Dungeon)
         {
-            if (InputManager.instance.moveForward) controller.Walk(0, 1);
-            else if (InputManager.instance.moveBackward) controller.Walk(0, -1);
-            else if (InputManager.instance.strafeRight) controller.Walk(1, 0);
-            else if (InputManager.instance.strafeLeft) controller.Walk(-1, 0);
-            else if (InputManager.instance.turnRight) controller.RotateRight();
-            else if (InputManager.instance.turnLeft) controller.RotateLeft();
-            else if (InputManager.instance.interact) controller.Interact();
-            else if (InputManager.instance.options) controller.OpenOptions();
-            else if (InputManager.instance.menu) controller.OpenMenu();
 
-            else if (InputManager.instance.debug1) GameManager.gm.Save(1);
-            else if (InputManager.instance.debug2) GameManager.gm.Load(1);
+            if (controller.inputState == DungeonInputControlState.FreeMove)
+            {
+                if (InputManager.instance.moveForward) controller.Walk(0, 1);
+                else if (InputManager.instance.moveBackward) controller.Walk(0, -1);
+                else if (InputManager.instance.strafeRight) controller.Walk(1, 0);
+                else if (InputManager.instance.strafeLeft) controller.Walk(-1, 0);
+                else if (InputManager.instance.turnRight) controller.RotateRight();
+                else if (InputManager.instance.turnLeft) controller.RotateLeft();
+                else if (InputManager.instance.interact) controller.Interact();
+                else if (InputManager.instance.options) controller.OpenOptions();
+                else if (InputManager.instance.menu) controller.OpenMenu();
+
+                else if (InputManager.instance.debug1) GameManager.gm.Save(1);
+                else if (InputManager.instance.debug2) GameManager.gm.Load(1);
+            }
+
+            else if (controller.inputState == DungeonInputControlState.Dialogue)
+            {
+                if (InputManager.instance.interact) controller.ProgressDialogue();
+            }
+
+            else if (controller.inputState == DungeonInputControlState.Menu)
+            {
+                if (InputManager.instance.decline) { controller.DeclineInMenu(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f); }
+                if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
+            }
+
+            else if (controller.inputState == DungeonInputControlState.Combat)
+            {
+                if (InputManager.instance.decline) { controller.DeclineInCombat(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f); }
+                if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
+            }
+
+            else if (controller.inputState == DungeonInputControlState.DialogueButtonSelect)
+            {
+                if (InputManager.instance.decline) { controller.DeclineInCombat(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f); }
+                if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
+            }
         }
-
-        else if (controller.inputState == DungeonInputControlState.Dialogue)
+        else if (dm.sceneMode == SceneMode.Town)
         {
-            if (InputManager.instance.interact) controller.ProgressDialogue();
+            if (controller.inputState == DungeonInputControlState.FreeMove)
+            {
+               controller.OverWorldMove(InputManager.instance.overworldMove);
+               controller.OverWorldRotate(InputManager.instance.overworldRotation);
+            }
+            else if (controller.inputState == DungeonInputControlState.Dialogue)
+            {
+                if (InputManager.instance.interact) controller.ProgressDialogue();
+            }
+            else if (controller.inputState == DungeonInputControlState.Menu)
+            {
+                if (InputManager.instance.decline) { controller.DeclineInMenu(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f); }
+                if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
+            }
         }
-
-        else if (controller.inputState == DungeonInputControlState.Menu)
-        {
-            if (InputManager.instance.decline) { controller.DeclineInMenu(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f); }
-            if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep",1.3f);
-        }
-
-        else if (controller.inputState == DungeonInputControlState.Combat)
-        {
-            if (InputManager.instance.decline){ controller.DeclineInCombat(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f);}
-            if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
-        }
-
-        else if (controller.inputState == DungeonInputControlState.DialogueButtonSelect)
-        {
-            if (InputManager.instance.decline){ controller.DeclineInCombat(); GameManager.gm.audioManager.PlaySfx("beep", 0.5f);}
-            if (InputManager.instance.interact) GameManager.gm.audioManager.PlaySfx("beep", 1.3f);
-        }
-
     }
+
+
+
 }
 
 public enum DungeonInputControlState

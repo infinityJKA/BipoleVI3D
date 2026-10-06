@@ -4,9 +4,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum SceneMode
+{
+    Dungeon,
+    Town
+}
+
 public class DungeonManager : MonoBehaviour
 {
     GameManager gm;
+    public SceneMode sceneMode; 
     public String dungeonName; // name of the dungeon that is displayed to the player
     public String dungeonID; // used for load/saving data, including the ids of tiles
     public String dungeonTheme, dungeonBattleTheme;
@@ -24,46 +31,54 @@ public class DungeonManager : MonoBehaviour
     {
         gm = GameManager.gm;
 
-        foreach(Transform child in transform)
+        if (sceneMode == SceneMode.Town)
         {
-            // adds tile to tile dictonary
-            Tile t = child.GetComponent<Tile>();
-            tiles.Add(new Vector2(t.x,t.y), t);
-            //Debug.Log("Added tile "+t.x+","+t.y+" to tiles dictionary");
-            t.dm = this;
 
-            // sets tileID
-            t.objectID = dungeonID+"_TILE_"+t.x+","+t.y;
-
-            // updates highest/lowest xy values
-            if (t.x < lowestX) { lowestX = t.x; }
-            else if (t.x > highestX) { highestX = t.x; }
-            if(t.y < lowestY){lowestY = t.y;}
-            else if(t.y > highestY){highestY = t.y;}
-
-            // creates minimap tile
-            MinimapTile mmT = Instantiate(minimapTilePrefab, new Vector3(minimapParent.transform.position.x+t.x,minimapParent.transform.position.y+t.y), minimapParent.transform.rotation, minimapParent.transform);
-            mmT.worldPosition = mmT.transform.position;
-            t.minimapTile = mmT;
-            t.UpdateMiniMapSprite();
         }
-
-        if (gm.isLoadingSave)
+        else if (sceneMode == SceneMode.Dungeon)
         {
-            Debug.Log("gm.isLoadingSave == true, loading dungeon data from slot "+gm.loadSaveNum);
-            gm.LoadDungeon(gm.loadSaveNum);
-        }
-        //else if(gm.isSentFromOtherScene)
-        //{
-        //    Debug.Log("not loading save but sent from another scene...");
-        //    gm.LoadDungeon(-1);
-        //}
-        else
-        {
-            Debug.Log("Scene is being loaded and is NOT loading from a save and is NOT sent from another scene");
-        }
+
+            foreach (Transform child in transform)
+            {
+                // adds tile to tile dictonary
+                Tile t = child.GetComponent<Tile>();
+                tiles.Add(new Vector2(t.x, t.y), t);
+                //Debug.Log("Added tile "+t.x+","+t.y+" to tiles dictionary");
+                t.dm = this;
+
+                // sets tileID
+                t.objectID = dungeonID + "_TILE_" + t.x + "," + t.y;
+
+                // updates highest/lowest xy values
+                if (t.x < lowestX) { lowestX = t.x; }
+                else if (t.x > highestX) { highestX = t.x; }
+                if (t.y < lowestY) { lowestY = t.y; }
+                else if (t.y > highestY) { highestY = t.y; }
+
+                // creates minimap tile
+                MinimapTile mmT = Instantiate(minimapTilePrefab, new Vector3(minimapParent.transform.position.x + t.x, minimapParent.transform.position.y + t.y), minimapParent.transform.rotation, minimapParent.transform);
+                mmT.worldPosition = mmT.transform.position;
+                t.minimapTile = mmT;
+                t.UpdateMiniMapSprite();
+            }
+
+            if (gm.isLoadingSave)
+            {
+                Debug.Log("gm.isLoadingSave == true, loading dungeon data from slot " + gm.loadSaveNum);
+                gm.LoadDungeon(gm.loadSaveNum);
+            }
+            //else if(gm.isSentFromOtherScene)
+            //{
+            //    Debug.Log("not loading save but sent from another scene...");
+            //    gm.LoadDungeon(-1);
+            //}
+            else
+            {
+                Debug.Log("Scene is being loaded and is NOT loading from a save and is NOT sent from another scene");
+            }
 
             gm.audioManager.PlayMusic(dungeonTheme, dungeonThemeVolume);
+        }
     }
 
     public Tile GetTile(int x, int y){

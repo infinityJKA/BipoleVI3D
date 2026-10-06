@@ -22,7 +22,10 @@ public class InputManager : MonoBehaviour
     public bool debug1 { get; private set; }
     public bool debug2 { get; private set; }
 
-    private InputAction moveForwardAction, moveBackwardsAction, turnRightAction, turnLeftAction, strafeRightAction, strafeLeftAction, interactAction, declineAction, optionsAction, menuAction,debug1Action, debug2Action;
+    public Vector2 overworldMove { get; private set; }
+    public Vector2 overworldRotation { get; private set; }
+
+    private InputAction moveForwardAction, moveBackwardsAction, turnRightAction, turnLeftAction, strafeRightAction, strafeLeftAction, interactAction, declineAction, optionsAction, menuAction,debug1Action, debug2Action, overworldMoveAction, overworldRotateAction;
     public EventSystem eventSystem;
     private void Awake()
     {
@@ -52,6 +55,8 @@ public class InputManager : MonoBehaviour
         menu = menuAction.WasPerformedThisFrame();
         debug1 = debug1Action.WasPressedThisFrame();
         debug2 = debug2Action.WasPressedThisFrame();
+        overworldMove = overworldMoveAction.ReadValue<Vector2>();
+        overworldRotation = overworldRotateAction.ReadValue<Vector2>();
     }
 
 
@@ -69,6 +74,8 @@ public class InputManager : MonoBehaviour
         menuAction = playerInput.actions["Menu"];
         debug1Action = playerInput.actions["Debug1"];
         debug2Action = playerInput.actions["Debug2"];
+        overworldMoveAction = playerInput.actions["Overworld Movement"];
+        overworldRotateAction = playerInput.actions["Overworld Rotation"];
     }
 
 }
