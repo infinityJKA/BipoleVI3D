@@ -75,8 +75,7 @@ public class DungeonInputCheck : MonoBehaviour
         {
             if (controller.inputState == DungeonInputControlState.FreeMove)
             {
-               controller.OverWorldMove(InputManager.instance.overworldMove);
-               controller.OverWorldRotate(InputManager.instance.overworldRotation);
+                controller.OverWorldRotate(InputManager.instance.overworldRotation);
             }
             else if (controller.inputState == DungeonInputControlState.Dialogue)
             {
@@ -90,9 +89,22 @@ public class DungeonInputCheck : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (dm.sceneMode == SceneMode.Town)
+        {
+            if (controller.inputState == DungeonInputControlState.FreeMove)
+            {
+                controller.OverWorldMove(InputManager.instance.overworldMove);
+            }
+        }
+
+    }
 
 
 }
+
+
 
 public enum DungeonInputControlState
 {

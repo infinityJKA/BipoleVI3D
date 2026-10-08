@@ -2141,7 +2141,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 3
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2165,7 +2165,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 921693233}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c31942b2a721daa4caa3a55adcb13928, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2518,6 +2518,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 483213532376494180, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: near clip plane
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 624131195683197545, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2819,6 +2823,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 959811128}
     - target: {fileID: 5976050094594522355, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: gravityScale
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976050094594522355, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: playerFacing
       value: 1
       objectReference: {fileID: 0}
@@ -2840,7 +2848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5976050094594522355, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: overWorldMovementSpeed
-      value: 3000
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7724111053592503262, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3004,6 +3012,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8500854463648193603, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778286225118172336, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9212423458871060298, guid: 262472bb5abce514f9c89d4418356a00, type: 3}

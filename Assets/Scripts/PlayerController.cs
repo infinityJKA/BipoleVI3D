@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public bool animateMovement = false;
     public float moveSpeed = 10f;
     public float rotateSpeed = 500f;
+    public float gravityScale = 1f;
     public int playerX,playerY = 0;
     public float overWorldMovementSpeed = 16f;
     public float overWorldRotateSpeed = 130f;
@@ -191,7 +192,7 @@ public class PlayerController : MonoBehaviour
         //inputState = DungeonInputControlState.FreeMove;
     }
 
-    public void OverWorldMove(Vector2 v2) // this is looped in the Update() of DungeonInputCheck
+    public void OverWorldMove(Vector2 v2) // this is looped in the FixedUpdate() of DungeonInputCheck
     {
         //Vector3 forward = Camera.main.transform.forward;
         //Vector3 right = Camera.main.transform.right;
@@ -209,6 +210,20 @@ public class PlayerController : MonoBehaviour
         //movementInput = new Vector2(v2.x, v2.y).normalized;
 
         //rb.velocity = new Vector2(v2.x, 0, v2.y).normalized * overWorldMovementSpeed * Time.deltaTime;
+
+        //Vector3 relativeMovement = (forward * (v2.x * moveSpeed)) + (right * (v2.y * moveSpeed));
+
+        //rb.velocity = new Vector3(relativeMovement.x * moveSpeed,0f, relativeMovement.y *moveSpeed);
+
+        v2 = v2.normalized;
+
+        Vector3 moveDirection = (transform.forward * v2.y) + (transform.right * v2.x);
+
+        rb.velocity = new Vector3(moveDirection.x * overWorldMovementSpeed, rb.velocity.y, moveDirection.z * overWorldMovementSpeed);
+
+        rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
+
+
     }
 
     public void OverWorldRotate(Vector2 v2) // this is looped in the Update() of DungeonInputCheck
@@ -220,7 +235,7 @@ public class PlayerController : MonoBehaviour
 
         yOverWorldRotation += x;
 
-        cameraObject.transform.localRotation = Quaternion.Euler(0f, yOverWorldRotation, 0f);
+        transform.localRotation = Quaternion.Euler(0f, yOverWorldRotation, 0f);
 
         //cameraObject.transform.localRotation = Quaternion.Euler(xOverWorldRotation, yOverWorldRotation, 0f);
 
