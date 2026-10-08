@@ -21,6 +21,7 @@ public class DungeonUI : MonoBehaviour
     {
         popupTextParent.SetActive(true);
         popupText.text = s;
+        Debug.Log("Popup text: " + s);
     }
 
 }

@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     [Header("Automatic, don't touch")]
     public GameObject selectedMenuObjectForSound;
     public bool isDialogueChoice, choicesSpawned;
+    public OverworldNpc currentOverworldNPC;
 
     private void Awake()
     {
@@ -106,6 +107,10 @@ public class PlayerController : MonoBehaviour
         if (dm.sceneMode == SceneMode.Dungeon)
         {
             MovePlayerObject();
+        }
+        else if(dm.sceneMode == SceneMode.Town)
+        {
+            if(inputState == DungeonInputControlState.FreeMove) OverworldCheckinteractable();
         }
     }
 
@@ -241,6 +246,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void StartDialogue(List<DungeonDialogue> dialogue)
+    {
+        inputState = DungeonInputControlState.Dialogue;
+        dialogueIndex = -1; // -1 bc +1s at the start of dialogue
+        currentDialogue = dialogue;
+        ui.popupTextParent.SetActive(false);
+        ui.dialogueBox.SetActive(true);
+        finishedDialogueEarly = false;
+        ui.dialogueTriangle.SetActive(false);
+
+        gm.audioManager.PlaySfx("beep");
+
+        ProgressDialogue();
+    }
+
 
     public void Interact()
     {
@@ -248,20 +268,35 @@ public class PlayerController : MonoBehaviour
         {
             if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk || dm.GetTile(playerX, playerY).interactType == InteractType.Exit)
             {
-                inputState = DungeonInputControlState.Dialogue;
-                dialogueIndex = -1; // -1 bc +1s at the start of dialogue
-                currentDialogue = dm.GetTile(playerX, playerY).dialogue;
-                ui.popupTextParent.SetActive(false);
-                ui.dialogueBox.SetActive(true);
-                finishedDialogueEarly = false;
-                ui.dialogueTriangle.SetActive(false);
-
-                gm.audioManager.PlaySfx("beep");
-
-                ProgressDialogue();
+                StartDialogue(dm.GetTile(playerX, playerY).dialogue);
             }
         }
     }
+
+    public void OverworldCheckinteractable()
+    {
+        float maxDistance = 5f;
+
+        Vector3 origin = transform.position;
+        Vector3 direction = transform.forward;
+
+        Debug.DrawRay(cameraObject.gameObject.transform.position, direction * maxDistance, Color.green);
+
+        if (Physics.Raycast(cameraObject.gameObject.transform.position, direction, out RaycastHit hit, maxDistance, -1))
+        {
+            if (hit.collider.gameObject.tag == "Interactable")
+            {
+                currentOverworldNPC = hit.collider.gameObject.GetComponent<OverworldNpc>();
+            }
+            else currentOverworldNPC = null;
+        }
+        else currentOverworldNPC = null;
+
+        UpdatePopupText();
+    }
+
+
+
 
     public void StartDialogueCombat(List<DungeonDialogue> d)
     {
@@ -1238,24 +1273,49 @@ public class PlayerController : MonoBehaviour
     }
 
     public void UpdatePopupText(){
-        if (currentTile.interactType != InteractType.None)  // sets popup text
+        if (dm.sceneMode == SceneMode.Dungeon)
         {
-            if (currentTile.interactType == InteractType.Talk)
+            if (currentTile.interactType != InteractType.None)  // sets popup text
             {
-                ui.PopupText("TALK");
+                if (currentTile.interactType == InteractType.Talk)
+                {
+                    ui.PopupText("TALK");
+                }
+                else if (currentTile.interactType == InteractType.Shop)
+                {
+                    ui.PopupText("SHOP");
+                }
+                else if (currentTile.interactType == InteractType.Exit)
+                {
+                    ui.PopupText("EXIT");
+                }
             }
-            else if (currentTile.interactType == InteractType.Shop)
+            else
             {
-                ui.PopupText("SHOP");
-            }
-            else if (currentTile.interactType == InteractType.Exit)
-            {
-                ui.PopupText("EXIT");
+                ui.popupTextParent.SetActive(false);
             }
         }
-        else
+        else if(dm.sceneMode == SceneMode.Town)
         {
-            ui.popupTextParent.SetActive(false);
+            if(inputState == DungeonInputControlState.FreeMove && currentOverworldNPC != null)
+            {
+                if (currentOverworldNPC.popupType == NpcInteractPopupType.Talk)
+                {
+                    ui.PopupText("TALK");
+                }
+                else if (currentOverworldNPC.popupType == NpcInteractPopupType.Shop)
+                {
+                    ui.PopupText("SHOP");
+                }
+                else
+                {
+                    ui.PopupText("INTERACT");
+                }
+            }
+            else
+            {
+                ui.popupTextParent.SetActive(false);
+            }
         }
     }
 

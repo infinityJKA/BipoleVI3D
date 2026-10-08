@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MinimapObject
   - MenuButton
+  - Interactable
   layers:
   - Default
   - TransparentFX
