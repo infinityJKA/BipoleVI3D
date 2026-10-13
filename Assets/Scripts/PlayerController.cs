@@ -45,10 +45,10 @@ public class PlayerController : MonoBehaviour
     public GameObject optionsUI, menuUI, optionsButtonSelected, menuButtonSelected;
     public EventSystem eventSystem;
     public GameObject buttonSelectOnDecline;
-    private TMP_Text currentDialogueText;
     public CombatReturnTo combatReturnTo;
 
     [Header("Automatic, don't touch")]
+    public TMP_Text currentDialogueText;
     public GameObject selectedMenuObjectForSound;
     public bool isDialogueChoice, choicesSpawned;
     public OverworldNpc currentOverworldNPC;
@@ -62,11 +62,14 @@ public class PlayerController : MonoBehaviour
     {
         gm = GameManager.gm;
         gm.dungeonPlayer = this;
+        UpdateTimeUI();
+        UpdatePartyUI();
 
-        
         if (dm.sceneMode == SceneMode.Town)
         {
             Debug.Log("PlayerController Start() scene is a Town");
+            currentDialogueText = ui.dialogueText;
+
         }
         else if (dm.sceneMode == SceneMode.Dungeon)
         {
@@ -264,11 +267,21 @@ public class PlayerController : MonoBehaviour
 
     public void Interact()
     {
-        if (DoneMoving)
+        if (dm.sceneMode == SceneMode.Dungeon)
         {
-            if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk || dm.GetTile(playerX, playerY).interactType == InteractType.Exit)
+            if (DoneMoving)
             {
-                StartDialogue(dm.GetTile(playerX, playerY).dialogue);
+                if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk || dm.GetTile(playerX, playerY).interactType == InteractType.Exit)
+                {
+                    StartDialogue(dm.GetTile(playerX, playerY).dialogue);
+                }
+            }
+        }
+        else if(dm.sceneMode == SceneMode.Town)
+        {
+            if (currentOverworldNPC != null)
+            {
+                StartDialogue(currentOverworldNPC.dialogue);
             }
         }
     }
@@ -1964,12 +1977,15 @@ public class PlayerController : MonoBehaviour
                 ui.moonSprite.sprite = ui.waningCrescent; break;
         }
 
-        int num = gm.eyePhase - 1;
-        if (num < 0) num = 0;
-         
-        if(num < ui.eyeSprites.Count()-1)
+        if (dm.sceneMode == SceneMode.Dungeon)
         {
-            ui.eyeSprite.sprite = ui.eyeSprites[num];
+            int num = gm.eyePhase - 1;
+            if (num < 0) num = 0;
+
+            if (num < ui.eyeSprites.Count() - 1)
+            {
+                ui.eyeSprite.sprite = ui.eyeSprites[num];
+            }
         }
         
 

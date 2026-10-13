@@ -76,6 +76,7 @@ public class DungeonInputCheck : MonoBehaviour
             if (controller.inputState == DungeonInputControlState.FreeMove)
             {
                 controller.OverWorldRotate(InputManager.instance.overworldRotation);
+                if (InputManager.instance.interact) controller.Interact();
             }
             else if (controller.inputState == DungeonInputControlState.Dialogue)
             {
