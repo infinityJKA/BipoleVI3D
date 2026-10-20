@@ -8,5 +8,5 @@ using Unity.VisualScripting;
 
 public class CoinInInventoryUI : MonoBehaviour
 { 
-
+     
 }

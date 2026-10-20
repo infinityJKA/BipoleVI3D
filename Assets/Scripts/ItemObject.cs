@@ -43,7 +43,7 @@ public class ItemObject : ScriptableObject
 }
 
 [Serializable]
-public class MoneyObject : ScriptableObject
+public class MoneyObject// : ScriptableObject
 {
     public string saveId;
     [Header("Universal")]
@@ -51,7 +51,7 @@ public class MoneyObject : ScriptableObject
     public string itemName_jp;
     [TextArea(5, 10)]
     public string itemDescription, itemDescription_jp;
-    public MoneyType moneyType;
+    public MoneyType moneyType; 
     public int value; // for coins, you can't sell them normally so this is only used for when you BUY the coin from a special vendor
      
     [Header("Coin")]

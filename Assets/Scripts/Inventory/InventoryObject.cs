@@ -6,6 +6,9 @@ using System.Collections.Generic;
 public class inventoryObject : ScriptableObject
 {
     public List<InventorySlot> Container = new List<InventorySlot>();
+
+    public List<MoneyObject> money = new List<MoneyObject>();
+    
     public void AddItem(ItemObject _item, int _amount)
     {
         bool hasItem = false;
@@ -57,6 +60,8 @@ public class inventoryObject : ScriptableObject
         Debug.Log("Item not found while trying to get count");
         return 0;
     }
+
+
 
 }
 

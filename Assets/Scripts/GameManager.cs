@@ -35,6 +35,10 @@ public class GameManager : MonoBehaviour
 	public List<Sprite> allMinimapSprites;
 	public Rotate2dSprite tileChildPrefab;
 
+	[Header("Default Currency References")]
+	public MoneyObject sohl, duone, triomey, die, daze, four, subquinatious, quinatian, extraquinatious, byg;
+	public static List<MoneyObject> bieaceDenominations;
+
 	[Header("Automatic, don't edit")]
 	public bool isLoadingSave;
 	public int loadSaveNum;
@@ -73,6 +77,8 @@ public class GameManager : MonoBehaviour
 		year = 1;
 		dayofWeek = 1;
 
+		
+
 
 		// scriptable objects save values onto the object itself so I have to create clones
 		for (int p = 0; p < partyMembersInit.Count; p++)
@@ -85,8 +91,13 @@ public class GameManager : MonoBehaviour
 		var invenotryClone = Instantiate(inventoryPrefab);
 		inventory = invenotryClone;
 
-		try
-		{
+		// generate some random money
+		inventory.money = GenerateMoney(800, "Bieace");
+
+
+
+        try
+        {
 			Debug.Log("Resetting temp data");
 
 			SaveData empty = new SaveData();			
@@ -676,6 +687,46 @@ public class GameManager : MonoBehaviour
 
         //SceneManager.LoadSceneAsync(data.savedScene);
     }
+
+	public List<MoneyObject> GenerateMoney(int amount, string region)
+	{
+		List<MoneyObject> generated = new List<MoneyObject>();
+
+		if (amount >= 0) { return null; }
+
+		List<MoneyObject> denominations = bieaceDenominations;
+
+		if (region == "not biece")
+		{
+			// change denomination list
+		}
+
+		int left = amount;
+
+		while(left > 0)
+		{
+            int index = UnityEngine.Random.Range(0, denominations.Count);
+
+			int maxYear = 900;
+
+			if (denominations[index].value <= left)
+			{
+				MoneyObject toAdd = Instantiate(denominations[index]);
+
+				toAdd.mintYear = UnityEngine.Random.Range(0, maxYear);
+				toAdd.itemName = toAdd.mintYear + " " + toAdd.itemName;
+				toAdd.condition = UnityEngine.Random.Range(0f, 100f);
+
+				generated.Add(toAdd);
+				left -= toAdd.value;
+			}
+
+        }
+
+
+		return generated;
+	}
+
 
 	public ItemObject GetItemByID(string id)
 	{

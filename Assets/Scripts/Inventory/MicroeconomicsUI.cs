@@ -20,60 +20,27 @@ public class MicroeconomicsUI : MonoBehaviour
     public List<RectTransform> rectTransforms;
     public float topPos, bottomPos, offSet;
     public int itemCount;
-    private RectTransform oldRect;
-    private Vector2 originalPos;
-    public int offsetGoingUp, offsetGoingDown;
 
     Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
 
     void OnEnable()
     {
-        originalPos = content.anchoredPosition;
+        //originalPos = content.anchoredPosition;
     }
 
     public void ResetButtonSnap()
     {
-        content.anchoredPosition = originalPos;
-        oldRect = null;
+        //content.anchoredPosition = originalPos;
+        //oldRect = null;
     }
 
-    public void NewerSnapTo(RectTransform target, int index)
-    {
-        Vector2 offsetVector = new Vector2(0, 0);
-        RectTransform rect = rectTransforms[index];
-        Vector2 v = rect.position;
-
-        bool inView = RectTransformUtility.RectangleContainsScreenPoint(viewport, v);
-
-        if (!inView)
-        {
-            if (oldRect != null)
-            {
-                if (oldRect.localPosition.y < rect.localPosition.y) // if old position was lower than new pos
-                {
-                    Debug.Log("offsetGoingUp");
-                    offsetVector = new Vector2(0, offsetGoingUp);
-                }
-                else if (oldRect.localPosition.y > rect.localPosition.y)
-                {
-                    Debug.Log("offsetGoingDown");
-                    offsetVector = new Vector2(0, offsetGoingDown);
-                }
-
-                Canvas.ForceUpdateCanvases();
-                Vector2 targetPosition = (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
-                Vector2 contentPosition = (Vector2)scrollRect.transform.InverseTransformPoint(content.position);
-                content.anchoredPosition = contentPosition - targetPosition + offsetVector;
-            }
-        }
-        oldRect = rect;
-    }
+    
 
     public void CreateDisplay(string str)
     {
-        ItemType itype = ItemType.Money;
-        if (str == "Check") itype = ItemType.Check;
-        else if (str == "Stock") itype = ItemType.Stock;
+        MoneyType mtype = MoneyType.Coin;
+        if (str == "Check") mtype = MoneyType.Check;
+        else if (str == "Stock") mtype = MoneyType.Stock;
 
         // destroy old children first
         foreach (Transform child in parentSpawnUnder.transform)
@@ -91,9 +58,9 @@ public class MicroeconomicsUI : MonoBehaviour
         firstButton = null;
         bool isFirst = true;
         // spawn new display
-        for (int i = 0; i < inv.Container.Count; i++)
+        for (int i = 0; i < inv.money.Count; i++)
         {
-            if (inv.Container[i].item.itemType == itype)
+            if (inv.money[i].moneyType == mtype)
             {
                 // create the UI display for the item
                 ItemUIButton iui = Instantiate(prefab, parentSpawnUnder.transform);
