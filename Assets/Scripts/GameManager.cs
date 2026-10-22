@@ -36,8 +36,9 @@ public class GameManager : MonoBehaviour
 	public Rotate2dSprite tileChildPrefab;
 
 	[Header("Default Currency References")]
-	public MoneyObject sohl, duone, triomey, die, daze, four, subquinatious, quinatian, extraquinatious, byg;
-	public static List<MoneyObject> bieaceDenominations;
+	//public MoneyObject sohl;
+	//public MoneyObject duone, triomey, die, daze, four, subquinatious, quinatian, extraquinatious, byg;
+	public List<MoneyObject> bieaceDenominations;
 
 	[Header("Automatic, don't edit")]
 	public bool isLoadingSave;
@@ -92,8 +93,11 @@ public class GameManager : MonoBehaviour
 		inventory = invenotryClone;
 
 		// generate some random money
-		inventory.money = GenerateMoney(800, "Bieace");
-
+		List<MoneyObject> moneyToAdd = GenerateMoney(800, "Bieace");
+		foreach(MoneyObject m in moneyToAdd)
+		{
+			inventory.money.Add(m);
+		}
 
 
         try
@@ -690,9 +694,12 @@ public class GameManager : MonoBehaviour
 
 	public List<MoneyObject> GenerateMoney(int amount, string region)
 	{
+
+		Debug.Log("GenerateMoney(" + amount + ", " + region + ")");
+
 		List<MoneyObject> generated = new List<MoneyObject>();
 
-		if (amount >= 0) { return null; }
+		if (amount <= 0) { return null; }
 
 		List<MoneyObject> denominations = bieaceDenominations;
 
@@ -711,14 +718,23 @@ public class GameManager : MonoBehaviour
 
 			if (denominations[index].value <= left)
 			{
-				MoneyObject toAdd = Instantiate(denominations[index]);
+				//var toAdd = Instantiate( denominations[index] );
 
-				toAdd.mintYear = UnityEngine.Random.Range(0, maxYear);
-				toAdd.itemName = toAdd.mintYear + " " + toAdd.itemName;
+				MoneyObject toAdd = new MoneyObject();
+				toAdd.itemName = denominations[index].itemName;
+                toAdd.currencyType = denominations[index].currencyType;
+                toAdd.itemDescription = denominations[index].itemDescription;
+                toAdd.value = denominations[index].value;
+
+
+                toAdd.mintYear = UnityEngine.Random.Range(0, maxYear);
+				toAdd.itemName = toAdd.itemName + " (" + toAdd.mintYear + " RT)";
 				toAdd.condition = UnityEngine.Random.Range(0f, 100f);
 
 				generated.Add(toAdd);
 				left -= toAdd.value;
+
+				Debug.Log("Generated " + toAdd.itemName);
 			}
 
         }

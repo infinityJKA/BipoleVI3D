@@ -45,21 +45,17 @@ public class ItemObject : ScriptableObject
 [Serializable]
 public class MoneyObject// : ScriptableObject
 {
-    public string saveId;
-    [Header("Universal")]
+    //public string saveId; 
     public string itemName;
     public string itemName_jp;
     [TextArea(5, 10)]
     public string itemDescription, itemDescription_jp;
-    public MoneyType moneyType; 
-    public int value; // for coins, you can't sell them normally so this is only used for when you BUY the coin from a special vendor
-     
-    [Header("Coin")]
-    public int coinValue; // used to determine your wealth, etc 1G coin would have 1 coinValue
+    public MoneyType moneyType;
+    public int value;
     public CurrencyType currencyType;
     public float condition; // 100 max, 0.01 minimum
     public int mintYear;
-    public String design; // the same year can have different designs
+    //public String design; // the same year can have different designs
 
 
 

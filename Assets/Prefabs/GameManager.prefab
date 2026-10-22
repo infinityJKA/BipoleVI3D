@@ -110,6 +110,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 8f985a0e-1ee5-493a-9879-88118e6c8fa2
     m_ActionName: In-Game/Debug2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c64b5d7a-db04-4e86-b24a-57cf37ce6d94
+    m_ActionName: In-Game/Overworld Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: In-Game
@@ -968,6 +972,97 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b83f37401373efa4d98e5f43014b0e9e, type: 3}
   - {fileID: 21300000, guid: 302aebc954906a348b0916b7919d4599, type: 3}
   tileChildPrefab: {fileID: 8300767496596685602, guid: f911a2573f065a84e924d621b0d837c3, type: 3}
+  bieaceDenominations:
+  - itemName: Sohl
+    itemName_jp: 
+    itemDescription: Worth 1 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 1
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Duone
+    itemName_jp: 
+    itemDescription: Worth 2 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 2
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Triomey
+    itemName_jp: 
+    itemDescription: Worth 3 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 3
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Die
+    itemName_jp: 
+    itemDescription: Worth 6 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 6
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Daze
+    itemName_jp: 
+    itemDescription: Worth 12 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 12
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Four
+    itemName_jp: 
+    itemDescription: Worth 25 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 25
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Subquinatious
+    itemName_jp: 
+    itemDescription: Worth 49 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 49
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Quinatian
+    itemName_jp: 
+    itemDescription: Worth 50 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 50
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Extraquinatious
+    itemName_jp: 
+    itemDescription: Worth 51 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 51
+    currencyType: 0
+    condition: 0
+    mintYear: 0
+  - itemName: Byg
+    itemName_jp: 
+    itemDescription: Worth 100 Gole.
+    itemDescription_jp: 
+    moneyType: 0
+    value: 100
+    currencyType: 0
+    condition: 0
+    mintYear: 0
   isLoadingSave: 0
   loadSaveNum: 0
   isSentFromOtherScene: 0
