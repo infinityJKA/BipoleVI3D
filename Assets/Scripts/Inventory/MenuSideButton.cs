@@ -15,6 +15,7 @@ public class MenuSideButton : MonoBehaviour, ISelectHandler
     public ItemsUI itemsUI;
     public EquipInMenuUI equipUI;
     public PartyInMenuUI partyUI;
+    public MicroeconomicsUI microeconomicsUI;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -35,6 +36,10 @@ public class MenuSideButton : MonoBehaviour, ISelectHandler
         else if (buttonType == "Party")
         {
             partyUI.CreateDisplay();
+        }
+        else if (buttonType == "Microeconomics")
+        {
+            microeconomicsUI.CreateDisplay("Coin");
         }
 
     }

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -10,18 +10,13 @@ using UnityEngine.Localization;
 public class MicroeconomicsUI : MonoBehaviour
 {
     public GameObject parentSpawnUnder;
-    public ItemUIButton prefab;
-    private ItemUIButton firstButton, previousButton;
-    public TMP_Text nameText, descriptionText;
-
-
-    public ScrollRect scrollRect;
-    public RectTransform content, viewport;
-    public List<RectTransform> rectTransforms;
-    public float topPos, bottomPos, offSet;
+    public CoinInInventoryUI prefab;
+    private CoinInInventoryUI firstButton, previousButton;
+    public TMP_Text nameText, descriptionText, totalText1, totalText2;
+      
     public int itemCount;
 
-    Dictionary<InventorySlot, ItemUIButton> itemsDisplayed = new Dictionary<InventorySlot, ItemUIButton>();
+
 
     void OnEnable()
     {
@@ -48,12 +43,15 @@ public class MicroeconomicsUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        itemsDisplayed.Clear();
-
         inventoryObject inv = GameManager.gm.inventory;
 
-        rectTransforms = new List<RectTransform>();
         itemCount = 0;
+
+        int gol = 0;
+        int ryy = 0;
+        int dwey = 0;
+        int skia = 0;
+
 
         firstButton = null;
         bool isFirst = true;
@@ -63,15 +61,33 @@ public class MicroeconomicsUI : MonoBehaviour
             if (inv.money[i].moneyType == mtype)
             {
                 // create the UI display for the item
-                ItemUIButton iui = Instantiate(prefab, parentSpawnUnder.transform);
-                iui.itemInfo = inv.Container[i];
+                CoinInInventoryUI iui = Instantiate(prefab, parentSpawnUnder.transform);
+                iui.microeconomicsUI = this;
+                iui.moneyObject = inv.money[i];
                 iui.UpdateGraphic();
-                itemsDisplayed.Add(inv.Container[i], iui);
+                //itemsDisplayed.Add(inv.Container[i], iui);
                 //iui.itemsUI = this;
 
-                rectTransforms.Add(iui.rectTransform);
-                iui.itemNumber = itemCount;
+                //rectTransforms.Add(iui.rectTransform);
+                //iui.itemNumber = itemCount;
                 itemCount++;
+
+                if(iui.moneyObject.currencyType == CurrencyType.Bieace)
+                {
+                    gol += iui.moneyObject.value;
+                }
+                else if (iui.moneyObject.currencyType == CurrencyType.Bievil)
+                {
+                    dwey += iui.moneyObject.value;
+                }
+                else if (iui.moneyObject.currencyType == CurrencyType.Farle)
+                {
+                    ryy += iui.moneyObject.value;
+                }
+                else if (iui.moneyObject.currencyType == CurrencyType.ShadowRealm)
+                {
+                    skia += iui.moneyObject.value;
+                }
 
 
                 var nav = iui.button.navigation;
@@ -100,11 +116,15 @@ public class MicroeconomicsUI : MonoBehaviour
             }
         }
 
+        // set total money text
+        totalText1.text = gol + " Gole\n" + ryy + " Ryy";
+        totalText2.text = dwey + " Dwey\n" + skia + " Skĭā";
+
         // set first button's navigation up to the last button
         if (firstButton != null)
         {
             Navigation nav = firstButton.button.navigation;
-            nav.selectOnUp = parentSpawnUnder.transform.GetChild(parentSpawnUnder.transform.childCount - 1).GetComponent<ItemUIButton>().button;
+            nav.selectOnUp = parentSpawnUnder.transform.GetChild(parentSpawnUnder.transform.childCount - 1).GetComponent<CoinInInventoryUI>().button;
             firstButton.button.navigation = nav;
         }
 

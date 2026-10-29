@@ -55,6 +55,7 @@ public class MoneyObject// : ScriptableObject
     public CurrencyType currencyType;
     public float condition; // 100 max, 0.01 minimum
     public int mintYear;
+    public bool favorited;
     //public String design; // the same year can have different designs
 
 
