@@ -1688,6 +1688,7 @@ public class PlayerController : MonoBehaviour
 
                 int rand = UnityEngine.Random.Range(0, index);
                 Debug.Log("rand = " + rand);
+                Debug.Log("index = "+index+", targets.Count = "+targets.Count);
                 foreach (EnemyAttackTarget t in targets)
                 {
                     if (rand <= t.maxPriority && rand >= t.minPriority)

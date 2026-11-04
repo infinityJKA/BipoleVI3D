@@ -75,11 +75,11 @@ public class CombatUI : MonoBehaviour
         //battlers.Add(gm.partyMembers[0]);
 
         // add each party member
-        for (int i = 1; i < gm.partyBattlers.Length; i++) // first 4 are used for combat
+        foreach (PartyMember partyMember in gm.partyBattlers)
         {
-            if (gm.partyBattlers[i] != null) // make sure party member exists
+            if (partyMember != null) // make sure party member exists
             {
-                PartyMember current = gm.partyBattlers[i];
+                PartyMember current = partyMember;
                 bool placed = false;
 
                 int currentSPD = current.CalculateStat("SPD");
