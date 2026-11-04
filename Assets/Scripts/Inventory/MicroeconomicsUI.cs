@@ -10,6 +10,7 @@ using UnityEngine.Localization;
 public class MicroeconomicsUI : MonoBehaviour
 {
     public GameObject parentSpawnUnder;
+    public ScrollSnapTo scrollSnapTo;
     public CoinInInventoryUI prefab;
     private CoinInInventoryUI firstButton, previousButton;
     public TMP_Text nameText, descriptionText, totalText1, totalText2;

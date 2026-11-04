@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -256,7 +256,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3519747201840297551}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 848855721273904323}
+        m_TargetAssemblyTypeName: CoinInInventoryUI, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &848855721273904323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +297,7 @@ MonoBehaviour:
     favorited: 0
   microeconomicsUI: {fileID: 0}
   button: {fileID: 1038469183420487458}
+  rectTransform: {fileID: 8234052510768657214}
 --- !u!1 &9094186645966228276
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +310,7 @@ GameObject:
   - component: {fileID: 2031737468613633135}
   - component: {fileID: 7747900039062018043}
   m_Layer: 5
-  m_Name: Image
+  m_Name: FavoritedIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

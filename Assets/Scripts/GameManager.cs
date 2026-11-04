@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 		inventory = invenotryClone;
 
 		// generate some random money
-		List<MoneyObject> moneyToAdd = GenerateMoney(800, "Bieace");
+		List<MoneyObject> moneyToAdd = GenerateMoney(1500, "Bieace");
 		foreach(MoneyObject m in moneyToAdd)
 		{
 			inventory.money.Add(m);
