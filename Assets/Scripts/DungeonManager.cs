@@ -20,6 +20,9 @@ public class DungeonManager : MonoBehaviour
     public float dungeonThemeVolume, dungeonBattleThemeVolume;
     public int minimumStepsUntilEyeChange; // minimum of how many steps it will take for the eye to change phases (used for random encounters)
     public List<EncounterObject> encounters;
+
+    public List<ShopDatabaseEntry> areaShops;
+
     public Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
 
     public int lowestX,highestX,lowestY,highestY = 0;

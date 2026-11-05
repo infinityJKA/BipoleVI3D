@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
         {
             if (DoneMoving)
             {
-                if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk || dm.GetTile(playerX, playerY).interactType == InteractType.Exit)
+                if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk || dm.GetTile(playerX, playerY).interactType == InteractType.Exit || dm.GetTile(playerX, playerY).interactType == InteractType.Shop)
                 {
                     StartDialogue(dm.GetTile(playerX, playerY).dialogue);
                 }
