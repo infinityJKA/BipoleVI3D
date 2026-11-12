@@ -249,6 +249,14 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void StartShop()
+    {
+        inputState = DungeonInputControlState.Menu;
+        ui.shopUI.gameObject.SetActive(true);
+
+
+    }
+
     public void StartDialogue(List<DungeonDialogue> dialogue)
     {
         inputState = DungeonInputControlState.Dialogue;

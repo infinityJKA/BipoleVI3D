@@ -17,6 +17,7 @@ public class DungeonUI : MonoBehaviour
     public Sprite newMoon, waxingCrescent, firstQuarter, waxingGibbous, fullMoon, waningGibbous, thirdQuarter, waningCrescent;
     public Sprite[] eyeSprites;
     public CombatUI combat;
+    public ShopMenu shopUI;
     public void PopupText(String s)
     {
         popupTextParent.SetActive(true);

@@ -101,7 +101,7 @@ public enum TargetType
 
 public enum ItemType
 {
-    Consumable, Equipment, Material, Book, Key
+    Consumable, Equipment, Material, Book, Key, Food, Drug
 }
 
 public enum MoneyType

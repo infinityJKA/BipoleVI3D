@@ -16,20 +16,6 @@ public class MicroeconomicsUI : MonoBehaviour
     public TMP_Text nameText, descriptionText, totalText1, totalText2;
       
     public int itemCount;
-
-
-
-    void OnEnable()
-    {
-        //originalPos = content.anchoredPosition;
-    }
-
-    public void ResetButtonSnap()
-    {
-        //content.anchoredPosition = originalPos;
-        //oldRect = null;
-    }
-
     
 
     public void CreateDisplay(string str)

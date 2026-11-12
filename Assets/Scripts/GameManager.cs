@@ -46,8 +46,10 @@ public class GameManager : MonoBehaviour
 	public bool isSentFromOtherScene;
 	public int startCordX, startCordY;
 	public String facingOnLoad;
+	public ShopData currentShop;
+	public ShopDatabaseEntry currentShopMeta;
 
-	[Header("Combat (automatic don't edit)")]
+    [Header("Combat (automatic don't edit)")]
 	public List<PartyMember> enemies; // the enemies you are currently fighting
 	public PartyMember currentBattler; // whoever's turn it is
 	public EquipmentAction currentAction; // the currently selected action

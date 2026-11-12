@@ -11,7 +11,7 @@ public class ShopData : ScriptableObject
     public float sellMultiplier = 1f;
     public float buyMultiplier = 0.5f;
 
-    public List<ItemObject> itemsForSale;
+    public List<InventorySlot> itemsForSale;
 
 }
 
