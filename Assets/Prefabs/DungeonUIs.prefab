@@ -2522,7 +2522,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CANCEL
+  m_text: EXIT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07a21c184293d984bb338e5f28f81795, type: 2}
   m_sharedMaterial: {fileID: -8784925539729039011, guid: 07a21c184293d984bb338e5f28f81795, type: 2}
@@ -3796,7 +3796,7 @@ GameObject:
   - component: {fileID: 3441194834957916051}
   - component: {fileID: 725384591520956685}
   m_Layer: 9
-  m_Name: Consumable (5)
+  m_Name: Drugs
   m_TagString: MenuButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3875,8 +3875,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 9096678640140251179}
+    m_SelectOnDown: {fileID: 191779466941432504}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -6541,7 +6541,7 @@ GameObject:
   - component: {fileID: 2387552788594737639}
   - component: {fileID: 809278335569244359}
   m_Layer: 9
-  m_Name: Consumable (1)
+  m_Name: Equipment
   m_TagString: MenuButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6620,8 +6620,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1844398134443216874}
+    m_SelectOnDown: {fileID: 1958353917476869116}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -10938,7 +10938,6 @@ RectTransform:
   - {fileID: 6648959274802152805}
   - {fileID: 1396000025076545839}
   - {fileID: 7632949781791450769}
-  - {fileID: 6936479571586725811}
   - {fileID: 3277870359102010125}
   - {fileID: 7102759035897718380}
   - {fileID: 8025389080730665321}
@@ -10980,13 +10979,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
-  parentSpawnUnder: {fileID: 0}
-  scrollSnapTo: {fileID: 0}
-  itemPrefab: {fileID: 0}
-  nameText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  fundsText: {fileID: 0}
-  vendorStatusText: {fileID: 0}
+  buySellButton: {fileID: 6436959076695681367}
+  exitButton: {fileID: 6417824601294480261}
+  buySellButtonText: {fileID: 9067712534382334881}
+  isBuying: 1
+  parentSpawnUnder: {fileID: 5023213488986005452}
+  scrollSnapTo: {fileID: 3460379659201898628}
+  itemPrefab: {fileID: 2785645479014276811, guid: ede5a53ad3731d14abebbeb7c4cdb49a, type: 3}
+  nameText: {fileID: 1968139027168609307}
+  descriptionText: {fileID: 1919378414811849978}
+  fundsText: {fileID: 7697623213509176055}
+  vendorStatusText: {fileID: 695143410533905963}
   itemCount: 0
 --- !u!1 &4107991173321941947
 GameObject:
@@ -11228,7 +11231,7 @@ GameObject:
   - component: {fileID: 7873405768901949974}
   - component: {fileID: 1958353917476869116}
   m_Layer: 9
-  m_Name: Consumable (2)
+  m_Name: Material
   m_TagString: MenuButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11307,8 +11310,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 809278335569244359}
+    m_SelectOnDown: {fileID: 5775577596110015153}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -11349,7 +11352,7 @@ GameObject:
   - component: {fileID: 7796396118668640593}
   - component: {fileID: 5775577596110015153}
   m_Layer: 9
-  m_Name: Consumable (3)
+  m_Name: Books
   m_TagString: MenuButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11428,8 +11431,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1958353917476869116}
+    m_SelectOnDown: {fileID: 9096678640140251179}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -12314,8 +12317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -318.55, y: 171.8}
-  m_SizeDelta: {x: 77.3522, y: 77.3522}
+  m_AnchoredPosition: {x: -318.55, y: 158.5}
+  m_SizeDelta: {x: 105.2551, y: 105.2551}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6875059145162056246
 CanvasRenderer:
@@ -16747,7 +16750,7 @@ GameObject:
   - component: {fileID: 7023931556415536729}
   - component: {fileID: 191779466941432504}
   m_Layer: 9
-  m_Name: Consumable (7)
+  m_Name: ExitButton
   m_TagString: MenuButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16826,8 +16829,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 725384591520956685}
+    m_SelectOnDown: {fileID: 932214992734516102}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -16854,7 +16857,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7023931556415536729}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3309596868406797801}
+        m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
+        m_MethodName: ClickedExitButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6436959076695681367
 GameObject:
   m_ObjectHideFlags: 0
@@ -16881,18 +16896,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6436959076695681367}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1944579, y: 0.27972057, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4836410088290655615}
-  m_Father: {fileID: 501776642139290396}
+  m_Father: {fileID: 1396000025076545839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -318.55, y: 102.4}
-  m_SizeDelta: {x: 120.1304, y: 40.3833}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2623291117036125717
 CanvasRenderer:
@@ -16945,10 +16960,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 191779466941432504}
+    m_SelectOnDown: {fileID: 1844398134443216874}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 2
@@ -16975,7 +16990,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4558458495555915309}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3309596868406797801}
+        m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
+        m_MethodName: ClickedBuySellButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6590114140286741256
 GameObject:
   m_ObjectHideFlags: 0
@@ -17007,6 +17034,7 @@ RectTransform:
   m_LocalScale: {x: 5.142501, y: 3.574996, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6936479571586725811}
   - {fileID: 2133798362748909039}
   - {fileID: 5917078272638483707}
   - {fileID: 1809390089119369157}
@@ -17018,8 +17046,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -318.55, y: -63.596336}
-  m_SizeDelta: {x: 25.7965, y: 77.019}
+  m_AnchoredPosition: {x: -318.55, y: -53.867237}
+  m_SizeDelta: {x: 25.7965, y: 82.4618}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2042785988733210144
 MonoBehaviour:
@@ -17826,7 +17854,7 @@ GameObject:
   - component: {fileID: 5302883679435114703}
   - component: {fileID: 9067712534382334881}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: BuySellButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20344,7 +20372,7 @@ GameObject:
   - component: {fileID: 4118061716015558970}
   - component: {fileID: 9096678640140251179}
   m_Layer: 9
-  m_Name: Consumable (4)
+  m_Name: Food
   m_TagString: MenuButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20423,8 +20451,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 5775577596110015153}
+    m_SelectOnDown: {fileID: 725384591520956685}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -24467,8 +24495,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 932214992734516102}
+    m_SelectOnDown: {fileID: 809278335569244359}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1

@@ -614,6 +614,17 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(WaitBeforeInputState(DungeonInputControlState.FreeMove));
             //inputState = DungeonInputControlState.FreeMove;
         }
+        else if (command == "SHOP")
+        {
+            Debug.Log("DIALOGUE COMMAND == SHOP, opening shop menu with shop ID " + currentDialogue[dialogueIndex].textEn);
+            gm.SetCurrentShop(currentDialogue[dialogueIndex].textEn);
+            ui.dialogueBox.SetActive(false);
+            ui.shopUI.gameObject.SetActive(true);
+            eventSystem.SetSelectedGameObject(ui.shopUI.buySellButton);
+            buttonSelectOnDecline = ui.shopUI.exitButton;
+            ui.shopUI.InitializeMenu();
+            inputState = DungeonInputControlState.Menu;
+        }
         else if (command == "SCENE")
         {
             gm.isSentFromOtherScene = true;

@@ -8,6 +8,10 @@ public class ShopMenu : MonoBehaviour
 {
     [HideInInspector] public GameManager gm;
 
+    public GameObject buySellButton, exitButton;
+    public TMP_Text buySellButtonText;
+    public bool isBuying = true;
+
     public GameObject parentSpawnUnder;
     public ScrollSnapTo scrollSnapTo;
     public ShopItemButton itemPrefab;
@@ -21,7 +25,7 @@ public class ShopMenu : MonoBehaviour
         gm = GameManager.gm;
     }
 
-    public void CreateDisplay(string str, bool isBuying)
+    public void CreateDisplay(string str)
     {
         ItemType itype = ItemType.Consumable;
         if (str == "Equipment") itype = ItemType.Equipment;
@@ -36,69 +40,64 @@ public class ShopMenu : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        List<InventorySlot> items;
+        if(str != "NONE"){
+            List<InventorySlot> items;
 
-        if (isBuying)
-        {
-            items = gm.currentShop.itemsForSale;
-        }
-        else
-        {
-            items = gm.inventory.Container;
-        }
-
-        itemCount = 0;
-
-        int gol = 0;
-        int ryy = 0;
-        int dwey = 0;
-        int skia = 0;
-
-
-        firstButton = null;
-        bool isFirst = true;
-        
-        // spawn new display
-        for (int i = 0; i < items.Count; i++)
-        {
-            if (items[i].item.itemType == itype)
+            if (isBuying)
             {
-                // create the UI display for the item
-                ShopItemButton sib = Instantiate(itemPrefab, parentSpawnUnder.transform);
-                sib.shopMenu = this;
-                sib.InventorySlot = items[i];
-                sib.isBuying = isBuying;
+                items = gm.currentShop.itemsForSale;
+            }
+            else
+            {
+                items = gm.inventory.Container;
+            }
 
-                sib.UpdateGraphic();
+            itemCount = 0;
 
-                itemCount++;
-
-                var nav = sib.button.navigation;
-
-                // navigation stuff
-                if (isFirst)
+            firstButton = null;
+            bool isFirst = true;
+            
+            // spawn new display
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].item.itemType == itype)
                 {
-                    firstButton = sib;
-                    isFirst = false;
+                    // create the UI display for the item
+                    ShopItemButton sib = Instantiate(itemPrefab, parentSpawnUnder.transform);
+                    sib.shopMenu = this;
+                    sib.InventorySlot = items[i];
+                    sib.isBuying = isBuying;
+
+                    sib.UpdateGraphic();
+
+                    itemCount++;
+
+                    var nav = sib.button.navigation;
+
+                    // navigation stuff
+                    if (isFirst)
+                    {
+                        firstButton = sib;
+                        isFirst = false;
+                    }
+                    else
+                    {
+                        nav.selectOnDown = firstButton.button; // this will be overriden unless this is the final button
+                        nav.selectOnUp = previousButton.button;
+                        sib.button.navigation = nav;
+
+                        // override the previous selectOnDown to be this button
+                        var pNav = previousButton.button.navigation;
+                        pNav.selectOnDown = sib.button;
+                        previousButton.button.navigation = pNav;
+
+                    }
+
+                    // set this button to the previous before moving forwards in the loop
+                    previousButton = sib;
                 }
-                else
-                {
-                    nav.selectOnDown = firstButton.button; // this will be overriden unless this is the final button
-                    nav.selectOnUp = previousButton.button;
-                    sib.button.navigation = nav;
-
-                    // override the previous selectOnDown to be this button
-                    var pNav = previousButton.button.navigation;
-                    pNav.selectOnDown = sib.button;
-                    previousButton.button.navigation = pNav;
-
-                }
-
-                // set this button to the previous before moving forwards in the loop
-                previousButton = sib;
             }
         }
-
 
         // set other info
         string vString = "Vendor is NOT BUYING";
@@ -127,16 +126,73 @@ public class ShopMenu : MonoBehaviour
 
         vendorStatusText.text = vString;
 
+        if(str != "NONE"){
+            // set first button's navigation up to the last button
+            if (firstButton != null)
+            {
+                Navigation nav = firstButton.button.navigation;
+                nav.selectOnUp = parentSpawnUnder.transform.GetChild(parentSpawnUnder.transform.childCount - 1).GetComponent<ShopItemButton>().button;
+                firstButton.button.navigation = nav;
+            }
 
-        // set first button's navigation up to the last button
-        if (firstButton != null)
-        {
-            Navigation nav = firstButton.button.navigation;
-            nav.selectOnUp = parentSpawnUnder.transform.GetChild(parentSpawnUnder.transform.childCount - 1).GetComponent<ShopItemButton>().button;
-            firstButton.button.navigation = nav;
         }
-
-
         //SendToDisplayButtons();
     }
+
+    public void GenerateMoneyText()
+    {
+        string cur = "Gole";
+        if(gm.currentShop.currencyType == CurrencyType.Bievil) cur = "Dwey";
+        else if(gm.currentShop.currencyType == CurrencyType.Bievil) cur = "Ryy";
+        else if(gm.currentShop.currencyType == CurrencyType.Bievil) cur = "Skĭā́";
+
+        fundsText.text = gm.GetTotalMoney(gm.currentShop.currencyType, false) + " " + cur +" total\n"+
+         gm.GetTotalMoney(gm.currentShop.currencyType, true) + " " +cur +" usable";
+    }
+
+    public void InitializeMenu()
+    {
+        isBuying = true;
+        UpdateBuySellButton();
+        GenerateMoneyText();
+
+        foreach (Transform child in parentSpawnUnder.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+    }
+
+    
+    public void UpdateBuySellButton()
+    {
+        if(isBuying)
+        {
+            buySellButtonText.text = "BUYING";
+            buySellButtonText.color = Color.yellow;
+        }
+        else
+        {
+            buySellButtonText.text = "SELLING";
+            buySellButtonText.color = Color.green;
+        }
+    }
+
+    public void ClickedBuySellButton()
+    {
+        if(isBuying) isBuying = false;
+        else isBuying = true;
+        UpdateBuySellButton();
+    }
+
+    public void ClickedExitButton()
+    {
+        gameObject.SetActive(false);
+        gm.dungeonPlayer.ui.dialogueBox.SetActive(true);
+        gm.dungeonPlayer.inputState = DungeonInputControlState.Dialogue;
+        gm.dungeonPlayer.ProgressDialogue();
+    }
+
+
+
 }

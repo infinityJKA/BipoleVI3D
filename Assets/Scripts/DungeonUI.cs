@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class DungeonUI : MonoBehaviour
 {
+    
     public TMP_Text popupText, dialogueText, dialogueText2, facingText,bpText;
     public Image dialoguePortrait;
     public GameObject popupTextParent, dialogueBox, dialogueTriangle, dialogueChoicesParent;
@@ -23,6 +24,13 @@ public class DungeonUI : MonoBehaviour
         popupTextParent.SetActive(true);
         popupText.text = s;
         Debug.Log("Popup text: " + s);
+    }
+
+    void Awake()
+    {
+        shopUI.gameObject.SetActive(false);
+        dialogueBox.SetActive(false);
+        
     }
 
 }

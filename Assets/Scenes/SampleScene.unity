@@ -3723,7 +3723,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: fb1b86ef9d6707d45b4b54c441ecdeab, type: 3}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[0].textEn
@@ -3731,10 +3731,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[1].textEn
-      value: 
+      value: test1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[2].textEn
+      value: Finished shop...
       objectReference: {fileID: 0}
     - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
       propertyPath: dialogue.Array.data[1].command
+      value: SHOP
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[2].command
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758223980713023293, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
+      propertyPath: dialogue.Array.data[3].command
       value: END
       objectReference: {fileID: 0}
     - target: {fileID: 6575038441906758128, guid: 7c822858ad0c46844927b90510c9fdd5, type: 3}
@@ -8638,6 +8650,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1081850633294496653, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: areaShops.Array.data[0].shopID
+      value: test1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1081850633294496653, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: areaShops.Array.data[0].shopData
       value: 
       objectReference: {fileID: 11400000, guid: d518843e7a9ad7f449891f78285892cb, type: 2}
@@ -8726,6 +8742,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1166664493683032366, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

@@ -745,6 +745,43 @@ public class GameManager : MonoBehaviour
 		return generated;
 	}
 
+	public int GetTotalMoney(CurrencyType currencyType, bool excludeFavorited)
+	{
+		int total = 0;
+		foreach (MoneyObject m in inventory.money)
+		{
+			if (m.moneyType == MoneyType.Coin && m.currencyType == currencyType)
+			{
+				if (excludeFavorited)
+				{
+					if (m.favorited == false)
+					{
+						total += m.value;
+					}
+				}
+				else
+				{
+					total += m.value;
+				}
+			}
+		}
+
+		return total;
+	}
+
+	public void SetCurrentShop(string id)
+	{
+		foreach (ShopDatabaseEntry db in dungeonPlayer.dm.areaShops)
+		{
+			if (db.shopID == id)
+			{
+				currentShopMeta = db;
+				currentShop = db.shopData;
+				return;
+			}
+		}
+		Debug.Log("Error: Shop with ID \"" + id + "\" not found in database (GameManager).");
+	}
 
 	public ItemObject GetItemByID(string id)
 	{
