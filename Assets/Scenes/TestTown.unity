@@ -186,6 +186,17 @@ LightingSettings:
   m_PVRTiledBaking: 0
   m_NumRaysToShootPerTexel: -1
   m_RespectSceneVisibilityWhenBakingGI: 0
+--- !u!114 &315074782 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7136504076493152018, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+  m_PrefabInstance: {fileID: 3817967465476964866}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &417597392
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,6 +3392,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628182593981195450, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2026044152461435001, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: m_Interactable
       value: 1
@@ -3685,6 +3720,10 @@ PrefabInstance:
       propertyPath: currentTile
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5976050094594522355, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
+      propertyPath: eventSystem
+      value: 
+      objectReference: {fileID: 315074782}
     - target: {fileID: 5976050094594522355, guid: 262472bb5abce514f9c89d4418356a00, type: 3}
       propertyPath: cameraObject
       value: 

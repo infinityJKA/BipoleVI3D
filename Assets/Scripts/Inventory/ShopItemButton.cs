@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShopItemButton : MonoBehaviour
+public class ShopItemButton : MonoBehaviour, ISelectHandler
 {
 
     public Button button;
 
     public ShopMenu shopMenu;
+    public string initializeType;
     public bool isBuying;
     public TMP_Text itemNameText, itemCountText, itemValueText;
     public InventorySlot InventorySlot;
@@ -44,6 +46,12 @@ public class ShopItemButton : MonoBehaviour
         if (InventorySlot.item.itemType == ItemType.Equipment) { 
             shopMenu.descriptionText.text += InventorySlot.item.equipmentAction.actionDescription;
         }
+
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        //shopMenu.CreateDisplay(initializeType);
 
     }
 

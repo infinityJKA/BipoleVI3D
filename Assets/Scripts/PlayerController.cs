@@ -281,6 +281,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (dm.GetTile(playerX, playerY).interactType == InteractType.Talk || dm.GetTile(playerX, playerY).interactType == InteractType.Exit || dm.GetTile(playerX, playerY).interactType == InteractType.Shop)
                 {
+                    
                     StartDialogue(dm.GetTile(playerX, playerY).dialogue);
                 }
             }
@@ -289,6 +290,7 @@ public class PlayerController : MonoBehaviour
         {
             if (currentOverworldNPC != null)
             {
+                rb.velocity = Vector3.zero;
                 StartDialogue(currentOverworldNPC.dialogue);
             }
         }
