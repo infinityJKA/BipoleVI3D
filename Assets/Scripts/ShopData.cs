@@ -8,6 +8,8 @@ public class ShopData : ScriptableObject
 {
     public CurrencyType currencyType;
 
+    public Sprite vendorPortrait;
+
     public float sellMultiplier = 1f;
     public float buyMultiplier = 0.5f;
 

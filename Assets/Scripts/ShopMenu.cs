@@ -18,6 +18,8 @@ public class ShopMenu : MonoBehaviour
     private ShopItemButton firstButton, previousButton;
     public TMP_Text nameText, descriptionText, fundsText, vendorStatusText;
 
+    public Image vendorPortrait;
+
     public int itemCount;
 
     private void OnEnable()
@@ -27,8 +29,9 @@ public class ShopMenu : MonoBehaviour
 
     public void CreateDisplay(string str)
     {
-        ItemType itype = ItemType.Consumable;
+        ItemType itype = ItemType.NULL;
         if (str == "Equipment") itype = ItemType.Equipment;
+        else if (str == "Consumable") itype = ItemType.Consumable;
         else if (str == "Material") itype = ItemType.Material;
         else if (str == "Book") itype = ItemType.Book;
         else if (str == "Food") itype = ItemType.Food;
@@ -156,6 +159,8 @@ public class ShopMenu : MonoBehaviour
         UpdateBuySellButton();
         GenerateMoneyText();
 
+        vendorPortrait.sprite = gm.currentShop.vendorPortrait; 
+
         foreach (Transform child in parentSpawnUnder.transform)
         {
             Destroy(child.gameObject);
@@ -166,7 +171,9 @@ public class ShopMenu : MonoBehaviour
     
     public void UpdateBuySellButton()
     {
-        if(isBuying)
+        isBuying = !isBuying;
+
+        if (isBuying)
         {
             buySellButtonText.text = "BUYING";
             buySellButtonText.color = Color.yellow;
@@ -191,6 +198,20 @@ public class ShopMenu : MonoBehaviour
         gm.dungeonPlayer.ui.dialogueBox.SetActive(true);
         gm.dungeonPlayer.inputState = DungeonInputControlState.Dialogue;
         gm.dungeonPlayer.ProgressDialogue();
+    }
+
+    public void SendToDisplayButtons()
+    {
+        // make sure there is at least one item of the type
+        if (firstButton != null)
+        {
+            // set decline button to the previous button
+            GameManager.gm.dungeonPlayer.buttonSelectOnDecline = GameManager.gm.dungeonPlayer.eventSystem.currentSelectedGameObject;
+
+            // move the selection to the first item
+            GameManager.gm.dungeonPlayer.eventSystem.SetSelectedGameObject(firstButton.button.gameObject);
+        }
+
     }
 
 

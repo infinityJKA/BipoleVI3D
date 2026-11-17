@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -138,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 2593767934737536697}
   shopMenu: {fileID: 0}
+  initializeType: 
   isBuying: 0
   itemNameText: {fileID: 812042598796593379}
   itemCountText: {fileID: 7095887972846839857}
@@ -145,6 +146,7 @@ MonoBehaviour:
   InventorySlot:
     item: {fileID: 0}
     amount: 0
+  rectTransform: {fileID: 3093070824807163117}
 --- !u!1 &7762172841395753892
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,6 +16,8 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
     public TMP_Text itemNameText, itemCountText, itemValueText;
     public InventorySlot InventorySlot;
 
+    public RectTransform rectTransform;
+
     public void UpdateGraphic()
     {
         if (isBuying) itemCountText.text = "";
@@ -27,13 +29,20 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
 
         if (isBuying == false)
         {
-            num = Mathf.RoundToInt(num * shopMenu.gm.currentShop.sellMultiplier);
+            num = Mathf.RoundToInt( (float) num * shopMenu.gm.currentShop.sellMultiplier);
         }
         else
         {
             num = Mathf.RoundToInt(num * shopMenu.gm.currentShop.buyMultiplier);
         }
-    
+
+        string denom = "g";
+        if(shopMenu.gm.currentShop.currencyType == CurrencyType.Bievil) denom = "d";
+        else if (shopMenu.gm.currentShop.currencyType == CurrencyType.Farle) denom = "y";
+        else if (shopMenu.gm.currentShop.currencyType == CurrencyType.ShadowRealm) denom = "ā́";
+
+        itemValueText.text = num + denom;
+
     }
 
     public void UpdateDescription()
@@ -52,7 +61,8 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
     public void OnSelect(BaseEventData eventData)
     {
         //shopMenu.CreateDisplay(initializeType);
-
+        UpdateDescription();
+        shopMenu.scrollSnapTo.SnapTo(rectTransform);
     }
 
 

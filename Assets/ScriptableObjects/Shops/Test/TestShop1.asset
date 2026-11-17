@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TestShop1
   m_EditorClassIdentifier: 
   currencyType: 0
+  vendorPortrait: {fileID: 21300000, guid: 2fd2888378fe0bc4e82685632cff896e, type: 3}
   sellMultiplier: 1
   buyMultiplier: 0.5
   itemsForSale:
