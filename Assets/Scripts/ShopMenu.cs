@@ -18,13 +18,42 @@ public class ShopMenu : MonoBehaviour
     private ShopItemButton firstButton, previousButton;
     public TMP_Text nameText, descriptionText, fundsText, vendorStatusText;
 
+    public InventorySlot selectedItem;
+    public GameObject buySellParent;
+    public TMP_Text buySellText;
+    public GameObject buySellFirstSelect;
+    [HideInInspector] public int buySellCount;
+
     public Image vendorPortrait;
 
-    public int itemCount;
+    [HideInInspector] public int itemCount;
 
     private void OnEnable()
     {
         gm = GameManager.gm;
+    }
+
+    public void UpdateBuySellPopup()
+    {
+        string s;
+        if (isBuying) s = "BUYING";
+        else s = "SELLING";
+
+        s = s + " x" + itemCount + " for ";
+
+        int totalPrice;
+        if(isBuying) totalPrice = (int) ( (selectedItem.item.value * gm.currentShop.buyMultiplier) * buySellCount );
+        else totalPrice = (int) ( (selectedItem.item.value * gm.currentShop.sellMultiplier) * buySellCount );
+
+        string c;
+        if(gm.currentShop.currencyType == CurrencyType.Bieace) c = "Gole";
+        else if(gm.currentShop.currencyType == CurrencyType.Bievil) c = "Dwey";
+        else if(gm.currentShop.currencyType == CurrencyType.Farle) c = "Ryy";
+        else c = "Skĭā́";
+
+        s = s + totalPrice + " " + c;
+
+        buySellParent.SetActive(true);
     }
 
     public void CreateDisplay(string str)

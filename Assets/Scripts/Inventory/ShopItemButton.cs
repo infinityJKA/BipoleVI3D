@@ -62,9 +62,20 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
     {
         //shopMenu.CreateDisplay(initializeType);
         UpdateDescription();
+        shopMenu.buySellParent.SetActive(false);
         shopMenu.scrollSnapTo.SnapTo(rectTransform);
     }
 
+    public void OnClick()
+    {
+        shopMenu.selectedItem = InventorySlot;
+        shopMenu.buySellParent.SetActive(true);
+        shopMenu.UpdateBuySellPopup();
+        EventSystem.current.SetSelectedGameObject(shopMenu.buySellFirstSelect);
+        shopMenu.gm.dungeonPlayer.buttonSelectOnDecline = gameObject;
+
+
+    }
 
 
 
